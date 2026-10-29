@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b49be5be89220e45bd78e4b4e79958f, type: 3}
+  m_Name: Trash_Rock
+  m_EditorClassIdentifier: Assembly-CSharp::ParcelDefinition
+  displayName: "\u041A\u0430\u043C\u0435\u043D\u044C"
+  sprite: {fileID: 21300000, guid: 2df34fa591d77ad4da4795b1a59524f6, type: 3}
+  isTrash: 1
+  value: 0
+  minNight: 1
+  requiredUnlock: 
+  weight: 1
+  scale: 0.8
+  stampOffset: {x: 0.15, y: -0.05}
