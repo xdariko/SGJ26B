@@ -14,6 +14,9 @@
 /Assets/Classic_RPG_GUI/
 /Assets/Gizmos/
 
+# Personal jam notes
+/JamNotes/
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
@@ -114,3 +117,4 @@ Assets/FastScriptReload/Plugins/Harmony/net48/0Harmony.xml.meta
 Assets/FastScriptReload/Plugins/Roslyn/2021+/System.Reflection.Metadata.xml.meta
 Assets/FastScriptReload/Plugins/Roslyn/2021+/System.Runtime.CompilerServices.Unsafe.xml.meta
 /.idea
+/Assets/_Recovery*
