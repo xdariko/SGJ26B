@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b419471370c6bd44682b49e30df17f83, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: Assembly-CSharp::GameConfig
+  coin: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+  ecto: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+  rootNodeId: night_shift
+  shiftDuration: 90
+  nightNotes:
+  - night: 1
+    text: "\u041A\u043B\u0438\u043A\u0430\u0439 \u043F\u043E \u043C\u0443\u0441\u043E\u0440\u0443,
+      \u0447\u0442\u043E\u0431\u044B \u0441\u043D\u044F\u0442\u044C \u0435\u0433\u043E
+      \u0441 \u043B\u0435\u043D\u0442\u044B.\n\u0412\u0441\u0451 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435
+      \u043F\u0443\u0441\u0442\u044C \u0435\u0434\u0435\u0442 \u043A \u0430\u0434\u0440\u0435\u0441\u0430\u0442\u0430\u043C."
+  - night: 2
+    text: "\u041F\u043E\u0447\u0442\u044B \u0432\u0441\u0451 \u0431\u043E\u043B\u044C\u0448\u0435.
+      \u0421\u043B\u0435\u0434\u0438 \u0437\u0430 \u043F\u0435\u0447\u0430\u0442\u044F\u043C\u0438
+      \u0430\u0434\u0440\u0435\u0441\u0430\u0442\u043E\u0432."
+  - night: 3
+    text: "\u0425\u043E\u0434\u044F\u0442 \u0441\u043B\u0443\u0445\u0438 \u043E \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u044B\u0445
+      \u043F\u043E\u0441\u044B\u043B\u043A\u0430\u0445..."
+  - night: 5
+    text: "\u0412 \u043F\u043E\u0441\u044B\u043B\u043A\u0430\u0445 \u0437\u0430\u0432\u0435\u043B\u0438\u0441\u044C
+      \u043C\u0438\u043C\u0438\u043A\u0438.\n\u0410 \u0438\u0437\u043D\u0443\u0442\u0440\u0438
+      \u043A\u0442\u043E-\u0442\u043E \u0448\u0435\u043F\u0447\u0435\u0442."
+  beltSpeed: 1.5
+  spawnInterval: 1.6
+  lineSpawnSlowdown: 0.35
+  trashChance: 0.45
+  minTrashChance: 0.15
+  comboStep: 5
+  comboStepBonus: 0.5
+  comboMax: 2
+  ectoComboStreak: 10
+  shapes:
+  - {fileID: 11400000, guid: 1a604b5549f78fc499f7c3a733556658, type: 2}
+  - {fileID: 11400000, guid: 7e632ee5d1fc31e4ca98eca9812733cb, type: 2}
+  - {fileID: 11400000, guid: d3f444fb08e84e74185214f5a4bdda31, type: 2}
+  - {fileID: 11400000, guid: 6d50eb75ef4500c408e75006c00657ea, type: 2}
+  - {fileID: 11400000, guid: 004f7960e88793e4fa8517b21a4fc8e4, type: 2}
+  - {fileID: 11400000, guid: 8a36b8c5152a95449ac3a281c4a18039, type: 2}
+  - {fileID: 11400000, guid: a88e0d5940453ab4381b74641f8fb696, type: 2}
+  goldenShape: {fileID: 11400000, guid: 8beda9225649fbe43937c1c5f4880d43, type: 2}
+  addressees:
+  - id: 1
+    displayName: "\u0412\u0430\u043C\u043F\u0438\u0440\u0430\u043C"
+    stamp: {fileID: 21300000, guid: 4ac5651b8343e23449f4c0e7900faf49, type: 3}
+    color: {r: 0.85, g: 0.12, b: 0.15, a: 1}
+  - id: 2
+    displayName: "\u0412\u0435\u0434\u044C\u043C\u0430\u043C"
+    stamp: {fileID: 21300000, guid: bf8d80e7f85ddc34c9b087f45fae8d3b, type: 3}
+    color: {r: 0.2, g: 0.75, b: 0.3, a: 1}
+  - id: 3
+    displayName: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0430\u043C"
+    stamp: {fileID: 21300000, guid: c6bf90a9429084c4e9227aaa01d420a3, type: 3}
+    color: {r: 0.25, g: 0.55, b: 0.95, a: 1}
+  - id: 4
+    displayName: "\u0422\u044B\u043A\u0432\u043E\u0433\u043E\u043B\u043E\u0432\u044B\u043C"
+    stamp: {fileID: 21300000, guid: 95f5eb8c520656b45beab467b379fb08, type: 3}
+    color: {r: 1, g: 0.55, b: 0.1, a: 1}
+  kindRules:
+  - kind: 0
+    mustRemove: 0
+    reward: 0
+    penalty: 0
+    requiredCamLevel: 0
+    complaint: 
+    upgradeHint: 
+  - kind: 1
+    mustRemove: 1
+    reward: 2
+    penalty: 5
+    requiredCamLevel: 0
+    complaint: "\u041C\u0443\u043C\u0438\u044F \u043D\u0435\u0434\u043E\u0432\u043E\u043B\u044C\u043D\u0430:
+      \u0435\u0439 \u043F\u0440\u0438\u0441\u043B\u0430\u043B\u0438 \u043A\u0430\u043C\u0435\u043D\u044C"
+    upgradeHint: 
+  - kind: 2
+    mustRemove: 1
+    reward: 2
+    penalty: 5
+    requiredCamLevel: 1
+    complaint: "\u0412\u0430\u043C\u043F\u0438\u0440 \u043F\u043E\u043B\u0443\u0447\u0438\u043B
+      \u0432\u0435\u0434\u044C\u043C\u0438\u043D\u0443 \u043F\u043E\u0441\u044B\u043B\u043A\u0443"
+    upgradeHint: "\xAB\u0420\u043E\u0432\u043D\u0430\u044F \u0440\u0435\u0437\u044C\u0431\u0430\xBB
+      \u0432 \u043A\u043D\u0438\u0433\u0435: \u043A\u0430\u043C\u0435\u0440\u0430
+      \u0440\u0430\u0437\u043B\u0438\u0447\u0438\u0442 \u043F\u0435\u0447\u0430\u0442\u0438"
+  - kind: 3
+    mustRemove: 1
+    reward: 4
+    penalty: 20
+    requiredCamLevel: 2
+    complaint: "\u041F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u0435 \u0440\u0430\u0437\u043D\u0435\u0441\u043B\u043E
+      \u043F\u043E\u0447\u0442\u043E\u0432\u044B\u0439 \u044F\u0449\u0438\u043A"
+    upgradeHint: "\xAB\u0413\u043B\u0430\u0437 \u0432\u0435\u0434\u044C\u043C\u044B\xBB
+      \u0432 \u043A\u043D\u0438\u0433\u0435: \u043A\u0430\u043C\u0435\u0440\u0430
+      \u0443\u0432\u0438\u0434\u0438\u0442 \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u044F"
+  - kind: 4
+    mustRemove: 1
+    reward: 6
+    penalty: 10
+    requiredCamLevel: 3
+    complaint: "\u041C\u0438\u043C\u0438\u043A \u0443\u043A\u0443\u0441\u0438\u043B
+      \u043F\u043E\u043B\u0443\u0447\u0430\u0442\u0435\u043B\u044F"
+    upgradeHint: "\xAB\u041F\u0440\u0438\u0437\u0440\u0430\u0447\u043D\u0430\u044F
+      \u0441\u0432\u0435\u0447\u0430\xBB \u0432 \u043A\u043D\u0438\u0433\u0435: \u043A\u0430\u043C\u0435\u0440\u0430
+      \u0443\u0432\u0438\u0434\u0438\u0442 \u043C\u0438\u043C\u0438\u043A\u043E\u0432"
+  - kind: 5
+    mustRemove: 0
+    reward: 0
+    penalty: 0
+    requiredCamLevel: 0
+    complaint: 
+    upgradeHint: 
+  traitChances:
+  - trait: 4
+    minNight: 1
+    chance: 0.02
+    minCamLevel: -1
+  - trait: 1
+    minNight: 3
+    chance: 0.12
+    minCamLevel: -1
+  - trait: 2
+    minNight: 5
+    chance: 0.07
+    minCamLevel: -1
+  - trait: 3
+    minNight: 5
+    chance: 0.1
+    minCamLevel: -1
+  - trait: 0
+    minNight: 2
+    chance: 0.25
+    minCamLevel: -1
+  ghostEcto: 1
+  unseenPenaltyMult: 0.25
+  cameraResolutions:
+  - {x: 96, y: 54}
+  - {x: 192, y: 108}
+  - {x: 384, y: 216}
+  - {x: 384, y: 216}
