@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f254fec017f16b747a0fe0d84ce42c2e, type: 3}
+  m_Name: Fam_Bat
+  m_EditorClassIdentifier: Assembly-CSharp::FamiliarDefinition
+  displayName: "\u041B\u0435\u0442\u0443\u0447\u0430\u044F \u043C\u044B\u0448\u044C"
+  sprite: {fileID: 21300000, guid: 0c9b6d4f6a4ef3c4da978fe2803b2efb, type: 3}
+  unlockEffect: fam_bat
+  rateEffect: 
+  cooldown: 6
+  pounceTime: 0.35
+  targets: 04000000
+  releasesGhosts: 1
+  zoneStart: 0.3
+  zoneEnd: 0.92
