@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4391d70e4e04214b9be9284fff31682, type: 3}
+  m_Name: DemoSkillTree
+  m_EditorClassIdentifier: Assembly-CSharp::GridSkillTree.SkillTreeData
+  treeId: demo_tree
+  nodes:
+  - id: start
+    title: Start
+    description: First node. Free entry point for the demo tree.
+    gridPosition: {x: 0, y: 0}
+    icon: {fileID: 21300000, guid: c901be57a1b65524fae4c01cb9acbe8d, type: 3}
+    iconColor: {r: 0.8784314, g: 0.9490196, b: 0.99607843, a: 1}
+    previousNodeIds: []
+    maxLevel: 1
+    costs: []
+    effects:
+    - id: start_bonus
+      valueMode: 0
+      baseValue: 1
+      growthFormula: 0
+  - id: damage_01
+    title: Damage
+    description: Increases generic damage. Demonstrates a linear additive effect.
+    gridPosition: {x: 1, y: 0}
+    icon: {fileID: 21300000, guid: a1c6cfcb22f08ab4baef5087f2fb71b1, type: 3}
+    iconColor: {r: 0.972549, g: 0.44313726, b: 0.44313726, a: 1}
+    previousNodeIds:
+    - start
+    maxLevel: 3
+    costs:
+    - currency: {fileID: 11400000, guid: a1111111111111111111111111111111, type: 2}
+      baseAmount: 10
+      formula: 1
+    effects:
+    - id: damage
+      valueMode: 0
+      baseValue: 5
+      growthFormula: 1
+  - id: move_speed_01
+    title: Move Speed
+    description: Increases generic movement speed. Demonstrates percent values.
+    gridPosition: {x: 0, y: 1}
+    icon: {fileID: 21300000, guid: 28109d6f23addd64f94e6d97e98432c4, type: 3}
+    iconColor: {r: 0.21960784, g: 0.7411765, b: 0.972549, a: 1}
+    previousNodeIds:
+    - start
+    maxLevel: 3
+    costs:
+    - currency: {fileID: 11400000, guid: a1111111111111111111111111111111, type: 2}
+      baseAmount: 8
+      formula: 1
+    effects:
+    - id: move_speed
+      valueMode: 1
+      baseValue: 5
+      growthFormula: 2
+  - id: max_health_01
+    title: Max Health
+    description: Increases generic health. Demonstrates another additive branch.
+    gridPosition: {x: 0, y: -1}
+    icon: {fileID: 21300000, guid: 428629ccad7c5f648a46327f1c2cbb70, type: 3}
+    iconColor: {r: 0.20392157, g: 0.827451, b: 0.6, a: 1}
+    previousNodeIds:
+    - start
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: a1111111111111111111111111111111, type: 2}
+      baseAmount: 12
+      formula: 1
+    effects:
+    - id: max_health
+      valueMode: 0
+      baseValue: 25
+      growthFormula: 1
+  - id: crit_chance_01
+    title: Critical Chance
+    description: Requires two currencies. Demonstrates multi-currency node costs.
+    gridPosition: {x: 2, y: 0}
+    icon: {fileID: 21300000, guid: 0bdaefc8572baa0449c68d9bdedfb456, type: 3}
+    iconColor: {r: 0.9843137, g: 0.7490196, b: 0.14117648, a: 1}
+    previousNodeIds:
+    - damage_01
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: a1111111111111111111111111111111, type: 2}
+      baseAmount: 20
+      formula: 1
+    - currency: {fileID: 11400000, guid: b2222222222222222222222222222222, type: 2}
+      baseAmount: 2
+      formula: 0
+    effects:
+    - id: crit_chance
+      valueMode: 1
+      baseValue: 3
+      growthFormula: 2
+  - id: unlock_dash
+    title: Unlock Dash
+    description: Unlocks a generic ability flag. Your game can read it with HasUnlock("unlock_dash").
+    gridPosition: {x: 1, y: 1}
+    icon: {fileID: 21300000, guid: abba28c1cacda6242a2c2b1fdb09354f, type: 3}
+    iconColor: {r: 0.654902, g: 0.54509807, b: 0.98039216, a: 1}
+    previousNodeIds:
+    - move_speed_01
+    maxLevel: 1
+    costs:
+    - currency: {fileID: 11400000, guid: a1111111111111111111111111111111, type: 2}
+      baseAmount: 18
+      formula: 0
+    - currency: {fileID: 11400000, guid: b2222222222222222222222222222222, type: 2}
+      baseAmount: 1
+      formula: 0
+    effects:
+    - id: unlock_dash
+      valueMode: 3
+      baseValue: 1
+      growthFormula: 0
+  - id: currency_gain_01
+    title: Currency Gain
+    description: Increases generic currency gain. Demonstrates a utility branch.
+    gridPosition: {x: 1, y: -1}
+    icon: {fileID: 21300000, guid: 66eacf211e538f241a6d4e92a8b31fa1, type: 3}
+    iconColor: {r: 0.3764706, g: 0.64705884, b: 0.98039216, a: 1}
+    previousNodeIds:
+    - max_health_01
+    maxLevel: 3
+    costs:
+    - currency: {fileID: 11400000, guid: a1111111111111111111111111111111, type: 2}
+      baseAmount: 15
+      formula: 2
+    effects:
+    - id: currency_gain
+      valueMode: 1
+      baseValue: 10
+      growthFormula: 2
