@@ -64,16 +64,15 @@ public class UI : MonoBehaviour
             finalExitButton.onClick.RemoveListener(OnExitClicked);
     }
 
+    // В вебе Application.Quit не работает, поэтому выход = в главное меню
     private void OnExitClicked()
     {
-        Application.Quit();
+        Scenes.Load(Scenes.Menu);
     }
 
     private void OnRestartClicked()
     {
-        Time.timeScale = 1f;
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Scenes.Load(SceneManager.GetActiveScene().name);
     }
 
     internal void SetPausePanel(bool active)
