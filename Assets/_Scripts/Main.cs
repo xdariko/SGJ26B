@@ -8,13 +8,16 @@ public enum GamePhase
 {
     Shift,
     Report,
-    Book
+    Book,
+    Ending
 }
 
 public class Main : MonoBehaviour
 {
     [SerializeField] private SkillTreeRuntime tree;
     [SerializeField] private CurrencyWallet wallet;
+    [Tooltip("Комикс перед первой ночью новой игры")]
+    [SerializeField] private ComicCutsceneUI introComic;
 
     public GamePhase Phase { get; private set; }
 
@@ -31,6 +34,29 @@ public class Main : MonoBehaviour
     private void Start()
     {
         G.shift.OnShiftEnded += HandleShiftEnded;
+
+        if (SaveData.NewGameRequested)
+        {
+            SaveData.NewGameRequested = false;
+            SaveData.ResetAll();
+        }
+
+        StartGame();
+    }
+
+    // Новая игра начинается с комикса, продолжение — сразу со смены
+    private void StartGame()
+    {
+        if (!SaveData.IntroSeen && introComic != null)
+        {
+            introComic.Play(() =>
+            {
+                SaveData.IntroSeen = true;
+                BeginNight();
+            });
+            return;
+        }
+
         BeginNight();
     }
 
@@ -42,7 +68,8 @@ public class Main : MonoBehaviour
 
     private void HandleShiftEnded(ShiftScore score)
     {
-        SetPhase(GamePhase.Report);
+        // После финальной смены вместо отчёта концовка
+        SetPhase(G.stats.finalShift ? GamePhase.Ending : GamePhase.Report);
     }
 
     public void OpenBook()
@@ -58,17 +85,18 @@ public class Main : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame
+            && !ComicCutsceneUI.BlocksPause && Phase != GamePhase.Ending)
         {
             TogglePause();
         }
     }
 
     // Пересобрать статы из книги и начать смену
-    public void BeginNight()
+    public void BeginNight(bool forceFinal = false)
     {
         EnsureRootNode();
-        G.stats = GameStats.Build(G.tree, G.config);
+        G.stats = GameStats.Build(G.tree, G.config, forceFinal);
         G.shift.StartShift();
         SetPhase(GamePhase.Shift);
     }
@@ -83,7 +111,7 @@ public class Main : MonoBehaviour
     public void NewGame()
     {
         SaveData.ResetAll();
-        BeginNight();
+        StartGame();
     }
 
     private void TogglePause()
