@@ -32,8 +32,9 @@ public class ShiftIntroView : MonoBehaviour
 
     private void Play()
     {
-        string note = G.config.GetNightNote(G.shift.Night);
-        titleText.text = $"НОЧЬ {G.shift.Night}";
+        bool final = G.stats.finalShift;
+        string note = final ? G.config.finalNote : G.config.GetNightNote(G.shift.Night);
+        titleText.text = final ? G.config.finalTitle : $"НОЧЬ {G.shift.Night}";
         noteText.text = note ?? string.Empty;
 
         group.DOKill();

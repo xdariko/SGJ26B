@@ -30,6 +30,12 @@ public class GameConfig : ScriptableObject
     public float shiftDuration = 90f;
     public List<NightNote> nightNotes = new();
 
+    [Header("Финал")]
+    [Tooltip("Во сколько раз чаще идут посылки в финальную смену (2 = поток x2)")]
+    public float finalSpawnMult = 2f;
+    public string finalTitle = "ПОЛНОЧЬ ХЕЛЛОУИНА";
+    [TextArea] public string finalNote = "Король Тыкв ждёт свой заказ. Все линии открыты, поток удвоен. Не подведи!";
+
     [Header("Лента")]
     public float beltSpeed = 1.5f;
     public float spawnInterval = 1.6f;

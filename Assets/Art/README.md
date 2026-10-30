@@ -19,6 +19,7 @@
 | UI/monitor_frame.png | 128×128 | — | 9-slice, бордер 30 | рамка монитора (центр прозрачный) |
 | UI/locked_slot.png | любой | — | — | закрытый слот (грядка) |
 | Familiars/*.png | 128×128 | 128 | центр | кот, ворон, сова, мышь: иконка на полке и прыжок на посылку в мониторе |
+| Ending/pumpkin_king.png | 256×256 | — | — | Король Тыкв на экране концовки (UI Image `Canvas/Ending/Root/King`) |
 
 - Спрайт фамильяра меняется в `ScriptableObjects/Familiars/*.asset` → Sprite. Размер прыжка: `FamiliarPounceView.size`
   на объекте `Familiars` в сцене. Тёмный фамильяр плохо читается на тёмном полу: дай ему светлый контур.

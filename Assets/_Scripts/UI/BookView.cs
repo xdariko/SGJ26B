@@ -41,7 +41,7 @@ public class BookView : MonoBehaviour
             return;
 
         titleText.text = "Ведьмина книга";
-        startLabel.text = $"Начать ночь {SaveData.Night}";
+        startLabel.text = G.tree.HasUnlock(Effects.FinalOrder) ? "Начать финальную ночь" : $"Начать ночь {SaveData.Night}";
         newGameLabel.text = "Новая игра";
         confirmUntil = 0f;
     }
