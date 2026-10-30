@@ -68,7 +68,8 @@ public class GameStats
 
     public bool HasUnlock(string effectId) => unlocks.Contains(effectId);
 
-    public static GameStats Build(SkillTreeRuntime tree, GameConfig cfg)
+    // forceFinal: финальная смена без покупки final_order (чит F6)
+    public static GameStats Build(SkillTreeRuntime tree, GameConfig cfg, bool forceFinal = false)
     {
         GameStats s = new();
 
@@ -84,6 +85,13 @@ public class GameStats
         s.trashChance = Mathf.Max(cfg.minTrashChance, cfg.trashChance * (1f - Value(Effects.TrashCut)));
         s.parcelValueMult = 1f + Value(Effects.ParcelValue);
         s.lines = 1 + (Has(Effects.Line2) ? 1 : 0) + (Has(Effects.Line3) ? 1 : 0) + (Has(Effects.Line4) ? 1 : 0);
+        s.finalShift = forceFinal || Has(Effects.FinalOrder);
+        // Финал: все линии сразу, поток чаще
+        if (s.finalShift)
+        {
+            s.lines = 4;
+            s.spawnInterval /= Mathf.Max(0.1f, cfg.finalSpawnMult);
+        }
         // С каждой новой линией поток на одну ленту реже, чтобы 4 монитора не давали 4x нагрузки
         s.spawnInterval *= 1f + cfg.lineSpawnSlowdown * (s.lines - 1);
 
@@ -99,8 +107,6 @@ public class GameStats
         s.famBat = Has(Effects.FamBat);
         s.famCatRateMult = 1f + Value(Effects.FamCatRate);
         s.famRateMult = 1f + Value(Effects.FamRate);
-
-        s.finalShift = Has(Effects.FinalOrder);
 
         if (tree != null && tree.TreeData != null)
             foreach (SkillNodeData node in tree.TreeData.nodes)

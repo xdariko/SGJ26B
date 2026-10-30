@@ -79,6 +79,7 @@ public class ShiftController : ManagedBehaviour
             belt.Stop();
 
         Current = State.Ended;
+        SaveData.AddShift(Score);
         SaveData.Night = Night + 1;
         OnShiftEnded?.Invoke(Score);
     }

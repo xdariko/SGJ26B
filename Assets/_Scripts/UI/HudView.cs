@@ -53,7 +53,7 @@ public class HudView : MonoBehaviour
     private void HandleShiftStarted()
     {
         if (nightText != null && G.shift.Score != null)
-            nightText.text = $"НОЧЬ {G.shift.Night}";
+            nightText.text = G.stats.finalShift ? "ХЕЛЛОУИН" : $"НОЧЬ {G.shift.Night}";
 
         SetCombo(1f, 0);
     }
