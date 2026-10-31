@@ -18,6 +18,6 @@ MonoBehaviour:
   value: 3
   minNight: 4
   requiredUnlock: 
-  weight: 1
+  weight: 0.5
   scale: 1
   stampOffset: {x: 0.15, y: -0.05}

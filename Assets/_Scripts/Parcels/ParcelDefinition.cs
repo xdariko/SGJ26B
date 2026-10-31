@@ -10,6 +10,8 @@ public class ParcelDefinition : ScriptableObject
     public bool isTrash;
     [Tooltip("Монеты за доставку (для обычных предметов)")]
     public int value = 1;
+    [Tooltip("Чей это предмет (гробик — вампирам). Выпадает только в посылках этому адресату. Any = кому угодно")]
+    public Addressee addressee = Addressee.Any;
 
     [Header("Когда появляется")]
     [Min(1)] public int minNight = 1;

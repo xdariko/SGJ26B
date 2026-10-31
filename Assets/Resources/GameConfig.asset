@@ -50,6 +50,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 004f7960e88793e4fa8517b21a4fc8e4, type: 2}
   - {fileID: 11400000, guid: 8a36b8c5152a95449ac3a281c4a18039, type: 2}
   - {fileID: 11400000, guid: a88e0d5940453ab4381b74641f8fb696, type: 2}
+  - {fileID: 11400000, guid: 69bf2082f0954aaeb032175a214de437, type: 2}
+  - {fileID: 11400000, guid: f39f536ee8494f22ac92364f0c331fdd, type: 2}
+  - {fileID: 11400000, guid: aa9b351dba054275914f31ffb2cecb76, type: 2}
+  - {fileID: 11400000, guid: fbfdd35083d84ab29617eb592383bf36, type: 2}
+  - {fileID: 11400000, guid: 357600ae00ba4e7eb7aa8fd173197319, type: 2}
+  - {fileID: 11400000, guid: 07fba941424f4105af46e4d43b00eedc, type: 2}
   goldenShape: {fileID: 11400000, guid: 8beda9225649fbe43937c1c5f4880d43, type: 2}
   addressees:
   - id: 1

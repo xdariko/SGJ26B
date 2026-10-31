@@ -20,7 +20,9 @@ public static class ParcelFactory
             return spec;
         }
 
-        spec.shape = PickShape(cfg.shapes, false, night, stats);
+        // Адрес уже выбран: тематические предметы (гробик, котёл...) только для своего адресата.
+        // «Чужой адрес» ниже может сменить марку — гроб с ведьминой маркой и есть ошибка.
+        spec.shape = PickShape(cfg.shapes, false, night, stats, spec.address);
 
         foreach (TraitChance tc in cfg.traitChances)
         {
@@ -74,11 +76,12 @@ public static class ParcelFactory
         }
     }
 
-    private static ParcelDefinition PickShape(List<ParcelDefinition> shapes, bool trash, int night, GameStats stats)
+    private static ParcelDefinition PickShape(List<ParcelDefinition> shapes, bool trash, int night, GameStats stats,
+        Addressee address = Addressee.Any)
     {
         float total = 0f;
         foreach (ParcelDefinition s in shapes)
-            if (s != null && s.isTrash == trash && s.IsAvailable(night, stats))
+            if (Fits(s, trash, night, stats, address))
                 total += s.weight;
 
         float roll = Random.value * total;
@@ -86,7 +89,7 @@ public static class ParcelFactory
 
         foreach (ParcelDefinition s in shapes)
         {
-            if (s == null || s.isTrash != trash || !s.IsAvailable(night, stats))
+            if (!Fits(s, trash, night, stats, address))
                 continue;
 
             last = s;
@@ -96,6 +99,12 @@ public static class ParcelFactory
         }
 
         return last;
+    }
+
+    private static bool Fits(ParcelDefinition s, bool trash, int night, GameStats stats, Addressee address)
+    {
+        return s != null && s.isTrash == trash && s.IsAvailable(night, stats)
+               && (s.addressee == Addressee.Any || s.addressee == address);
     }
 
     private static Addressee RandomAddressee(GameConfig cfg, Addressee exclude)
