@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: WitchBookUIConfig
   m_EditorClassIdentifier: Assembly-CSharp::GridSkillTree.SkillTreeUIConfig
   nodeButtonPrefab: {fileID: 8078567855229118437, guid: 3bd79c96cd4c94a4fa1048a5256f2e3f, type: 3}
-  connectionLinePrefab: {fileID: 8293103456220398604, guid: 912e9abd32cfa44498fc534b678f00d2, type: 3}
-  connectionThickness: 6
+  connectionLinePrefab: {fileID: 8293103456220398604, guid: 578a9484289570e439d519b8287a0f3f, type: 3}
+  connectionThickness: 3
   cellSize: {x: 120, y: 120}
   spacing: {x: 60, y: 70}
-  lockedColor: {r: 0.16, g: 0.12, b: 0.18, a: 1}
-  availableColor: {r: 0.55, g: 0.28, b: 0.08, a: 1}
-  maxedColor: {r: 0.3, g: 0.45, b: 0.2, a: 1}
+  lockedColor: {r: 0.46, g: 0.37, b: 0.52, a: 1}
+  availableColor: {r: 0.92, g: 0.56, b: 0.2, a: 1}
+  maxedColor: {r: 0.62, g: 0.4, b: 0.78, a: 1}

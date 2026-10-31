@@ -15,7 +15,7 @@ public class EndingView : MonoBehaviour
     [SerializeField] private RectTransform creditsContent;
     [SerializeField] private TMP_Text creditsText;
     [TextArea(4, 12)]
-    [SerializeField] private string credits = "ТЫКВЕННАЯ ПОЧТА\n\n<size=70%>Игра</size>\nxdariko\n\nСпасибо, что сортировали!";
+    [SerializeField] private string credits = "ТЫКВЕННАЯ ПОЧТА\n\n<size=70%>Игра</size>\nxdariko\n\n<size=70%>Иконки</size>\nLorc, Delapouite, Caro Asercion\n<size=60%>game-icons.net, CC BY 3.0</size>\n\nСпасибо, что сортировали!";
     [SerializeField] private float scrollSpeed = 90f;
     [Tooltip("Через сколько секунд после начала титров клик / пробел / Escape их пропускает")]
     [SerializeField] private float skipDelay = 0.6f;

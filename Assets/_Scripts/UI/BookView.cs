@@ -1,27 +1,25 @@
+using GridSkillTree;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Ведьмина книга между сменами. Здесь будет дерево (шаг 6), пока кнопки «Начать ночь» и «Новая игра».
+// Ведьмина книга между сменами: дерево на весь экран и тонкая панель снизу (валюта + «Продолжить»).
 public class BookView : MonoBehaviour
 {
     [SerializeField] private GameObject root;
-    [SerializeField] private TMP_Text titleText;
     [SerializeField] private Button startButton;
     [SerializeField] private TMP_Text startLabel;
-    [SerializeField] private Button newGameButton;
-    [SerializeField] private TMP_Text newGameLabel;
 
-    [Tooltip("Сколько секунд кнопка «Новая игра» ждёт второго нажатия")]
-    [SerializeField] private float confirmTime = 3f;
-
-    private float confirmUntil;
+    [Header("Нижняя панель: валюта")]
+    [SerializeField] private TMP_Text coinsText;
+    [SerializeField] private TMP_Text ectoText;
 
     private void Start()
     {
         G.main.OnPhaseChanged += HandlePhase;
+        if (G.wallet != null)
+            G.wallet.OnCurrencyChanged += HandleCurrencyChanged;
         startButton.onClick.AddListener(OnStartClicked);
-        newGameButton.onClick.AddListener(OnNewGameClicked);
         HandlePhase(G.main.Phase);
     }
 
@@ -29,8 +27,9 @@ public class BookView : MonoBehaviour
     {
         if (G.main != null)
             G.main.OnPhaseChanged -= HandlePhase;
+        if (G.wallet != null)
+            G.wallet.OnCurrencyChanged -= HandleCurrencyChanged;
         startButton.onClick.RemoveListener(OnStartClicked);
-        newGameButton.onClick.RemoveListener(OnNewGameClicked);
     }
 
     private void HandlePhase(GamePhase phase)
@@ -40,35 +39,28 @@ public class BookView : MonoBehaviour
         if (!open)
             return;
 
-        titleText.text = "Ведьмина книга";
-        startLabel.text = G.tree.HasUnlock(Effects.FinalOrder) ? "Начать финальную ночь" : $"Начать ночь {SaveData.Night}";
-        newGameLabel.text = "Новая игра";
-        confirmUntil = 0f;
+        startLabel.text = "Продолжить";
+        RefreshCurrency();
     }
 
-    private void Update()
+    private void HandleCurrencyChanged(CurrencyDefinition currency, int balance)
     {
-        if (confirmUntil > 0f && Time.unscaledTime > confirmUntil)
-        {
-            confirmUntil = 0f;
-            newGameLabel.text = "Новая игра";
-        }
+        if (root.activeSelf)
+            RefreshCurrency();
+    }
+
+    private void RefreshCurrency()
+    {
+        if (G.wallet == null)
+            return;
+        if (coinsText != null)
+            coinsText.text = G.wallet.GetBalance(G.config.coin).ToString();
+        if (ectoText != null)
+            ectoText.text = G.wallet.GetBalance(G.config.ecto).ToString();
     }
 
     private void OnStartClicked()
     {
         G.main.BeginNight();
-    }
-
-    private void OnNewGameClicked()
-    {
-        if (confirmUntil > 0f)
-        {
-            G.main.NewGame();
-            return;
-        }
-
-        confirmUntil = Time.unscaledTime + confirmTime;
-        newGameLabel.text = "Точно? Нажми ещё раз";
     }
 }

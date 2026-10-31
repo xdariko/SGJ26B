@@ -21,7 +21,7 @@ MonoBehaviour:
       \u041E\u0442\u0441\u044E\u0434\u0430 \u0440\u0430\u0441\u0442\u0451\u0442 \u0432\u0441\u0451
       \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435."
     gridPosition: {x: 0, y: 0}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 2e711caff84bb4644aaf36557b5134b6, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds: []
     maxLevel: 1
@@ -36,7 +36,7 @@ MonoBehaviour:
       \u0430\u0434\u0440\u0435\u0441\u0430 \u043F\u0440\u0438\u0434\u0451\u0442\u0441\u044F
       \u0441\u043D\u0438\u043C\u0430\u0442\u044C."
     gridPosition: {x: 0, y: 1}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: c9028f23673b1654cb28fdbd23a65601, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - night_shift
@@ -55,7 +55,7 @@ MonoBehaviour:
     description: "\u041C\u0435\u043D\u044C\u0448\u0435 \u0448\u0443\u043C\u0430 \u043D\u0430
       \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0430\u0445: -25% \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: -1, y: 1}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: a8c991ce09728df4ebc22bb7b52691fd, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - cam_carve
@@ -75,7 +75,7 @@ MonoBehaviour:
       \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u044F: \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u0443\u044E
       \u0430\u0443\u0440\u0443 \u0432\u043E\u043A\u0440\u0443\u0433 \u043F\u043E\u0441\u044B\u043B\u043E\u043A."
     gridPosition: {x: 0, y: 2}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 334f2260a54d5a940a82f9a5ea4b63b0, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - cam_carve
@@ -98,7 +98,7 @@ MonoBehaviour:
       \u0447\u0442\u043E\u0431\u044B \u0432\u044B\u043F\u0443\u0441\u0442\u0438\u0442\u044C
       \u0435\u0433\u043E."
     gridPosition: {x: 0, y: 3}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 6fb217a333fbb724b99cbe5cd30c4425, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - cam_eye
@@ -120,7 +120,7 @@ MonoBehaviour:
     description: "\u041B\u0435\u043D\u0442\u0430 \u0435\u0434\u0435\u0442 \u043D\u0430
       15% \u0431\u044B\u0441\u0442\u0440\u0435\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 1, y: 0}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 97d1674c8d1007a46b1b793237858f04, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - night_shift
@@ -139,7 +139,7 @@ MonoBehaviour:
     description: "\u041F\u043E\u0441\u044B\u043B\u043A\u0438 \u043F\u0440\u0438\u0445\u043E\u0434\u044F\u0442
       \u043D\u0430 15% \u0447\u0430\u0449\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 2, y: 0}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 10932c6eb9d8c0a4d9d558f15ab83110, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - line_speed
@@ -158,7 +158,7 @@ MonoBehaviour:
     description: "\u0412\u0441\u0435 \u0432\u044B\u043F\u043B\u0430\u0442\u044B +20%
       \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 3, y: 0}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 5c2c050560532de43849fa7236be5591, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - spawn_rate
@@ -179,7 +179,7 @@ MonoBehaviour:
       \u0434\u043E\u0441\u0442\u0430\u0432\u043A\u0443 \u043C\u0435\u0448\u043A\u0430
       \u043F\u043B\u0430\u0442\u044F\u0442 3 \u043C\u0435\u0434\u044F\u043A\u0430."
     gridPosition: {x: 2, y: 1}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 77f13b5c522a6194d91f530f7fa7cadf, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - spawn_rate
@@ -199,7 +199,7 @@ MonoBehaviour:
       \u0438 \u0432\u0442\u043E\u0440\u0430\u044F \u043B\u0435\u043D\u0442\u0430:
       \u0442\u043E\u043B\u044C\u043A\u043E \u0434\u043B\u044F \u0432\u0435\u0434\u044C\u043C."
     gridPosition: {x: 1, y: 1}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: f8872f5619eab0143a022db7eb255ac8, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - line_speed
@@ -219,7 +219,7 @@ MonoBehaviour:
     description: "\u0422\u0440\u0435\u0442\u044C\u044F \u043B\u0435\u043D\u0442\u0430:
       \u0434\u043B\u044F \u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432."
     gridPosition: {x: 1, y: 2}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: a45c951a25931804bac77eb710d38221, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - line_2
@@ -238,7 +238,7 @@ MonoBehaviour:
     description: "\u0427\u0435\u0442\u0432\u0451\u0440\u0442\u0430\u044F \u043B\u0435\u043D\u0442\u0430:
       \u0434\u043B\u044F \u0442\u044B\u043A\u0432\u043E\u0433\u043E\u043B\u043E\u0432\u044B\u0445."
     gridPosition: {x: 1, y: 3}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 0bdacddfc58810c4da2a94a893b8bed9, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - line_3
@@ -260,7 +260,7 @@ MonoBehaviour:
     description: "\u0421\u043C\u0435\u043D\u0430 \u0434\u043B\u0438\u043D\u043D\u0435\u0435
       \u043D\u0430 15 \u0441\u0435\u043A\u0443\u043D\u0434 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 0, y: -1}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: c52ea5410f13efa4ca124b7ad79aeeff, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - night_shift
@@ -281,7 +281,7 @@ MonoBehaviour:
       \u043D\u0430 15% \u043C\u0435\u043D\u044C\u0448\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C.\n\u0421\u043E\u0432\u0441\u0435\u043C
       \u043E\u043D \u043D\u0435 \u043F\u0440\u043E\u043F\u0430\u0434\u0451\u0442."
     gridPosition: {x: -1, y: -1}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: ceb7c253cd3845941b6facafbdf09ced, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - shift_time
@@ -301,7 +301,7 @@ MonoBehaviour:
       \u043C\u043D\u043E\u0436\u0438\u0442\u0435\u043B\u044C \u043A\u043E\u043C\u0431\u043E
       +0.5 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 0, y: -2}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 11788abd359d45049af481600b0c6646, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - shift_time
@@ -320,7 +320,7 @@ MonoBehaviour:
     description: "\u0428\u0442\u0440\u0430\u0444\u044B \u0437\u0430 \u0436\u0430\u043B\u043E\u0431\u044B
       -20% \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 1, y: -2}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: cd3ae81ea7dde7f45aaf04e84a8f107a, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - combo
@@ -340,7 +340,7 @@ MonoBehaviour:
       \u043F\u043E\u043F\u0430\u0434\u0430\u044E\u0442\u0441\u044F \u043D\u0430 30%
       \u0447\u0430\u0449\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 0, y: -3}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: fff8864f79e13694cb19072f1c1a851c, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - combo
@@ -360,7 +360,7 @@ MonoBehaviour:
       \u0435\u0434\u0435\u0442 \u0437\u043E\u043B\u043E\u0442\u0430\u044F \u0442\u044B\u043A\u0432\u0430.
       \u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438 \u0435\u0451: 50 \u043C\u0435\u0434\u044F\u043A\u043E\u0432!"
     gridPosition: {x: 1, y: -3}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 2d7921cb0e4f1f840b5671f7e67d7322, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - forgive
@@ -380,7 +380,7 @@ MonoBehaviour:
       \u043C\u0443\u0441\u043E\u0440 \u0441 \u043B\u0435\u043D\u0442\u044B, \u043F\u043E\u0442\u043E\u043C
       \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442."
     gridPosition: {x: -1, y: 0}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 77058180a22da264298be29c9482041c, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - night_shift
@@ -399,7 +399,7 @@ MonoBehaviour:
     description: "\u041A\u043E\u0442 \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442
       \u043D\u0430 20% \u043C\u0435\u043D\u044C\u0448\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: -2, y: 0}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: f86ead94860e41f46a28054292a312d5, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - fam_cat
@@ -419,7 +419,7 @@ MonoBehaviour:
       \u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0442 \u043D\u0430 20% \u0447\u0430\u0449\u0435
       \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: -3, y: 0}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 804e598acec6cc2428517dcb72613087, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - fam_cat_fast
@@ -439,7 +439,7 @@ MonoBehaviour:
       \u043F\u043E\u0441\u044B\u043B\u043A\u0438 \u0441 \u0447\u0443\u0436\u0438\u043C
       \u0430\u0434\u0440\u0435\u0441\u043E\u043C."
     gridPosition: {x: -2, y: 1}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: e97e4c5384ce2ed44a30ddc602193d36, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - fam_cat
@@ -459,7 +459,7 @@ MonoBehaviour:
     description: "\u0421\u043E\u0432\u0430 \u0441\u043D\u0438\u043C\u0430\u0435\u0442
       \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u044B\u0435 \u043F\u043E\u0441\u044B\u043B\u043A\u0438."
     gridPosition: {x: -2, y: 2}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 843c3191ef856834890697499cbcee5a, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - fam_raven
@@ -475,11 +475,11 @@ MonoBehaviour:
       baseValue: 1
       growthFormula: 0
   - id: fam_bat
-    title: "\u041B\u0435\u0442\u0443\u0447\u0430\u044F \u043C\u044B\u0448\u044C"
-    description: "\u041C\u044B\u0448\u044C \u043B\u043E\u0432\u0438\u0442 \u043C\u0438\u043C\u0438\u043A\u043E\u0432
+    title: "\u041B\u0438\u0441\u0430"
+    description: "\u041B\u0438\u0441\u0430 \u043B\u043E\u0432\u0438\u0442 \u043C\u0438\u043C\u0438\u043A\u043E\u0432
       \u0438 \u0432\u044B\u043F\u0443\u0441\u043A\u0430\u0435\u0442 \u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432."
     gridPosition: {x: -2, y: 3}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 12a62c9c179049f4c8feefc89a5df0c4, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - fam_owl
@@ -506,7 +506,7 @@ MonoBehaviour:
       \u0432\u0441\u0435 \u043B\u0438\u043D\u0438\u0438, \u0434\u0432\u043E\u0439\u043D\u043E\u0439
       \u043F\u043E\u0442\u043E\u043A."
     gridPosition: {x: 0, y: 4}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 80e3e02795e8e5740a406965c0b11df1, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - cam_candle
