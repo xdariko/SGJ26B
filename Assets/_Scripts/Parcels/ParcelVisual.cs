@@ -38,7 +38,7 @@ public class ParcelVisual : MonoBehaviour
     public void Show(ParcelSpec spec, GameConfig cfg, Quaternion facing)
     {
         transform.rotation = facing;
-        transform.localScale = Vector3.one * (spec.shape != null ? spec.shape.scale : 1f);
+        transform.localScale = Vector3.one * (spec.shape != null ? spec.shape.scale : 1f) * cfg.parcelScale;
         body.sprite = spec.shape != null ? spec.shape.sprite : null;
 
         // Оверлеи встают по габаритам спрайта, так что новый арт не требует ручной подгонки

@@ -26,6 +26,10 @@ public class GameConfig : ScriptableObject
     [Tooltip("Стартовый узел дерева, покупается автоматически")]
     public string rootNodeId = "night_shift";
 
+    [Header("Посылки")]
+    [Tooltip("Общий множитель размера всех посылок на ленте (поверх scale у каждой)")]
+    public float parcelScale = 1.3f;
+
     [Header("Смена")]
     public float shiftDuration = 90f;
     public List<NightNote> nightNotes = new();
