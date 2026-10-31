@@ -92,7 +92,9 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
         gameObject.SetActive(true);
         liveRoot.SetActive(false);
         lockedRoot.SetActive(true);
-        lockedText.text = hint;
+        // Пустой слот = белый шум без надписей; подпись оставлена на случай, если её вернут в префаб
+        if (lockedText != null)
+            lockedText.text = hint;
     }
 
     public void Hide()

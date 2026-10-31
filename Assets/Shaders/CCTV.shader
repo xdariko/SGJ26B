@@ -17,6 +17,7 @@ Shader "PumpkinPost/CCTV"
         _Glitch ("Glitch", Range(0, 1)) = 0
         _RollBar ("Rolling Bar", Range(0, 1)) = 0.15
         _Brightness ("Brightness", Range(0, 3)) = 1.15
+        _Static ("TV Static (нет сигнала)", Range(0, 1)) = 0
 
         // UGUI маски
         _StencilComp ("Stencil Comparison", Float) = 8
@@ -71,7 +72,7 @@ Shader "PumpkinPost/CCTV"
             sampler2D _MainTex;
             fixed4 _Color;
             fixed4 _CamTint;
-            float _Distortion, _Aberration, _Scanlines, _ScanlineCount, _Noise, _Vignette, _Glitch, _RollBar, _Brightness;
+            float _Distortion, _Aberration, _Scanlines, _ScanlineCount, _Noise, _Vignette, _Glitch, _RollBar, _Brightness, _Static;
 
             float hash(float2 p)
             {
@@ -121,6 +122,11 @@ Shader "PumpkinPost/CCTV"
                 // Шум
                 float n = hash(floor(i.uv * float2(320, 180)) + frac(t * 7.13) * 100);
                 col += (n - 0.5) * (_Noise * 0.25 + _Glitch * 0.5);
+
+                // Нет сигнала: чёрно-белый «снег» поверх всего, скан-линии и виньетка остаются
+                float sn = hash(floor(i.uv * float2(260, 160)) + frac(t * 11.7) * 97.0);
+                float snow = sn * sn * 1.1;
+                col = lerp(col, snow.xxx * (1 - _Scanlines * scan * 0.5), _Static);
 
                 // Виньетка
                 col *= saturate(1 - _Vignette * r2 * 0.5);
