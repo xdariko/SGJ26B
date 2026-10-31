@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e731fde96b418cb6d182a66e1fb6e0, type: 3}
+  m_Name: SoundBank
+  m_EditorClassIdentifier: Assembly-CSharp::SoundBank
+  sfx:
+  - id: 0
+    clips: []
+    volume: 0.5
+    pitchJitter: 0.05
+    cooldown: 0.05
+  - id: 1
+    clips: []
+    volume: 0.8
+    pitchJitter: 0.04
+    cooldown: 0.02
+  - id: 2
+    clips: []
+    volume: 0.8
+    pitchJitter: 0.03
+    cooldown: 0.08
+  - id: 3
+    clips: []
+    volume: 0.3
+    pitchJitter: 0.08
+    cooldown: 0.09
+  - id: 4
+    clips: []
+    volume: 0.75
+    pitchJitter: 0.03
+    cooldown: 0.25
+  - id: 5
+    clips: []
+    volume: 0.7
+    pitchJitter: 0.08
+    cooldown: 0.1
+  - id: 6
+    clips: []
+    volume: 0.6
+    pitchJitter: 0
+    cooldown: 0.1
+  - id: 7
+    clips: []
+    volume: 0.45
+    pitchJitter: 0.12
+    cooldown: 0.06
+  - id: 8
+    clips: []
+    volume: 0.7
+    pitchJitter: 0
+    cooldown: 0.5
+  - id: 9
+    clips: []
+    volume: 0.8
+    pitchJitter: 0
+    cooldown: 0.5
+  - id: 10
+    clips: []
+    volume: 0.5
+    pitchJitter: 0
+    cooldown: 0.2
+  - id: 11
+    clips: []
+    volume: 0.45
+    pitchJitter: 0.1
+    cooldown: 0.02
+  - id: 12
+    clips: []
+    volume: 0.9
+    pitchJitter: 0.04
+    cooldown: 0.1
+  - id: 13
+    clips: []
+    volume: 0.7
+    pitchJitter: 0.02
+    cooldown: 0.05
+  - id: 14
+    clips: []
+    volume: 0.6
+    pitchJitter: 0.1
+    cooldown: 0.1
+  - id: 15
+    clips: []
+    volume: 0.7
+    pitchJitter: 0
+    cooldown: 1
+  - id: 16
+    clips: []
+    volume: 0.6
+    pitchJitter: 0.05
+    cooldown: 0.2
+  music:
+  - id: 1
+    clip: {fileID: 0}
+    volume: 1
+  - id: 2
+    clip: {fileID: 0}
+    volume: 1
+  - id: 3
+    clip: {fileID: 0}
+    volume: 1
+  - id: 4
+    clip: {fileID: 0}
+    volume: 1
+  - id: 5
+    clip: {fileID: 0}
+    volume: 1
+  musicFade: 1.2
+  proceduralSfxVolume: 0.8
+  proceduralMusicVolume: 0.55

@@ -477,6 +477,7 @@ public class ComicCutsceneUI : MonoBehaviour
         }
 
         HidePageImmediate(currentPageIndex);
+        AudioHub.Play(SfxId.PageTurn);
         ShowNextFrameOnCurrentPage();
     }
 

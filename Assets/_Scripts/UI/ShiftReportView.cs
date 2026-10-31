@@ -71,7 +71,11 @@ public class ShiftReportView : MonoBehaviour
 
         foreach (string line in BuildLines(s))
         {
-            reveal.AppendCallback(() => bodyText.text += line + "\n");
+            reveal.AppendCallback(() =>
+            {
+                bodyText.text += line + "\n";
+                AudioHub.Play(SfxId.ReportLine);
+            });
             reveal.AppendInterval(lineDelay);
         }
 
@@ -82,6 +86,7 @@ public class ShiftReportView : MonoBehaviour
             stamp.localScale = Vector3.one * 2f;
         });
         reveal.Append(stamp.DOScale(1f, 0.2f).SetEase(Ease.InQuad));
+        reveal.AppendCallback(() => AudioHub.Play(SfxId.Stamp));
         if (paper != null)
             reveal.Append(paper.DOShakeAnchorPos(0.15f, 8f));
         reveal.AppendCallback(() => bookButton.gameObject.SetActive(true));

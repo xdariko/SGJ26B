@@ -7,6 +7,8 @@ public class FamiliarDefinition : ScriptableObject
 {
     public string displayName = "Чёрный кот";
     public Sprite sprite;
+    [Tooltip("Звук прыжка (мяу, карр...). Пусто = общий звук из SoundBank")]
+    public AudioClip[] pounceClips;
 
     [Header("Открытие и скорость")]
     [Tooltip("Unlock-эффект из книги, который даёт фамильяра")]

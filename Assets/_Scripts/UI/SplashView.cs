@@ -28,6 +28,8 @@ public class SplashView : MonoBehaviour
 
         if (caption != null)
             caption.alpha = 0f;
+        // В браузере звук может не сыграть до первого клика — это ок
+        AudioHub.Play(SfxId.Splash);
         float frameTime = 1f / Mathf.Max(1f, fps);
 
         for (int i = 0; i < frames.Length && !skip; i++)
