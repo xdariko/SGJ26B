@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f254fec017f16b747a0fe0d84ce42c2e, type: 3}
-  m_Name: Fam_Bat
+  m_Name: Fam_Fox
   m_EditorClassIdentifier: Assembly-CSharp::FamiliarDefinition
-  displayName: "\u041B\u0435\u0442\u0443\u0447\u0430\u044F \u043C\u044B\u0448\u044C"
+  displayName: "\u041B\u0438\u0441\u0430"
   sprite: {fileID: 21300000, guid: 0c9b6d4f6a4ef3c4da978fe2803b2efb, type: 3}
+  pounceClips: []
   unlockEffect: fam_bat
   rateEffect: 
   cooldown: 6
