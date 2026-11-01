@@ -82,7 +82,10 @@ public class GameStats
 
         s.beltSpeed = cfg.beltSpeed * (1f + Value(Effects.BeltSpeed));
         s.spawnInterval = cfg.spawnInterval / (1f + Value(Effects.SpawnRate));
-        s.trashChance = Mathf.Max(cfg.minTrashChance, cfg.trashChance * (1f - Value(Effects.TrashCut)));
+        // Мусора меньше от ночи к ночи: на ленте появляются другие посылки, которые надо снимать
+        float nightTrash = Mathf.Max(Mathf.Min(cfg.trashNightFloor, cfg.trashChance),
+            cfg.trashChance - cfg.trashDropPerNight * (SaveData.Night - 1));
+        s.trashChance = Mathf.Max(cfg.minTrashChance, nightTrash * (1f - Value(Effects.TrashCut)));
         s.parcelValueMult = 1f + Value(Effects.ParcelValue);
         s.lines = 1 + (Has(Effects.Line2) ? 1 : 0) + (Has(Effects.Line3) ? 1 : 0) + (Has(Effects.Line4) ? 1 : 0);
         s.finalShift = forceFinal || Has(Effects.FinalOrder);

@@ -9,6 +9,7 @@ public static class SaveData
     private const string GhostsKey = "PumpkinPost.TotalGhosts";
     private const string CoinsKey = "PumpkinPost.TotalCoins";
     private const string IntroKey = "PumpkinPost.IntroSeen";
+    private const string HintsKey = "PumpkinPost.HintsSeen";
 
     // Меню попросило начать заново. Сбросить прогресс можно только в Game: там живут дерево и кошелёк
     public static bool NewGameRequested;
@@ -35,6 +36,18 @@ public static class SaveData
             PlayerPrefs.SetInt(NightKey, value);
             PlayerPrefs.Save();
         }
+    }
+
+    // Подсказки обучения, которые уже показаны. Храним одной строкой: «|trash|book|»
+    public static bool IsHintSeen(string id) => PlayerPrefs.GetString(HintsKey, "|").Contains("|" + id + "|");
+
+    public static void MarkHintSeen(string id)
+    {
+        if (IsHintSeen(id))
+            return;
+
+        PlayerPrefs.SetString(HintsKey, PlayerPrefs.GetString(HintsKey, "|") + id + "|");
+        PlayerPrefs.Save();
     }
 
     // Итоги за всю игру, для титров
@@ -65,6 +78,7 @@ public static class SaveData
         PlayerPrefs.DeleteKey(GhostsKey);
         PlayerPrefs.DeleteKey(CoinsKey);
         PlayerPrefs.DeleteKey(IntroKey);
+        PlayerPrefs.DeleteKey(HintsKey);
 
         if (G.tree != null)
             G.tree.ResetProgress();

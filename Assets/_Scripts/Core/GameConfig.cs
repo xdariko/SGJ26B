@@ -47,6 +47,10 @@ public class GameConfig : ScriptableObject
     public float lineSpawnSlowdown = 0.35f;
     [Tooltip("Стартовый шанс мусора. Узел trash_cut снижает его")]
     [Range(0f, 1f)] public float trashChance = 0.45f;
+    [Tooltip("На сколько мусора меньше с каждой ночью: дальше снимать приходится чужие адреса и проклятия")]
+    [Range(0f, 0.2f)] public float trashDropPerNight = 0.07f;
+    [Tooltip("Ниже этого шанс мусора не падает от ночей (узел trash_cut режет дальше)")]
+    [Range(0f, 1f)] public float trashNightFloor = 0.3f;
     [Tooltip("Ниже этого шанс мусора не опустится, работа фамильярам останется")]
     [Range(0f, 1f)] public float minTrashChance = 0.15f;
 

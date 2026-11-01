@@ -11,6 +11,9 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
     [SerializeField] private GameObject liveRoot;
     [SerializeField] private RawImage screen;
     [SerializeField] private TMP_Text label;
+    [Tooltip("Марка адресата этой ленты, встаёт сразу после подписи. На общей ленте скрыта")]
+    [SerializeField] private Image stampIcon;
+    [SerializeField] private float stampGap = 10f;
     [SerializeField] private TMP_Text timecode;
 
     [Header("Закрытый слот")]
@@ -77,13 +80,44 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
         AddresseeInfo info = G.config.GetAddressee(belt.Addressee);
         string title = info != null ? info.displayName.ToUpper() : "ОБЩАЯ";
         label.text = $"CAM-{index + 1} · {title}";
+        ShowStamp(info);
 
         material.SetFloat(NoiseId, baseNoise * G.stats.camNoise);
         SetGlitch(0f);
     }
 
+    // Чтобы игрок знал, какая марка «своя» для этой ленты
+    private void ShowStamp(AddresseeInfo info)
+    {
+        if (stampIcon == null)
+            return;
+
+        bool show = info != null && info.stamp != null;
+        stampIcon.gameObject.SetActive(show);
+        if (!show)
+            return;
+
+        stampIcon.sprite = info.stamp;
+        stampIcon.preserveAspect = true;
+        // Подпись прижата влево, марку ставим сразу за последней буквой
+        label.ForceMeshUpdate();
+        RectTransform labelRect = label.rectTransform;
+        RectTransform icon = stampIcon.rectTransform;
+        float textEnd = labelRect.anchoredPosition.x + (0f - labelRect.pivot.x) * labelRect.rect.width
+                        + label.margin.x + label.GetRenderedValues(true).x;
+        // Середина самих букв, а не всей рамки подписи: текст прижат кверху
+        float textMiddle = labelRect.anchoredPosition.y + label.textBounds.center.y;
+        icon.anchorMin = labelRect.anchorMin;
+        icon.anchorMax = labelRect.anchorMax;
+        icon.pivot = new Vector2(0f, 0.5f);
+        icon.anchoredPosition = new Vector2(textEnd + stampGap, textMiddle);
+    }
+
     public void ShowLocked(int slotIndex, string hint)
     {
+        if (stampIcon != null)
+            stampIcon.gameObject.SetActive(false);
+
         if (belt != null)
             belt.Cam.OnOutputChanged -= HandleOutputChanged;
 
