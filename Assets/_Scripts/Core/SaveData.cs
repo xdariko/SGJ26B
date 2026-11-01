@@ -13,8 +13,9 @@ public static class SaveData
     // Меню попросило начать заново. Сбросить прогресс можно только в Game: там живут дерево и кошелёк
     public static bool NewGameRequested;
 
-    // Есть что продолжать: отыграна хотя бы одна смена
-    public static bool HasProgress => PlayerPrefs.GetInt(NightKey, 1) > 1;
+    // Есть что продолжать: отыграна хотя бы одна смена или уже показано вступление
+    // (иначе после выхода посреди первой смены нет ни «Новой игры», ни комикса)
+    public static bool HasProgress => PlayerPrefs.GetInt(NightKey, 1) > 1 || IntroSeen;
 
     public static bool IntroSeen
     {

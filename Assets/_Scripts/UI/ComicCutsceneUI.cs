@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -19,7 +20,10 @@ public class ComicCutsceneUI : MonoBehaviour
     {
         public string pageName;
 
-        [Tooltip("Кадры этой страницы. Они будут появляться друг за другом.")]
+        [Tooltip("Текст страницы (необязательно). Печатается побуквенно, потом сами появляются кадры")]
+        public TMP_Text text;
+
+        [Tooltip("Кадры этой страницы. Без текста — по клику друг за другом, с текстом — сами после текста.")]
         public Image[] frames;
     }
 
@@ -57,6 +61,12 @@ public class ComicCutsceneUI : MonoBehaviour
     [SerializeField] private float frameStartScale = 0.88f;
     [SerializeField] private float framePunchScale = 0.05f;
     [SerializeField] private Ease appearEase = Ease.OutBack;
+
+    [Header("Text")]
+    [Tooltip("Скорость печати текста страницы, букв в секунду")]
+    [SerializeField] private float charsPerSecond = 40f;
+    [Tooltip("Пауза между концом текста и появлением кадров")]
+    [SerializeField] private float delayAfterText = 0.3f;
 
     [Header("Pages Behaviour")]
     [Tooltip("Если true, при переходе на новую страницу кадры прошлой страницы выключаются.")]
@@ -108,6 +118,10 @@ public class ComicCutsceneUI : MonoBehaviour
     private Coroutine playRoutine;
     private Tween currentFrameTween;
     private Tween panelTween;
+
+    // Страница с текстом «доигрывается» сама: печать → кадры. Клик в это время показывает всё сразу
+    private Tween pageTween;
+    private bool pageAnimating;
 
     public bool IsPlaying => isPlaying;
 
@@ -209,10 +223,20 @@ public class ComicCutsceneUI : MonoBehaviour
         currentPageIndex = 0;
         currentFrameIndex = 0;
 
-        Image firstFrame = GetFrame(0, 0);
+        ComicPage firstPage = pages != null && pages.Length > 0 ? pages[0] : null;
+        if (firstPage != null && firstPage.text != null)
+        {
+            // Страница с текстом: показываем её целиком
+            ShowTextImmediate(firstPage.text);
+            ShowRemainingFramesImmediate(firstPage);
+        }
+        else
+        {
+            Image firstFrame = GetFrame(0, 0);
 
-        if (firstFrame != null)
-            ShowFrameImmediate(firstFrame);
+            if (firstFrame != null)
+                ShowFrameImmediate(firstFrame);
+        }
 
         preparedFirstFrameOnAwake = true;
         keepingLastFramePaused = false;
@@ -382,6 +406,13 @@ public class ComicCutsceneUI : MonoBehaviour
         if (!isPlaying)
             return;
 
+        // Текст ещё печатается или кадры ещё выезжают — первый клик показывает страницу целиком
+        if (pageAnimating)
+        {
+            FinishPageInstantly();
+            return;
+        }
+
         if (HasNextFrameOnCurrentPage())
         {
             ShowNextFrameOnCurrentPage();
@@ -478,7 +509,86 @@ public class ComicCutsceneUI : MonoBehaviour
 
         HidePageImmediate(currentPageIndex);
         AudioHub.Play(SfxId.PageTurn);
-        ShowNextFrameOnCurrentPage();
+
+        ComicPage page = pages[currentPageIndex];
+        if (page != null && page.text != null)
+            PlayPageText(page);
+        else
+            ShowNextFrameOnCurrentPage();
+    }
+
+    // Текст печатается побуквенно, затем кадры страницы появляются сами, один за другим
+    private void PlayPageText(ComicPage page)
+    {
+        TMP_Text text = page.text;
+        text.gameObject.SetActive(true);
+        text.maxVisibleCharacters = 0;
+        text.ForceMeshUpdate();
+        int total = text.textInfo.characterCount;
+
+        pageAnimating = true;
+        pageTween?.Kill();
+
+        Sequence seq = DOTween.Sequence().SetUpdate(true).SetLink(gameObject);
+        if (total > 0)
+            seq.Append(DOTween.To(() => 0, v => text.maxVisibleCharacters = v, total, total / Mathf.Max(1f, charsPerSecond))
+                .SetEase(Ease.Linear));
+
+        int frameCount = page.frames != null ? page.frames.Length : 0;
+        if (frameCount > 0)
+        {
+            seq.AppendInterval(delayAfterText);
+            for (int i = 0; i < frameCount; i++)
+            {
+                seq.AppendCallback(ShowNextFrameOnCurrentPage);
+                seq.AppendInterval(frameAppearDuration + 0.2f);
+            }
+        }
+
+        seq.OnComplete(() =>
+        {
+            pageAnimating = false;
+            pageTween = null;
+        });
+        pageTween = seq;
+    }
+
+    private void FinishPageInstantly()
+    {
+        pageTween?.Kill();
+        pageTween = null;
+        pageAnimating = false;
+
+        ComicPage page = GetCurrentPage();
+        if (page == null)
+            return;
+
+        if (page.text != null)
+            ShowTextImmediate(page.text);
+
+        // Кадр, который сейчас выезжает, и все оставшиеся — сразу на место
+        currentFrameTween?.Kill();
+        if (currentFrameIndex >= 0)
+            ShowFrameImmediate(GetFrame(currentPageIndex, currentFrameIndex));
+        ShowRemainingFramesImmediate(page);
+    }
+
+    private void ShowRemainingFramesImmediate(ComicPage page)
+    {
+        if (page.frames == null)
+            return;
+
+        while (currentFrameIndex < page.frames.Length - 1)
+        {
+            currentFrameIndex++;
+            ShowFrameImmediate(page.frames[currentFrameIndex]);
+        }
+    }
+
+    private static void ShowTextImmediate(TMP_Text text)
+    {
+        text.gameObject.SetActive(true);
+        text.maxVisibleCharacters = 99999;
     }
 
     private void ShowNextFrameOnCurrentPage()
@@ -733,7 +843,16 @@ public class ComicCutsceneUI : MonoBehaviour
 
         ComicPage page = pages[pageIndex];
 
-        if (page == null || page.frames == null)
+        if (page == null)
+            return;
+
+        if (page.text != null)
+        {
+            page.text.maxVisibleCharacters = 0;
+            page.text.gameObject.SetActive(false);
+        }
+
+        if (page.frames == null)
             return;
 
         foreach (Image frame in page.frames)
@@ -761,9 +880,12 @@ public class ComicCutsceneUI : MonoBehaviour
     {
         currentFrameTween?.Kill();
         panelTween?.Kill();
+        pageTween?.Kill();
 
         currentFrameTween = null;
         panelTween = null;
+        pageTween = null;
+        pageAnimating = false;
     }
 
     private void OnDisable()
