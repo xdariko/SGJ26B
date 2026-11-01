@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Fam_Fox
   m_EditorClassIdentifier: Assembly-CSharp::FamiliarDefinition
   displayName: "\u041B\u0438\u0441\u0430"
+  feminine: 1
   sprite: {fileID: 21300000, guid: 0c9b6d4f6a4ef3c4da978fe2803b2efb, type: 3}
   pounceClips: []
   unlockEffect: fam_bat

@@ -120,7 +120,7 @@ public class ShiftReportView : MonoBehaviour
         if (s.removedWrong > 0) lines.Add(Row("Снято зря", s.removedWrong.ToString()));
         if (s.ghosts > 0) lines.Add(Row("Пойманные призраки", s.ghosts.ToString()));
         foreach (KeyValuePair<FamiliarDefinition, int> pair in s.familiarCatches)
-            lines.Add(Row($"  {pair.Key.displayName} помог", pair.Value.ToString()));
+            lines.Add(Row($"  {pair.Key.displayName} {(pair.Key.feminine ? "помогла" : "помог")}", pair.Value.ToString()));
         lines.Add(Row("Лучшее комбо", $"{s.bestStreak} (x{s.bestMult:0.#})"));
 
         string complaints = s.coinsLost > 0 ? $"<color={badColor}>{s.complaints}  (-{s.coinsLost} {Icon(coinSprite, coinIconColor)})</color>" : "0";

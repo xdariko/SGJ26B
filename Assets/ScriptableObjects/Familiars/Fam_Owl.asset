@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Fam_Owl
   m_EditorClassIdentifier: Assembly-CSharp::FamiliarDefinition
   displayName: "\u0421\u043E\u0432\u0430"
+  feminine: 1
   sprite: {fileID: 21300000, guid: 0b7e27ad7538c434b8dd4485d365118a, type: 3}
   unlockEffect: fam_owl
   rateEffect: 

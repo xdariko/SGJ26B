@@ -6,6 +6,8 @@ using UnityEngine;
 public class FamiliarDefinition : ScriptableObject
 {
     public string displayName = "Чёрный кот";
+    [Tooltip("Женский род: в отчёте «Сова помогла», а не «помог»")]
+    public bool feminine;
     public Sprite sprite;
     [Tooltip("Звук прыжка (мяу, карр...). Пусто = общий звук из SoundBank")]
     public AudioClip[] pounceClips;
