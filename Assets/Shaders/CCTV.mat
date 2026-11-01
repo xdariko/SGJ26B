@@ -38,6 +38,7 @@ Material:
     - _RollBar: 0.15
     - _ScanlineCount: 180
     - _Scanlines: 0.2
+    - _Static: 0
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -45,7 +46,7 @@ Material:
     - _StencilWriteMask: 255
     - _Vignette: 0.9
     m_Colors:
-    - _CamTint: {r: 1, g: 0.82, b: 0.6, a: 1}
+    - _CamTint: {r: 0.93, g: 0.88, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -9,6 +9,8 @@ public class MainMenuView : MonoBehaviour
     [SerializeField] private TMP_Text playLabel;
     [SerializeField] private Button newGameButton;
     [SerializeField] private TMP_Text newGameLabel;
+    [Tooltip("В WebGL скрывается: браузер не даёт игре закрыть вкладку")]
+    [SerializeField] private Button exitButton;
 
     [Header("Настройки звука")]
     [SerializeField] private Button settingsButton;
@@ -18,9 +20,11 @@ public class MainMenuView : MonoBehaviour
     [Header("Автор")]
     [SerializeField] private TMP_Text authorText;
     [SerializeField] private string authorName = "xdariko";
+
+    [Header("Окно ссылок")]
     [SerializeField] private Button linkButton;
-    [Tooltip("Пусто = кнопка ссылки скрыта")]
-    [SerializeField] private string linkUrl = "";
+    [SerializeField] private GameObject linksPanel;
+    [SerializeField] private Button linksBackButton;
 
     [Tooltip("Сколько секунд кнопка «Новая игра» ждёт второго нажатия")]
     [SerializeField] private float confirmTime = 3f;
@@ -34,6 +38,8 @@ public class MainMenuView : MonoBehaviour
         newGameButton.gameObject.SetActive(hasProgress);
         newGameLabel.text = "Новая игра";
         settingsPanel.SetActive(false);
+        if (linksPanel != null)
+            linksPanel.SetActive(false);
         if (authorText != null)
             authorText.text = authorName;
 
@@ -42,11 +48,17 @@ public class MainMenuView : MonoBehaviour
         settingsButton.onClick.AddListener(ToggleSettings);
         if (settingsCloseButton != null)
             settingsCloseButton.onClick.AddListener(ToggleSettings);
-        if (linkButton != null)
+        if (exitButton != null)
         {
-            linkButton.gameObject.SetActive(!string.IsNullOrEmpty(linkUrl));
-            linkButton.onClick.AddListener(OnLinkClicked);
+#if UNITY_WEBGL && !UNITY_EDITOR
+            exitButton.gameObject.SetActive(false);
+#endif
+            exitButton.onClick.AddListener(OnExitClicked);
         }
+        if (linkButton != null)
+            linkButton.onClick.AddListener(ToggleLinks);
+        if (linksBackButton != null)
+            linksBackButton.onClick.AddListener(ToggleLinks);
     }
 
     private void OnDestroy()
@@ -56,8 +68,12 @@ public class MainMenuView : MonoBehaviour
         settingsButton.onClick.RemoveListener(ToggleSettings);
         if (settingsCloseButton != null)
             settingsCloseButton.onClick.RemoveListener(ToggleSettings);
+        if (exitButton != null)
+            exitButton.onClick.RemoveListener(OnExitClicked);
         if (linkButton != null)
-            linkButton.onClick.RemoveListener(OnLinkClicked);
+            linkButton.onClick.RemoveListener(ToggleLinks);
+        if (linksBackButton != null)
+            linksBackButton.onClick.RemoveListener(ToggleLinks);
     }
 
     private void Update()
@@ -93,8 +109,18 @@ public class MainMenuView : MonoBehaviour
         settingsPanel.SetActive(!settingsPanel.activeSelf);
     }
 
-    private void OnLinkClicked()
+    private void OnExitClicked()
     {
-        Application.OpenURL(linkUrl);
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    private void ToggleLinks()
+    {
+        if (linksPanel != null)
+            linksPanel.SetActive(!linksPanel.activeSelf);
     }
 }

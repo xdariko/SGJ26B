@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridSkillTree.CurrencyDefinition
   id: coin
   displayName: "\u041C\u0435\u0434\u044F\u043A\u0438"
-  icon: {fileID: 21300000, guid: 373d82f5088322948a3de7787bb5dcae, type: 3}
+  icon: {fileID: 1747585333518746215, guid: bdb9f32df843301428f796fc4faa6214, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}

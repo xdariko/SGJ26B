@@ -27,7 +27,22 @@ public class ShiftReportView : MonoBehaviour
     [SerializeField] private string hintColor = "#6B3FA0";
     [SerializeField] private string mutedColor = "#6E5A48";
 
+    [Header("Иконки валют (имена спрайтов в TMP Sprite Asset у текста)")]
+    [SerializeField] private string coinSprite = "coin";
+    [SerializeField] private string ectoSprite = "ecto";
+    [Tooltip("Цвет иконок на бумаге отчёта: пастельные иконки из HUD на светлом бланке не видно")]
+    [SerializeField] private string coinIconColor = "#A8873E";
+    [SerializeField] private string ectoIconColor = "#4F86AD";
+
     private Sequence reveal;
+    // Где бумага стоит в сцене: анимация въезжает именно сюда
+    private Vector2 paperHome;
+
+    private void Awake()
+    {
+        if (paper != null)
+            paperHome = paper.anchoredPosition;
+    }
 
     private void Start()
     {
@@ -54,7 +69,7 @@ public class ShiftReportView : MonoBehaviour
     private void Show(ShiftScore s)
     {
         root.SetActive(true);
-        titleText.text = $"ОТЧЁТ · НОЧЬ {s.night}";
+        titleText.text = "ОТЧЁТ";
         bodyText.text = string.Empty;
         totalText.text = string.Empty;
         stamp.gameObject.SetActive(false);
@@ -65,8 +80,8 @@ public class ShiftReportView : MonoBehaviour
 
         if (paper != null)
         {
-            paper.anchoredPosition = new Vector2(0f, -80f);
-            reveal.Append(paper.DOAnchorPosY(0f, 0.3f).SetEase(Ease.OutBack));
+            paper.anchoredPosition = paperHome + new Vector2(0f, -80f);
+            reveal.Append(paper.DOAnchorPos(paperHome, 0.3f).SetEase(Ease.OutBack));
         }
 
         foreach (string line in BuildLines(s))
@@ -108,7 +123,7 @@ public class ShiftReportView : MonoBehaviour
             lines.Add(Row($"  {pair.Key.displayName} помог", pair.Value.ToString()));
         lines.Add(Row("Лучшее комбо", $"{s.bestStreak} (x{s.bestMult:0.#})"));
 
-        string complaints = s.coinsLost > 0 ? $"<color={badColor}>{s.complaints}  (-{s.coinsLost})</color>" : "0";
+        string complaints = s.coinsLost > 0 ? $"<color={badColor}>{s.complaints}  (-{s.coinsLost} {Icon(coinSprite, coinIconColor)})</color>" : "0";
         lines.Add(Row("Жалобы", complaints));
 
         // Одинаковые жалобы склеиваем: «Мумия недовольна... ×12»
@@ -139,10 +154,13 @@ public class ShiftReportView : MonoBehaviour
         return lines;
     }
 
-    private static string FormatTotal(int coins, int ecto)
+    // Иконка валюты прямо в строке, в своих цветах (не красится цветом текста)
+    private static string Icon(string spriteName, string color) => $"<sprite name=\"{spriteName}\" color={color}>";
+
+    private string FormatTotal(int coins, int ecto)
     {
-        string text = $"ИТОГ: {coins:+#;-#;0} медяков";
-        if (ecto > 0) text += $", +{ecto} эктоплазмы";
+        string text = $"ИТОГ: {coins:+#;-#;0} {Icon(coinSprite, coinIconColor)}";
+        if (ecto > 0) text += $"   +{ecto} {Icon(ectoSprite, ectoIconColor)}";
         return text;
     }
 

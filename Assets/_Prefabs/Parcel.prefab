@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4215999541952237310}
   - component: {fileID: 8673994398157167551}
   m_Layer: 11
-  m_Name: Mimic
+  m_Name: MimicAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,9 +79,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: -2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: a66a38f9f5100a34580fa5b2d619193e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2cd4816b57655544b8f4aa3a8a0a836c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -237,8 +237,17 @@ MonoBehaviour:
   body: {fileID: 7278818763366584308}
   stamp: {fileID: 8174581165197477478}
   aura: {fileID: 1226621370508792669}
-  ghost: {fileID: 7564751796496353794}
-  mimic: {fileID: 8673994398157167551}
+  ghostAura: {fileID: 7564751796496353794}
+  mimicAura: {fileID: 8673994398157167551}
+  mimicColor: {r: 0.86, g: 0.18, b: 0.16, a: 0.9}
+  mimicSize: 1.7
+  mimicBeatScale: 1.15
+  mimicBeatPause: 0.55
+  ghostColor: {r: 0.62, g: 0.95, b: 0.9, a: 0.75}
+  ghostSize: 1.9
+  ghostBreathTime: 1.4
+  ghostJitter: 0.035
+  ghostJitterSpeed: 18
   removeOffset: {x: 0.4, y: -1.6}
   removeHop: 0.9
   removeDuration: 0.35
@@ -453,7 +462,7 @@ GameObject:
   - component: {fileID: 5073035982497582857}
   - component: {fileID: 7564751796496353794}
   m_Layer: 11
-  m_Name: Ghost
+  m_Name: GhostAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -521,9 +530,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: -3
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 1aaf59e53c62f2f478316d72b7309791, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2cd4816b57655544b8f4aa3a8a0a836c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
