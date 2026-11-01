@@ -26,7 +26,28 @@ public class SoundBank : ScriptableObject
         public MusicId id;
         [Tooltip("Пусто = процедурная заглушка")]
         public AudioClip clip;
+        [Tooltip("Ещё треки для этого места: при каждом запуске выбирается случайный из clip + этих")]
+        public AudioClip[] alternates;
         [Range(0f, 1.5f)] public float volume = 1f;
+
+        public bool HasClip => clip != null || (alternates != null && alternates.Length > 0);
+
+        // Случайный трек, но не тот же, что в прошлый раз (если есть из чего выбрать)
+        public AudioClip Pick(AudioClip previous)
+        {
+            var all = new List<AudioClip>();
+            if (clip != null)
+                all.Add(clip);
+            if (alternates != null)
+                foreach (AudioClip c in alternates)
+                    if (c != null)
+                        all.Add(c);
+            if (all.Count == 0)
+                return null;
+            if (all.Count > 1 && previous != null)
+                all.Remove(previous);
+            return all[UnityEngine.Random.Range(0, all.Count)];
+        }
     }
 
     public List<SfxEntry> sfx = new();
@@ -72,6 +93,7 @@ public class SoundBank : ScriptableObject
         { SfxId.PageTurn, (0.6f, 0.1f, 0.1f) },
         { SfxId.Splash, (0.7f, 0f, 1f) },
         { SfxId.BookOpen, (0.6f, 0.05f, 0.2f) },
+        { SfxId.UiHover, (0.3f, 0.06f, 0.06f) },
     };
 
     private Dictionary<SfxId, SfxEntry> sfxMap;

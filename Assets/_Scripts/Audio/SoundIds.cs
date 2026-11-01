@@ -17,7 +17,8 @@ public enum SfxId
     Buy,             // покупка узла в книге
     PageTurn,        // книга, комикс
     Splash,          // логотип на старте
-    BookOpen
+    BookOpen,
+    UiHover          // курсор навели на кнопку
 }
 
 public enum MusicId

@@ -98,22 +98,33 @@ MonoBehaviour:
     volume: 0.6
     pitchJitter: 0.05
     cooldown: 0.2
+  - id: 17
+    clips: []
+    volume: 0.3
+    pitchJitter: 0.06
+    cooldown: 0.06
   music:
   - id: 1
-    clip: {fileID: 0}
-    volume: 1
+    clip: {fileID: 8300000, guid: b38b296287072c94d96defb4fb013678, type: 3}
+    alternates: []
+    volume: 0.6
   - id: 2
-    clip: {fileID: 0}
-    volume: 1
+    clip: {fileID: 8300000, guid: 0660003d49febe64386f361a1ba113ce, type: 3}
+    alternates:
+    - {fileID: 8300000, guid: 2617338873c618e4493bb40e70a99c34, type: 3}
+    volume: 0.6
   - id: 3
-    clip: {fileID: 0}
-    volume: 1
+    clip: {fileID: 8300000, guid: b7943f12882e0f442b7b9ad9a35f53b3, type: 3}
+    alternates: []
+    volume: 0.6
   - id: 4
-    clip: {fileID: 0}
-    volume: 1
+    clip: {fileID: 8300000, guid: 5ecdecf66867957418aa85c2d782ac83, type: 3}
+    alternates: []
+    volume: 0.6
   - id: 5
-    clip: {fileID: 0}
-    volume: 1
+    clip: {fileID: 8300000, guid: d253f50272a0c244aa40d60ad2dbe9c4, type: 3}
+    alternates: []
+    volume: 0.6
   musicFade: 1.2
   proceduralSfxVolume: 0.8
   proceduralMusicVolume: 0.55

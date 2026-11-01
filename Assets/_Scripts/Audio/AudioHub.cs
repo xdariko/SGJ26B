@@ -22,6 +22,9 @@ public class AudioHub : MonoBehaviour
     private readonly Dictionary<SfxId, AudioClip> proceduralSfx = new();
     private readonly Dictionary<MusicId, AudioClip> proceduralMusic = new();
     private readonly List<RaycastResult> uiHits = new();
+    private readonly Dictionary<MusicId, AudioClip> lastPicked = new();
+    private Selectable hovered;
+    private Vector2 lastMousePos = new(-1f, -1f);
 
     private AudioSource musicA, musicB;
     private AudioSource musicCurrent;
@@ -73,7 +76,7 @@ public class AudioHub : MonoBehaviour
         foreach (MusicId id in new[] { MusicId.Menu, MusicId.Shift, MusicId.Book, MusicId.Final, MusicId.Ending })
         {
             SoundBank.MusicEntry e = Bank.GetMusic(id);
-            if ((e == null || e.clip == null) && !proceduralMusic.ContainsKey(id))
+            if ((e == null || !e.HasClip) && !proceduralMusic.ContainsKey(id))
                 proceduralMusic[id] = ProceduralAudio.MakeMusic(id);
             yield return null;
         }
@@ -83,6 +86,14 @@ public class AudioHub : MonoBehaviour
             if (e.clips == null || e.clips.Length == 0)
                 GetProceduralSfx(id);
         }
+    }
+
+    // Первая сцена. В редакторе с выключенной перезагрузкой сцены (Enter Play Mode Options) sceneLoaded для неё
+    // не приходит — без этого вызова при запуске прямо из Game не было бы ни музыки, ни GameAudio.
+    // Повторный вызов безопасен: та же музыка не перезапускается, GameAudio не дублируется.
+    private void Start()
+    {
+        HandleSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
     private void OnDestroy()
@@ -230,9 +241,11 @@ public class AudioHub : MonoBehaviour
         if (id != MusicId.None)
         {
             SoundBank.MusicEntry e = Bank.GetMusic(id);
-            if (e != null && e.clip != null)
+            if (e != null && e.HasClip)
             {
-                clip = e.clip;
+                lastPicked.TryGetValue(id, out AudioClip prev);
+                clip = e.Pick(prev);
+                lastPicked[id] = clip;
                 vol = e.volume;
             }
             else
@@ -268,6 +281,41 @@ public class AudioHub : MonoBehaviour
     {
         UpdateMusicFade();
         DetectUiClick();
+        DetectUiHover();
+    }
+
+    // ---------- Наведение на кнопки ----------
+    // Тоже глобально: любой Selectable, на который только что навели курсор. Рейкаст — только когда мышь сдвинулась.
+    private void DetectUiHover()
+    {
+        Mouse mouse = Mouse.current;
+        if (mouse == null || EventSystem.current == null)
+            return;
+
+        Vector2 pos = mouse.position.ReadValue();
+        if ((pos - lastMousePos).sqrMagnitude < 0.25f)
+            return;
+        lastMousePos = pos;
+
+        Selectable now = SelectableUnder(pos);
+        if (now == hovered)
+            return;
+        hovered = now;
+
+        // Ползунки не «звенят» при наведении — только кнопки и переключатели.
+        // Узлы книги откликаются всегда: они качаются и показывают подсказку, даже когда купить пока нельзя.
+        if (now == null || !now.enabled || now is Slider || now is Scrollbar)
+            return;
+        if (now.IsInteractable() || now.GetComponent<UIHoverWobble>() != null)
+            Play(SfxId.UiHover);
+    }
+
+    private Selectable SelectableUnder(Vector2 pos)
+    {
+        var data = new PointerEventData(EventSystem.current) { position = pos };
+        uiHits.Clear();
+        EventSystem.current.RaycastAll(data, uiHits);
+        return uiHits.Count > 0 ? uiHits[0].gameObject.GetComponentInParent<Selectable>() : null;
     }
 
     private void UpdateMusicFade()
@@ -300,13 +348,7 @@ public class AudioHub : MonoBehaviour
         if (mouse == null || !mouse.leftButton.wasPressedThisFrame || EventSystem.current == null)
             return;
 
-        var data = new PointerEventData(EventSystem.current) { position = mouse.position.ReadValue() };
-        uiHits.Clear();
-        EventSystem.current.RaycastAll(data, uiHits);
-        if (uiHits.Count == 0)
-            return;
-
-        Selectable sel = uiHits[0].gameObject.GetComponentInParent<Selectable>();
+        Selectable sel = SelectableUnder(mouse.position.ReadValue());
         if (sel != null && sel.IsInteractable() && sel.enabled)
             Play(SfxId.UiClick);
     }

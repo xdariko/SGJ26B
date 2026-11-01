@@ -17,29 +17,58 @@ public static class ProceduralAudio
     public static AudioClip MakeSfx(SfxId id)
     {
         rng = new System.Random(1031 + (int)id);
-        float[] d = id switch
+        // Настроение — уютный хеллоуинский lo-fi: мягкие щипки (калимба/шкатулка), дерево, бумага, колокола.
+        // Мелодические звуки в ля-минорной пентатонике, чтобы не спорить с музыкой. В конце всё «утепляем» фильтром.
+        (float[] d, float warmth) = id switch
         {
-            SfxId.UiClick => Click(),
-            SfxId.Snatch => Snatch(),
-            SfxId.WrongRemove => Bonk(),
-            SfxId.Deliver => Ding(),
-            SfxId.Complaint => Buzzer(),
-            SfxId.GhostRelease => Ghost(),
-            SfxId.Ecto => Sparkle(),
-            SfxId.FamiliarPounce => Whoosh(0.22f, 600f, 3500f),
-            SfxId.NightStart => Bell(196f, 2.2f, 1),
-            SfxId.ShiftEnd => Bell(147f, 1.1f, 3),
-            SfxId.ClockTick => Tick(),
-            SfxId.ReportLine => Typewriter(),
-            SfxId.Stamp => Stamp(),
-            SfxId.Buy => Chime(),
-            SfxId.PageTurn => Whoosh(0.3f, 300f, 2500f, 0.6f),
-            SfxId.BookOpen => Whoosh(0.4f, 200f, 1800f, 0.5f),
-            SfxId.Splash => SplashSting(),
-            _ => Click()
+            SfxId.UiClick => (Click(), 4500f),
+            SfxId.UiHover => (Hover(), 6000f),
+            SfxId.Snatch => (Snatch(), 7000f),
+            SfxId.WrongRemove => (Bonk(), 2600f),
+            SfxId.Deliver => (Ding(), 7000f),
+            SfxId.Complaint => (Wah(), 1800f),
+            SfxId.GhostRelease => (Ghost(), 4000f),
+            SfxId.Ecto => (Sparkle(), 8000f),
+            SfxId.FamiliarPounce => (Whoosh(0.22f, 500f, 2600f, 0.6f), 5000f),
+            SfxId.NightStart => (Bell(220f, 2.2f, 1), 5000f),
+            SfxId.ShiftEnd => (Bell(164.8f, 1.0f, 3), 5000f),
+            SfxId.ClockTick => (Tick(), 5000f),
+            SfxId.ReportLine => (Typewriter(), 6000f),
+            SfxId.Stamp => (Stamp(), 3500f),
+            SfxId.Buy => (Chime(), 8000f),
+            SfxId.PageTurn => (Whoosh(0.3f, 400f, 2200f, 0.5f), 5000f),
+            SfxId.BookOpen => (Whoosh(0.45f, 250f, 1500f, 0.45f), 4500f),
+            SfxId.Splash => (SplashSting(), 6000f),
+            _ => (Click(), 4500f)
         };
+        Warm(d, SfxRate, warmth);
         Normalize(d, 0.9f);
         return ToClip("sfx_" + id, d, SfxRate);
+    }
+
+    // Ноты ля-минорной пентатоники
+    private const float A4 = 440f, C5 = 523.25f, D5 = 587.33f, E5 = 659.25f, G5 = 783.99f,
+        A5 = 880f, C6 = 1046.5f, D6 = 1174.66f, E6 = 1318.51f, A6 = 1760f;
+
+    // Однополюсный фильтр низких частот + мягкое насыщение: убирает «цифровой» визг, звук теплее
+    private static void Warm(float[] d, int rate, float cutoff)
+    {
+        float a = 1f - Mathf.Exp(-TwoPi * cutoff / rate);
+        float lp = 0f;
+        for (int i = 0; i < d.Length; i++)
+        {
+            lp += a * (d[i] - lp);
+            d[i] = (float)Math.Tanh(lp * 1.4f) / 1.4f;
+        }
+    }
+
+    // Щипок калимбы/шкатулки: основной тон + негармонический обертон, который гаснет быстрее, + тихий «тик» удара
+    private static void Pluck(float[] d, float start, float f, float amp, float decay = 9f)
+    {
+        float dur = Mathf.Min(1.2f, 6f / decay + 0.05f);
+        AddTone(d, SfxRate, start, dur, f, f, amp, 0, 0.002f, decay);
+        AddTone(d, SfxRate, start, dur * 0.5f, f * 2.76f, f * 2.76f, amp * 0.25f, 0, 0.001f, decay * 3f);
+        AddNoise(d, SfxRate, start, 0.008f, 4000f, 2500f, amp * 0.12f, 0.0005f, 300f);
     }
 
     private static float[] Buf(float seconds) => new float[Mathf.CeilToInt(seconds * SfxRate)];
@@ -111,67 +140,85 @@ public static class ProceduralAudio
                 d[i] += d[i - ds] * feedback;
     }
 
+    // Деревянный «ток» — как кнопка старого радиоприёмника
     private static float[] Click()
     {
-        float[] d = Buf(0.05f);
-        AddTone(d, SfxRate, 0, 0.04f, 1500f, 900f, 0.6f, 1, 0.001f, 90f);
-        AddNoise(d, SfxRate, 0, 0.015f, 5000f, 3000f, 0.4f, 0.0005f, 200f);
+        float[] d = Buf(0.08f);
+        AddTone(d, SfxRate, 0, 0.06f, 720f, 520f, 0.6f, 1, 0.001f, 70f);
+        AddTone(d, SfxRate, 0, 0.03f, 1450f, 1300f, 0.15f, 0, 0.001f, 120f);
+        AddNoise(d, SfxRate, 0, 0.012f, 2500f, 1500f, 0.2f, 0.0005f, 250f);
         return d;
     }
 
-    private static float[] Snatch()
+    // Наведение: еле слышная стеклянная капля, не утомляет при частом повторе
+    private static float[] Hover()
     {
         float[] d = Buf(0.16f);
-        AddTone(d, SfxRate, 0, 0.12f, 420f, 1100f, 0.7f, 1, 0.002f, 18f);
-        AddTone(d, SfxRate, 0.03f, 0.1f, 840f, 1650f, 0.25f, 0, 0.002f, 25f);
-        AddNoise(d, SfxRate, 0, 0.06f, 2000f, 6000f, 0.25f, 0.001f, 40f, true);
+        AddTone(d, SfxRate, 0, 0.14f, E6, E6 * 1.01f, 0.4f, 0, 0.003f, 32f);
+        AddTone(d, SfxRate, 0, 0.06f, E6 * 2f, E6 * 2f, 0.06f, 0, 0.002f, 60f);
         return d;
     }
 
+    // Верно сняла посылку: два щипка калимбы вверх (+ тон растёт с комбо)
+    private static float[] Snatch()
+    {
+        float[] d = Buf(0.5f);
+        AddTone(d, SfxRate, 0, 0.05f, 300f, 700f, 0.25f, 0, 0.001f, 40f); // мягкий «поп»
+        Pluck(d, 0.0f, A5, 0.5f, 14f);
+        Pluck(d, 0.06f, E6, 0.4f, 14f);
+        return d;
+    }
+
+    // Сняла не то: глухие два шага вниз, без резкости
     private static float[] Bonk()
     {
-        float[] d = Buf(0.35f);
-        AddTone(d, SfxRate, 0, 0.14f, 220f, 180f, 0.5f, 3, 0.002f, 12f);
-        AddTone(d, SfxRate, 0.15f, 0.18f, 165f, 120f, 0.5f, 3, 0.002f, 10f);
+        float[] d = Buf(0.45f);
+        AddTone(d, SfxRate, 0, 0.18f, 330f, 315f, 0.55f, 1, 0.003f, 11f);
+        AddTone(d, SfxRate, 0.14f, 0.28f, 262f, 240f, 0.55f, 1, 0.003f, 9f);
+        AddNoise(d, SfxRate, 0, 0.02f, 900f, 500f, 0.2f, 0.001f, 120f);
         return d;
     }
 
+    // Доставлено: одна тихая нота шкатулки (звучит часто — должна быть ненавязчивой)
     private static float[] Ding()
     {
-        float[] d = Buf(0.35f);
-        AddTone(d, SfxRate, 0, 0.35f, 1318f, 1318f, 0.5f, 0, 0.002f, 12f);
-        AddTone(d, SfxRate, 0.05f, 0.3f, 1760f, 1760f, 0.4f, 0, 0.002f, 14f);
+        float[] d = Buf(0.6f);
+        Pluck(d, 0, C6, 0.5f, 8f);
         return d;
     }
 
-    private static float[] Buzzer()
+    // Жалоба: «уа-уа» приглушённой трубы вниз + лёгкие помехи монитора
+    private static float[] Wah()
     {
-        float[] d = Buf(0.55f);
-        AddTone(d, SfxRate, 0, 0.5f, 110f, 104f, 0.55f, 2, 0.005f, 2.5f, 9f, 0.04f);
-        AddTone(d, SfxRate, 0, 0.5f, 117f, 110f, 0.4f, 3, 0.005f, 2.5f);
-        // Помехи монитора
-        AddNoise(d, SfxRate, 0, 0.5f, 3000f, 1500f, 0.35f, 0.003f, 3f);
+        float[] d = Buf(0.8f);
+        AddTone(d, SfxRate, 0, 0.32f, 233f, 220f, 0.5f, 2, 0.02f, 3f, 6f, 0.02f);
+        AddTone(d, SfxRate, 0, 0.32f, 234.5f, 221f, 0.3f, 1, 0.02f, 3f);
+        AddTone(d, SfxRate, 0.3f, 0.48f, 196f, 165f, 0.5f, 2, 0.02f, 3.5f, 6f, 0.03f);
+        AddTone(d, SfxRate, 0.3f, 0.48f, 197f, 166f, 0.3f, 1, 0.02f, 3.5f);
+        AddNoise(d, SfxRate, 0, 0.7f, 2200f, 1200f, 0.06f, 0.01f, 3f);
         return d;
     }
 
+    // Призрак улетел: воздушное «у-у» вверх с эхом
     private static float[] Ghost()
     {
-        float[] d = Buf(1.3f);
-        AddTone(d, SfxRate, 0, 0.9f, 520f, 880f, 0.45f, 0, 0.12f, 2.5f, 6f, 0.03f);
-        AddTone(d, SfxRate, 0.05f, 0.85f, 780f, 1320f, 0.15f, 0, 0.15f, 3f, 5.5f, 0.03f);
-        AddNoise(d, SfxRate, 0, 0.8f, 800f, 3000f, 0.12f, 0.2f, 3f);
-        Echo(d, SfxRate, 0.13f, 0.35f, 2);
+        float[] d = Buf(1.5f);
+        AddTone(d, SfxRate, 0, 1.0f, A4, A5, 0.4f, 0, 0.15f, 2.2f, 5f, 0.025f);
+        AddTone(d, SfxRate, 0.05f, 0.9f, E5, E6, 0.12f, 0, 0.18f, 2.8f, 5.5f, 0.025f);
+        AddNoise(d, SfxRate, 0, 0.9f, 600f, 2400f, 0.1f, 0.25f, 2.5f);
+        Echo(d, SfxRate, 0.16f, 0.35f, 2);
         return d;
     }
 
+    // Эктоплазма: короткое волшебное арпеджио челесты
     private static float[] Sparkle()
     {
-        float[] d = Buf(0.6f);
-        float[] notes = { 1046.5f, 1318.5f, 1568f, 2093f };
+        float[] d = Buf(0.9f);
+        float[] notes = { A5, C6, E6, A6 };
         for (int i = 0; i < notes.Length; i++)
-            AddTone(d, SfxRate, i * 0.05f, 0.3f, notes[i], notes[i], 0.35f, 0, 0.002f, 12f);
-        AddNoise(d, SfxRate, 0, 0.3f, 6000f, 9000f, 0.06f, 0.01f, 8f, true);
-        Echo(d, SfxRate, 0.09f, 0.3f, 1);
+            Pluck(d, i * 0.055f, notes[i], 0.35f, 10f);
+        AddNoise(d, SfxRate, 0, 0.35f, 6000f, 8000f, 0.03f, 0.02f, 7f, true);
+        Echo(d, SfxRate, 0.12f, 0.3f, 2);
         return d;
     }
 
@@ -207,19 +254,22 @@ public static class ProceduralAudio
         return d;
     }
 
+    // Тиканье старых часов: деревянное, без писка
     private static float[] Tick()
     {
-        float[] d = Buf(0.08f);
-        AddTone(d, SfxRate, 0, 0.06f, 1800f, 1500f, 0.5f, 0, 0.0005f, 70f);
-        AddNoise(d, SfxRate, 0, 0.02f, 4000f, 2000f, 0.3f, 0.0005f, 150f);
+        float[] d = Buf(0.1f);
+        AddTone(d, SfxRate, 0, 0.07f, 1150f, 980f, 0.45f, 1, 0.0005f, 75f);
+        AddTone(d, SfxRate, 0, 0.05f, 380f, 300f, 0.25f, 0, 0.0005f, 80f);
+        AddNoise(d, SfxRate, 0, 0.015f, 3000f, 1500f, 0.2f, 0.0005f, 200f);
         return d;
     }
 
+    // Клавиша печатной машинки — мягче, ниже
     private static float[] Typewriter()
     {
-        float[] d = Buf(0.07f);
-        AddNoise(d, SfxRate, 0, 0.04f, 2500f, 1500f, 0.7f, 0.0005f, 90f, true);
-        AddTone(d, SfxRate, 0, 0.03f, 300f, 200f, 0.4f, 0, 0.0005f, 100f);
+        float[] d = Buf(0.08f);
+        AddNoise(d, SfxRate, 0, 0.035f, 2200f, 1200f, 0.5f, 0.0005f, 110f, true);
+        AddTone(d, SfxRate, 0, 0.04f, 260f, 180f, 0.45f, 0, 0.0005f, 90f);
         return d;
     }
 
@@ -231,17 +281,16 @@ public static class ProceduralAudio
         return d;
     }
 
+    // Покупка в книге: заклинание — пентатоника вверх на калимбе + мерцание
     private static float[] Chime()
     {
-        float[] d = Buf(1.0f);
-        float[] notes = { 587.3f, 740f, 880f, 1174.7f, 1480f };
+        float[] d = Buf(1.4f);
+        float[] notes = { E5, G5, A5, C6, E6 };
         for (int i = 0; i < notes.Length; i++)
-        {
-            AddTone(d, SfxRate, i * 0.06f, 0.6f, notes[i], notes[i], 0.3f, 1, 0.002f, 6f);
-            AddTone(d, SfxRate, i * 0.06f, 0.5f, notes[i] * 2f, notes[i] * 2f, 0.08f, 0, 0.002f, 8f);
-        }
-        AddNoise(d, SfxRate, 0.1f, 0.6f, 7000f, 9000f, 0.05f, 0.05f, 4f, true);
-        Echo(d, SfxRate, 0.11f, 0.3f, 2);
+            Pluck(d, i * 0.07f, notes[i], 0.4f, 6f);
+        AddTone(d, SfxRate, 0.3f, 0.9f, A4, A4, 0.15f, 1, 0.05f, 3f); // тёплая подложка снизу
+        AddNoise(d, SfxRate, 0.15f, 0.7f, 6000f, 8000f, 0.03f, 0.08f, 4f, true);
+        Echo(d, SfxRate, 0.14f, 0.3f, 2);
         return d;
     }
 
