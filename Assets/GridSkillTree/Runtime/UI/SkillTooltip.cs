@@ -95,7 +95,7 @@ namespace GridSkillTree
                 titleText.text = string.IsNullOrWhiteSpace(currentNode.title) ? currentNode.id : currentNode.title;
 
             if (descriptionText != null)
-                descriptionText.text = currentNode.description;
+                descriptionText.text = currentNode.GetDescription(level);
 
             if (levelText != null)
                 levelText.text = string.Format(levelFormat, level, currentNode.maxLevel);

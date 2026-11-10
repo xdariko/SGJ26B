@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 804e598acec6cc2428517dcb72613087
+guid: d95dc89f8096b1646beb452c764a2e93
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8396669563913589684
-    second: fam_speed_0
+      213: -6221176513961526961
+    second: node_glow_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fam_speed_0
+      name: node_glow_0
       rect:
         serializedVersion: 2
-        x: 25
-        y: 27
-        width: 201
-        height: 205
+        x: 9
+        y: 9
+        width: 238
+        height: 238
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c4ca892e489097b80800000000000000
-      internalID: -8396669563913589684
+      spriteID: f49f158fbe0f9a9a0800000000000000
+      internalID: -6221176513961526961
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      fam_speed_0: -8396669563913589684
+      node_glow_0: -6221176513961526961
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

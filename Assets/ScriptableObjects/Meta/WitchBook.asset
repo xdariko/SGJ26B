@@ -17,9 +17,8 @@ MonoBehaviour:
   - id: night_shift
     title: "\u041D\u043E\u0447\u043D\u0430\u044F \u0441\u043C\u0435\u043D\u0430"
     description: "\u0422\u044B \u043D\u043E\u0447\u043D\u043E\u0439 \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0449\u0438\u043A
-      \u0422\u044B\u043A\u0432\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0447\u0442\u044B.
-      \u041E\u0442\u0441\u044E\u0434\u0430 \u0440\u0430\u0441\u0442\u0451\u0442 \u0432\u0441\u0451
-      \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435."
+      <color=#FFE08A>\u0422\u044B\u043A\u0432\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0447\u0442\u044B</color>.\n\u041E\u0442\u0441\u044E\u0434\u0430
+      \u0440\u0430\u0441\u0442\u0451\u0442 \u0432\u0441\u0451 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435."
     gridPosition: {x: 0, y: 0}
     icon: {fileID: 21300000, guid: 2e711caff84bb4644aaf36557b5134b6, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -30,11 +29,11 @@ MonoBehaviour:
   - id: cam_carve
     title: "\u0420\u043E\u0432\u043D\u0430\u044F \u0440\u0435\u0437\u044C\u0431\u0430"
     description: "\u041A\u0430\u043C\u0435\u0440\u0430 \u0440\u0430\u0437\u043B\u0438\u0447\u0430\u0435\u0442
-      \u0446\u0432\u0435\u0442\u0430 \u043F\u0435\u0447\u0430\u0442\u0435\u0439.\n\u041B\u0438\u043D\u0438\u044F
-      1 \u0441\u0442\u0430\u043D\u0435\u0442 \u043B\u0438\u043D\u0438\u0435\u0439
-      \xAB\u0412\u0430\u043C\u043F\u0438\u0440\u0430\u043C\xBB, \u0447\u0443\u0436\u0438\u0435
-      \u0430\u0434\u0440\u0435\u0441\u0430 \u043F\u0440\u0438\u0434\u0451\u0442\u0441\u044F
-      \u0441\u043D\u0438\u043C\u0430\u0442\u044C."
+      <color=#FFE08A>\u043C\u0430\u0440\u043A\u0438</color>.\n\u041B\u0438\u043D\u0438\u044F
+      1 \u0441\u0442\u0430\u043D\u0435\u0442 \xAB\u0412\u0430\u043C\u043F\u0438\u0440\u0430\u043C\xBB:
+      \u0447\u0443\u0436\u0438\u0435 \u043C\u0430\u0440\u043A\u0438 \u0441\u043D\u0438\u043C\u0430\u0439,
+      <color=#FFE08A>+2 \u043C\u043E\u043D\u0435\u0442\u044B</color> \u0437\u0430
+      \u043A\u0430\u0436\u0434\u0443\u044E."
     gridPosition: {x: 0, y: 1}
     icon: {fileID: 21300000, guid: c9028f23673b1654cb28fdbd23a65601, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -52,8 +51,10 @@ MonoBehaviour:
       growthFormula: 0
   - id: cam_clean
     title: "\u041F\u0440\u043E\u0442\u0435\u0440\u0435\u0442\u044C \u0433\u043B\u0430\u0437\u0430"
-    description: "\u041C\u0435\u043D\u044C\u0448\u0435 \u0448\u0443\u043C\u0430 \u043D\u0430
-      \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0430\u0445: -25% \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+    description: "\u041A\u0430\u0440\u0442\u0438\u043D\u043A\u0430 \u043D\u0430 \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0430\u0445
+      <color=#FFE08A>\u0447\u0451\u0442\u0447\u0435</color>, \u0430 \u043F\u043E\u043C\u0435\u0445
+      \u043C\u0435\u043D\u044C\u0448\u0435: <color=#FFE08A>-20%</color> \u0437\u0430
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: -1, y: 1}
     icon: {fileID: 21300000, guid: a8c991ce09728df4ebc22bb7b52691fd, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -62,88 +63,188 @@ MonoBehaviour:
     maxLevel: 3
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 15
+      baseAmount: 30
       formula: 1
     effects:
     - id: cam_noise
       valueMode: 0
-      baseValue: 0.25
+      baseValue: 0.2
       growthFormula: 1
-  - id: cam_eye
-    title: "\u0413\u043B\u0430\u0437 \u0432\u0435\u0434\u044C\u043C\u044B"
-    description: "\u041A\u0430\u043C\u0435\u0440\u0430 \u0432\u0438\u0434\u0438\u0442
-      \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u044F: \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u0443\u044E
-      \u0430\u0443\u0440\u0443 \u0432\u043E\u043A\u0440\u0443\u0433 \u043F\u043E\u0441\u044B\u043B\u043E\u043A."
+    - id: cam_sharp
+      valueMode: 0
+      baseValue: 1
+      growthFormula: 1
+  - id: open_curse
+    title: "\u041F\u0440\u043E\u043A\u043B\u044F\u0442\u0430\u044F \u043F\u043E\u0447\u0442\u0430"
+    description: "\u041F\u0440\u0438\u0434\u0443\u0442 <color=#E6B3FF>\u043F\u0440\u043E\u043A\u043B\u044F\u0442\u044B\u0435
+      \u043F\u043E\u0441\u044B\u043B\u043A\u0438</color>: \u043F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0448\u044C
+      \u2014 <color=#FFC0B8>\u0436\u0430\u043B\u043E\u0431\u0430</color>.\n\u0412\u044B\u043F\u043B\u0430\u0442\u044B
+      <color=#FFE08A>+20%</color>, \u0441\u043D\u044F\u0442\u043E\u0435 \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u0435
+      <color=#FFE08A>+5 \u043C\u043E\u043D\u0435\u0442</color>."
     gridPosition: {x: 0, y: 2}
-    icon: {fileID: 21300000, guid: 334f2260a54d5a940a82f9a5ea4b63b0, type: 3}
+    icon: {fileID: 21300000, guid: 85a5540ee3d1ce842902a05f42e5b18f, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - cam_carve
     maxLevel: 1
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 120
+      baseAmount: 40
       formula: 0
     effects:
-    - id: cam_curse
+    - id: open_curse
       valueMode: 3
       baseValue: 1
       growthFormula: 0
-  - id: cam_candle
-    title: "\u041F\u0440\u0438\u0437\u0440\u0430\u0447\u043D\u0430\u044F \u0441\u0432\u0435\u0447\u0430"
-    description: "\u041A\u0430\u043C\u0435\u0440\u0430 \u0432\u0438\u0434\u0438\u0442
-      \u043C\u0438\u043C\u0438\u043A\u043E\u0432 \u0438 \u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432.\n\u0412\u044B\u043F\u0443\u0449\u0435\u043D\u043D\u044B\u0439
-      \u043F\u0440\u0438\u0437\u0440\u0430\u043A \u0434\u0430\u0451\u0442 \u044D\u043A\u0442\u043E\u043F\u043B\u0430\u0437\u043C\u0443."
+    - id: parcel_value
+      valueMode: 0
+      baseValue: 0.2
+      growthFormula: 1
+  - id: open_mimic
+    title: "\u0413\u043E\u043B\u043E\u0434\u043D\u044B\u0435 \u0441\u0443\u043D\u0434\u0443\u043A\u0438"
+    description: "\u041F\u0440\u0438\u0434\u0443\u0442 <color=#FFC0B8>\u043C\u0438\u043C\u0438\u043A\u0438</color>:
+      \u043F\u0440\u043E\u043F\u0443\u0449\u0435\u043D\u043D\u044B\u0439 \u043A\u0443\u0441\u0430\u0435\u0442
+      \u043F\u043E\u043B\u0443\u0447\u0430\u0442\u0435\u043B\u044F.\n\u0421\u043D\u044F\u0442\u044B\u0439
+      \u043C\u0438\u043C\u0438\u043A: <color=#FFE08A>8 \u043C\u043E\u043D\u0435\u0442</color>
+      \u0438 \u043A\u0430\u043F\u043B\u044F <color=#ADFFEA>\u044D\u043A\u0442\u043E\u043F\u043B\u0430\u0437\u043C\u044B</color>."
     gridPosition: {x: 0, y: 3}
-    icon: {fileID: 21300000, guid: 6fb217a333fbb724b99cbe5cd30c4425, type: 3}
+    icon: {fileID: 21300000, guid: 47a9cc14762cbcd4595ffd846939e75c, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
-    - cam_eye
+    - open_curse
     maxLevel: 1
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 300
-      formula: 0
-    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
-      baseAmount: 5
+      baseAmount: 90
       formula: 0
     effects:
-    - id: cam_ghost
+    - id: open_mimic
       valueMode: 3
       baseValue: 1
       growthFormula: 0
+  - id: open_ghost
+    title: "\u0428\u0451\u043F\u043E\u0442 \u0438\u0437 \u043A\u043E\u0440\u043E\u0431\u043E\u043A"
+    description: "\u0412 \u043F\u043E\u0441\u044B\u043B\u043A\u0430\u0445 \u043F\u043E\u0441\u0435\u043B\u044F\u0442\u0441\u044F
+      <color=#ADFFEA>\u043F\u0440\u0438\u0437\u0440\u0430\u043A\u0438</color>: \u043A\u043B\u0438\u043A\u043D\u0438
+      \u2014 \u043F\u043E\u043B\u0443\u0447\u0438\u0448\u044C <color=#ADFFEA>\u044D\u043A\u0442\u043E\u043F\u043B\u0430\u0437\u043C\u0443</color>.\n\u041F\u0440\u043E\u043F\u0443\u0449\u0435\u043D\u043D\u044B\u0439
+      \u043F\u0440\u043E\u0441\u0442\u043E \u0443\u043B\u0435\u0442\u0438\u0442."
+    gridPosition: {x: 0, y: 4}
+    icon: {fileID: 21300000, guid: 685f7cb79041437439084fe761732d7c, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - open_mimic
+    maxLevel: 1
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 150
+      formula: 0
+    effects:
+    - id: open_ghost
+      valueMode: 3
+      baseValue: 1
+      growthFormula: 0
+  - id: cam_eye
+    title: "\u0413\u043B\u0430\u0437 \u0432\u0435\u0434\u044C\u043C\u044B"
+    description: "<color=#E6B3FF>\u041F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u044F</color>
+      \u0441\u0432\u0435\u0442\u044F\u0442\u0441\u044F <color=#FFE08A>\u044F\u0440\u0447\u0435</color>
+      \u0438 \u0432\u0441\u043F\u044B\u0445\u0438\u0432\u0430\u044E\u0442 <color=#FFE08A>\u0447\u0430\u0449\u0435</color>
+      \u0441 \u043A\u0430\u0436\u0434\u044B\u043C \u0443\u0440\u043E\u0432\u043D\u0435\u043C."
+    gridPosition: {x: -1, y: 2}
+    icon: {fileID: 21300000, guid: 334f2260a54d5a940a82f9a5ea4b63b0, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - open_curse
+    maxLevel: 3
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 35
+      formula: 1
+    effects:
+    - id: glow_curse
+      valueMode: 0
+      baseValue: 1
+      growthFormula: 1
+  - id: cam_candle
+    title: "\u041F\u0440\u0438\u0437\u0440\u0430\u0447\u043D\u0430\u044F \u0441\u0432\u0435\u0447\u0430"
+    description: "<color=#ADFFEA>\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0438</color>
+      \u0441\u0432\u0435\u0442\u044F\u0442\u0441\u044F <color=#FFE08A>\u044F\u0440\u0447\u0435</color>
+      \u0438 \u0432\u0441\u043F\u044B\u0445\u0438\u0432\u0430\u044E\u0442 <color=#FFE08A>\u0447\u0430\u0449\u0435</color>
+      \u0441 \u043A\u0430\u0436\u0434\u044B\u043C \u0443\u0440\u043E\u0432\u043D\u0435\u043C."
+    gridPosition: {x: -1, y: 4}
+    icon: {fileID: 21300000, guid: 6fb217a333fbb724b99cbe5cd30c4425, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - open_ghost
+    maxLevel: 3
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 60
+      formula: 1
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 2
+      formula: 1
+    effects:
+    - id: glow_ghost
+      valueMode: 0
+      baseValue: 1
+      growthFormula: 1
+  - id: cam_mimic
+    title: "\u0421\u0435\u0440\u0434\u0435\u0447\u043D\u0430\u044F \u0440\u0443\u043D\u0430"
+    description: "\u0420\u0443\u043D\u0430 \u0441\u043B\u044B\u0448\u0438\u0442 \u0441\u0435\u0440\u0434\u0446\u0435
+      <color=#FFC0B8>\u043C\u0438\u043C\u0438\u043A\u0430</color>: \u043E\u043D \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F
+      <color=#FFE08A>\u044F\u0440\u0447\u0435</color> \u0438 \u0432\u0441\u043F\u044B\u0445\u0438\u0432\u0430\u0435\u0442
+      <color=#FFE08A>\u0447\u0430\u0449\u0435</color> \u0441 \u043A\u0430\u0436\u0434\u044B\u043C
+      \u0443\u0440\u043E\u0432\u043D\u0435\u043C."
+    gridPosition: {x: -1, y: 3}
+    icon: {fileID: 21300000, guid: e833d921157d7b248b8ae7891b96fcaf, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - open_mimic
+    maxLevel: 3
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 50
+      formula: 1
+    effects:
+    - id: glow_mimic
+      valueMode: 0
+      baseValue: 1
+      growthFormula: 1
   - id: line_speed
     title: "\u0421\u043C\u0430\u0437\u0430\u0442\u044C \u043B\u0435\u043D\u0442\u0443"
     description: "\u041B\u0435\u043D\u0442\u0430 \u0435\u0434\u0435\u0442 \u043D\u0430
-      15% \u0431\u044B\u0441\u0442\u0440\u0435\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+      <color=#FFE08A>10%</color> \u0431\u044B\u0441\u0442\u0440\u0435\u0435, \u043F\u043E\u0441\u044B\u043B\u043E\u043A
+      \u043F\u0440\u0438\u0445\u043E\u0434\u0438\u0442 \u043D\u0430 <color=#FFE08A>10%</color>
+      \u0431\u043E\u043B\u044C\u0448\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 1, y: 0}
     icon: {fileID: 21300000, guid: 97d1674c8d1007a46b1b793237858f04, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - night_shift
-    maxLevel: 5
+    maxLevel: 3
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 10
+      baseAmount: 15
       formula: 2
     effects:
     - id: belt_speed
       valueMode: 0
-      baseValue: 0.15
+      baseValue: 0.1
       growthFormula: 1
   - id: spawn_rate
     title: "\u0411\u043E\u043B\u044C\u0448\u0435 \u043F\u0438\u0441\u0435\u043C"
     description: "\u041F\u043E\u0441\u044B\u043B\u043A\u0438 \u043F\u0440\u0438\u0445\u043E\u0434\u044F\u0442
-      \u043D\u0430 15% \u0447\u0430\u0449\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+      \u043D\u0430 <color=#FFE08A>15%</color> \u0447\u0430\u0449\u0435 \u0437\u0430
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 2, y: 0}
     icon: {fileID: 21300000, guid: 10932c6eb9d8c0a4d9d558f15ab83110, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - line_speed
-    maxLevel: 5
+    maxLevel: 4
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 15
+      baseAmount: 30
       formula: 2
     effects:
     - id: spawn_rate
@@ -152,29 +253,29 @@ MonoBehaviour:
       growthFormula: 1
   - id: parcel_value
     title: "\u041F\u043E\u0447\u0442\u043E\u0432\u044B\u0439 \u0442\u0430\u0440\u0438\u0444"
-    description: "\u0412\u0441\u0435 \u0432\u044B\u043F\u043B\u0430\u0442\u044B +20%
+    description: "\u0412\u0441\u0435 \u0432\u044B\u043F\u043B\u0430\u0442\u044B <color=#FFE08A>+15%</color>
       \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 3, y: 0}
     icon: {fileID: 21300000, guid: 5c2c050560532de43849fa7236be5591, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - spawn_rate
-    maxLevel: 5
+    maxLevel: 3
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 25
+      baseAmount: 80
       formula: 2
     effects:
     - id: parcel_value
       valueMode: 0
-      baseValue: 0.2
+      baseValue: 0.15
       growthFormula: 1
   - id: item_sack
     title: "\u041C\u0435\u0448\u043A\u0438 \u0441 \u043F\u043E\u0434\u0430\u0440\u043A\u0430\u043C\u0438"
     description: "\u041D\u043E\u0432\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442
-      \u043D\u0430 \u043B\u0435\u043D\u0442\u0435: \u043C\u0435\u0448\u043E\u043A.\n\u0417\u0430
+      \u043D\u0430 \u043B\u0435\u043D\u0442\u0435: <color=#FFE08A>\u043C\u0435\u0448\u043E\u043A</color>.\n\u0417\u0430
       \u0434\u043E\u0441\u0442\u0430\u0432\u043A\u0443 \u043C\u0435\u0448\u043A\u0430
-      \u043F\u043B\u0430\u0442\u044F\u0442 3 \u043C\u043E\u043D\u0435\u0442\u044B."
+      \u043F\u043B\u0430\u0442\u044F\u0442 <color=#FFE08A>4 \u043C\u043E\u043D\u0435\u0442\u044B</color>."
     gridPosition: {x: 2, y: 1}
     icon: {fileID: 21300000, guid: 77f13b5c522a6194d91f530f7fa7cadf, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -192,9 +293,9 @@ MonoBehaviour:
       growthFormula: 0
   - id: line_2
     title: "\u041B\u0438\u043D\u0438\u044F \xAB\u0412\u0435\u0434\u044C\u043C\u0430\u043C\xBB"
-    description: "\u0412\u0442\u043E\u0440\u043E\u0439 \u043C\u043E\u043D\u0438\u0442\u043E\u0440
+    description: "<color=#FFE08A>\u0412\u0442\u043E\u0440\u043E\u0439 \u043C\u043E\u043D\u0438\u0442\u043E\u0440</color>
       \u0438 \u0432\u0442\u043E\u0440\u0430\u044F \u043B\u0435\u043D\u0442\u0430:
-      \u0442\u043E\u043B\u044C\u043A\u043E \u0434\u043B\u044F \u0432\u0435\u0434\u044C\u043C."
+      \u0442\u043E\u043B\u044C\u043A\u043E \u0434\u043B\u044F <color=#FFE08A>\u0432\u0435\u0434\u044C\u043C</color>."
     gridPosition: {x: 1, y: 1}
     icon: {fileID: 21300000, guid: f8872f5619eab0143a022db7eb255ac8, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -213,8 +314,8 @@ MonoBehaviour:
       growthFormula: 0
   - id: line_3
     title: "\u041B\u0438\u043D\u0438\u044F \xAB\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0430\u043C\xBB"
-    description: "\u0422\u0440\u0435\u0442\u044C\u044F \u043B\u0435\u043D\u0442\u0430:
-      \u0434\u043B\u044F \u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432."
+    description: "<color=#FFE08A>\u0422\u0440\u0435\u0442\u044C\u044F \u043B\u0435\u043D\u0442\u0430</color>:
+      \u0434\u043B\u044F <color=#ADFFEA>\u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432</color>."
     gridPosition: {x: 1, y: 2}
     icon: {fileID: 21300000, guid: a45c951a25931804bac77eb710d38221, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -223,7 +324,7 @@ MonoBehaviour:
     maxLevel: 1
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 200
+      baseAmount: 300
       formula: 0
     effects:
     - id: line_3
@@ -232,8 +333,8 @@ MonoBehaviour:
       growthFormula: 0
   - id: line_4
     title: "\u041B\u0438\u043D\u0438\u044F \xAB\u0422\u044B\u043A\u0432\u043E\u0433\u043E\u043B\u043E\u0432\u044B\u043C\xBB"
-    description: "\u0427\u0435\u0442\u0432\u0451\u0440\u0442\u0430\u044F \u043B\u0435\u043D\u0442\u0430:
-      \u0434\u043B\u044F \u0442\u044B\u043A\u0432\u043E\u0433\u043E\u043B\u043E\u0432\u044B\u0445."
+    description: "<color=#FFE08A>\u0427\u0435\u0442\u0432\u0451\u0440\u0442\u0430\u044F
+      \u043B\u0435\u043D\u0442\u0430</color>: \u0434\u043B\u044F <color=#FFD3A8>\u0442\u044B\u043A\u0432\u043E\u0433\u043E\u043B\u043E\u0432\u044B\u0445</color>."
     gridPosition: {x: 1, y: 3}
     icon: {fileID: 21300000, guid: 0bdacddfc58810c4da2a94a893b8bed9, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -242,10 +343,10 @@ MonoBehaviour:
     maxLevel: 1
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 500
+      baseAmount: 800
       formula: 0
     - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
-      baseAmount: 6
+      baseAmount: 8
       formula: 0
     effects:
     - id: line_4
@@ -255,7 +356,8 @@ MonoBehaviour:
   - id: shift_time
     title: "\u041A\u043E\u0444\u0435 \u0441 \u043F\u043E\u043B\u044B\u043D\u044C\u044E"
     description: "\u0421\u043C\u0435\u043D\u0430 \u0434\u043B\u0438\u043D\u043D\u0435\u0435
-      \u043D\u0430 15 \u0441\u0435\u043A\u0443\u043D\u0434 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+      \u043D\u0430 <color=#FFE08A>15 \u0441\u0435\u043A\u0443\u043D\u0434</color>
+      \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 0, y: -1}
     icon: {fileID: 21300000, guid: c52ea5410f13efa4ca124b7ad79aeeff, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -275,7 +377,8 @@ MonoBehaviour:
     title: "\u0422\u0430\u0431\u043B\u0438\u0447\u043A\u0430 \xAB\u041C\u0443\u0441\u043E\u0440
       \u043D\u0435 \u0441\u043B\u0430\u0442\u044C\xBB"
     description: "\u041C\u0443\u0441\u043E\u0440\u0430 \u043D\u0430 \u043B\u0435\u043D\u0442\u0435
-      \u043D\u0430 15% \u043C\u0435\u043D\u044C\u0448\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C.\n\u0421\u043E\u0432\u0441\u0435\u043C
+      \u043D\u0430 <color=#FFE08A>15%</color> \u043C\u0435\u043D\u044C\u0448\u0435
+      \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C.\n\u0421\u043E\u0432\u0441\u0435\u043C
       \u043E\u043D \u043D\u0435 \u043F\u0440\u043E\u043F\u0430\u0434\u0451\u0442."
     gridPosition: {x: -1, y: -1}
     icon: {fileID: 21300000, guid: ceb7c253cd3845941b6facafbdf09ced, type: 3}
@@ -296,16 +399,16 @@ MonoBehaviour:
     title: "\u0420\u0438\u0442\u043C \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0449\u0438\u043A\u0430"
     description: "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439
       \u043C\u043D\u043E\u0436\u0438\u0442\u0435\u043B\u044C \u043A\u043E\u043C\u0431\u043E
-      +0.5 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+      <color=#FFE08A>+0.5</color> \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 0, y: -2}
     icon: {fileID: 21300000, guid: 11788abd359d45049af481600b0c6646, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - shift_time
-    maxLevel: 4
+    maxLevel: 3
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 40
+      baseAmount: 60
       formula: 1
     effects:
     - id: combo_max
@@ -314,8 +417,8 @@ MonoBehaviour:
       growthFormula: 1
   - id: forgive
     title: "\u0414\u043E\u0431\u0440\u0430\u044F \u043D\u0430\u0447\u0430\u043B\u044C\u043D\u0438\u0446\u0430"
-    description: "\u0428\u0442\u0440\u0430\u0444\u044B \u0437\u0430 \u0436\u0430\u043B\u043E\u0431\u044B
-      -20% \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+    description: "\u0428\u0442\u0440\u0430\u0444\u044B \u0437\u0430 <color=#FFC0B8>\u0436\u0430\u043B\u043E\u0431\u044B</color>
+      <color=#FFE08A>-20%</color> \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 1, y: -2}
     icon: {fileID: 21300000, guid: cd3ae81ea7dde7f45aaf04e84a8f107a, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -324,7 +427,7 @@ MonoBehaviour:
     maxLevel: 3
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 35
+      baseAmount: 40
       formula: 1
     effects:
     - id: complaint_cut
@@ -333,9 +436,10 @@ MonoBehaviour:
       growthFormula: 1
   - id: ecto_luck
     title: "\u041C\u0435\u0434\u0438\u0443\u043C"
-    description: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0438 \u0432 \u043F\u043E\u0441\u044B\u043B\u043A\u0430\u0445
-      \u043F\u043E\u043F\u0430\u0434\u0430\u044E\u0442\u0441\u044F \u043D\u0430 30%
-      \u0447\u0430\u0449\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+    description: "<color=#ADFFEA>\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0438</color>
+      \u0432 \u043F\u043E\u0441\u044B\u043B\u043A\u0430\u0445 \u043F\u043E\u043F\u0430\u0434\u0430\u044E\u0442\u0441\u044F
+      \u043D\u0430 <color=#FFE08A>25%</color> \u0447\u0430\u0449\u0435 \u0437\u0430
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: 0, y: -3}
     icon: {fileID: 21300000, guid: fff8864f79e13694cb19072f1c1a851c, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -344,18 +448,19 @@ MonoBehaviour:
     maxLevel: 3
     costs:
     - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
-      baseAmount: 3
+      baseAmount: 4
       formula: 1
     effects:
     - id: ghost_chance
       valueMode: 0
-      baseValue: 0.3
+      baseValue: 0.25
       growthFormula: 1
   - id: golden
     title: "\u0417\u043E\u043B\u043E\u0442\u0430\u044F \u0433\u0440\u044F\u0434\u043A\u0430"
     description: "\u0418\u043D\u043E\u0433\u0434\u0430 \u043F\u043E \u043B\u0435\u043D\u0442\u0435
-      \u0435\u0434\u0435\u0442 \u0437\u043E\u043B\u043E\u0442\u0430\u044F \u0442\u044B\u043A\u0432\u0430.
-      \u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438 \u0435\u0451: 50 \u043C\u043E\u043D\u0435\u0442!"
+      \u0435\u0434\u0435\u0442 <color=#FFE08A>\u0437\u043E\u043B\u043E\u0442\u0430\u044F
+      \u0442\u044B\u043A\u0432\u0430</color>.\n\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438
+      \u0435\u0451: <color=#FFE08A>50 \u043C\u043E\u043D\u0435\u0442</color>!"
     gridPosition: {x: 1, y: -3}
     icon: {fileID: 21300000, guid: 2d7921cb0e4f1f840b5671f7e67d7322, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -364,18 +469,92 @@ MonoBehaviour:
     maxLevel: 1
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 200
+      baseAmount: 400
       formula: 0
     effects:
     - id: golden_chance
       valueMode: 3
       baseValue: 1
       growthFormula: 0
+  - id: fault_stop
+    title: "\u041F\u0435\u0441\u043E\u0447\u043D\u044B\u0435 \u0447\u0430\u0441\u044B"
+    description: "\u041F\u043E\u043A\u0430 \u043C\u043E\u043D\u0438\u0442\u043E\u0440
+      <color=#FFC0B8>\u0441\u043B\u043E\u043C\u0430\u043D</color>, \u0435\u0433\u043E
+      \u043B\u0435\u043D\u0442\u0430 \u0435\u0434\u0435\u0442 \u043D\u0430 <color=#FFE08A>25%</color>
+      \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u0435\u0435.\n\u0421 \u043A\u0430\u0436\u0434\u044B\u043C
+      \u0443\u0440\u043E\u0432\u043D\u0435\u043C \u0435\u0449\u0451 \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u0435\u0435.||\u0421\u043B\u043E\u043C\u0430\u043D\u043D\u0430\u044F
+      \u043B\u0435\u043D\u0442\u0430 \u0435\u0434\u0435\u0442 \u043D\u0430 <color=#FFE08A>50%</color>
+      \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u0435\u0435.\n\u0415\u0449\u0451
+      \u043D\u0435\u043C\u043D\u043E\u0433\u043E \u2014 \u0438 \u043E\u043D\u0430
+      \u0432\u0441\u0442\u0430\u043D\u0435\u0442.||\u0421\u043B\u043E\u043C\u0430\u043D\u043D\u0430\u044F
+      \u043B\u0435\u043D\u0442\u0430 \u0435\u0434\u0435\u0442 \u043D\u0430 <color=#FFE08A>75%</color>
+      \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u0435\u0435.\n\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0435\u0451 \u043E\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442.||\u041F\u043E\u043A\u0430
+      \u043C\u043E\u043D\u0438\u0442\u043E\u0440 <color=#FFC0B8>\u0441\u043B\u043E\u043C\u0430\u043D</color>,
+      \u0435\u0433\u043E \u043B\u0435\u043D\u0442\u0430 <color=#FFE08A>\u0441\u043E\u0432\u0441\u0435\u043C
+      \u0441\u0442\u043E\u0438\u0442</color> \u0438 \u0436\u0434\u0451\u0442 \u043F\u043E\u0447\u0438\u043D\u043A\u0438."
+    gridPosition: {x: 2, y: -2}
+    icon: {fileID: 21300000, guid: 3fe479446ed94502a9517a5372fff1a4, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fault_hits
+    maxLevel: 4
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 100
+      formula: 2
+    effects:
+    - id: fault_stop
+      valueMode: 0
+      baseValue: 0.25
+      growthFormula: 1
+  - id: fault_rate
+    title: "\u041A\u0440\u0435\u043F\u043A\u0438\u0435 \u043A\u0438\u043D\u0435\u0441\u043A\u043E\u043F\u044B"
+    description: "\u041C\u043E\u043D\u0438\u0442\u043E\u0440\u044B <color=#FFC0B8>\u043B\u043E\u043C\u0430\u044E\u0442\u0441\u044F</color>
+      \u0440\u0435\u0436\u0435: \u043F\u0435\u0440\u0435\u0440\u044B\u0432 \u043C\u0435\u0436\u0434\u0443
+      \u043F\u043E\u043B\u043E\u043C\u043A\u0430\u043C\u0438 <color=#FFE08A>+40%</color>
+      \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+    gridPosition: {x: 1, y: -1}
+    icon: {fileID: 21300000, guid: 3d2590a680574ae695edd239b9b35e7d, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - shift_time
+    maxLevel: 3
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 40
+      formula: 1
+    effects:
+    - id: fault_rate
+      valueMode: 0
+      baseValue: 0.4
+      growthFormula: 1
+  - id: fault_hits
+    title: "\u0422\u044F\u0436\u0451\u043B\u0430\u044F \u0440\u0443\u043A\u0430"
+    description: "\u0427\u0442\u043E\u0431\u044B \u043F\u043E\u0447\u0438\u043D\u0438\u0442\u044C
+      \u043C\u043E\u043D\u0438\u0442\u043E\u0440, \u043D\u0443\u0436\u043D\u043E
+      \u043D\u0430 <color=#FFE08A>\u043E\u0434\u0438\u043D \u0443\u0434\u0430\u0440</color>
+      \u043C\u0435\u043D\u044C\u0448\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+    gridPosition: {x: 2, y: -1}
+    icon: {fileID: 21300000, guid: 899fadfe6d4c47a2b41871a2272fedb8, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fault_rate
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 60
+      formula: 1
+    effects:
+    - id: fault_hits
+      valueMode: 0
+      baseValue: 1
+      growthFormula: 1
   - id: fam_cat
     title: "\u0427\u0451\u0440\u043D\u044B\u0439 \u043A\u043E\u0442"
-    description: "\u041A\u043E\u0442 \u0441\u0430\u043C \u0441\u043D\u0438\u043C\u0430\u0435\u0442
-      \u043C\u0443\u0441\u043E\u0440 \u0441 \u043B\u0435\u043D\u0442\u044B, \u043F\u043E\u0442\u043E\u043C
-      \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442."
+    description: "<color=#FFD3A8>\u041A\u043E\u0442</color> \u0441\u0430\u043C \u0441\u043D\u0438\u043C\u0430\u0435\u0442
+      <color=#FFE08A>\u043C\u0443\u0441\u043E\u0440</color> \u0441 \u043B\u0435\u043D\u0442\u044B,
+      \u043F\u043E\u0442\u043E\u043C \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442."
     gridPosition: {x: -1, y: 0}
     icon: {fileID: 21300000, guid: 77058180a22da264298be29c9482041c, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -393,8 +572,9 @@ MonoBehaviour:
       growthFormula: 0
   - id: fam_cat_fast
     title: "\u041A\u043E\u0448\u0430\u0447\u044C\u044F \u043C\u044F\u0442\u0430"
-    description: "\u041A\u043E\u0442 \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442
-      \u043D\u0430 20% \u043C\u0435\u043D\u044C\u0448\u0435 \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+    description: "<color=#FFD3A8>\u041A\u043E\u0442</color> \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442
+      \u043D\u0430 <color=#FFE08A>20%</color> \u043C\u0435\u043D\u044C\u0448\u0435
+      \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
     gridPosition: {x: -2, y: 0}
     icon: {fileID: 21300000, guid: f86ead94860e41f46a28054292a312d5, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -410,31 +590,75 @@ MonoBehaviour:
       valueMode: 0
       baseValue: 0.2
       growthFormula: 1
-  - id: fam_speed
-    title: "\u041C\u0435\u0442\u043B\u0430 \u043D\u0430 \u0432\u0441\u0435\u0445"
-    description: "\u0412\u0441\u0435 \u0444\u0430\u043C\u0438\u043B\u044C\u044F\u0440\u044B
-      \u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0442 \u043D\u0430 20% \u0447\u0430\u0449\u0435
+  - id: fam_bat_rate
+    title: "\u041B\u0438\u0441\u0438\u0439 \u0445\u0432\u043E\u0441\u0442"
+    description: "<color=#FFD3A8>\u041B\u0438\u0441\u0430</color> \u0431\u0435\u0433\u0430\u0435\u0442
+      \u0431\u044B\u0441\u0442\u0440\u0435\u0435: \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442
+      \u043D\u0430 <color=#FFE08A>20%</color> \u043C\u0435\u043D\u044C\u0448\u0435
       \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
-    gridPosition: {x: -3, y: 0}
-    icon: {fileID: 21300000, guid: 804e598acec6cc2428517dcb72613087, type: 3}
+    gridPosition: {x: -3, y: 3}
+    icon: {fileID: 21300000, guid: a96aa90edc56f114d8ed974ed68f03d5, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
-    - fam_cat_fast
+    - fam_bat
     maxLevel: 3
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 100
+      baseAmount: 200
       formula: 2
     effects:
-    - id: fam_rate
+    - id: fam_bat_rate
+      valueMode: 0
+      baseValue: 0.2
+      growthFormula: 1
+  - id: fam_owl_rate
+    title: "\u041C\u044B\u0448\u0438\u043D\u044B\u0439 \u043F\u0430\u0451\u043A"
+    description: "\u0421\u044B\u0442\u0430\u044F <color=#FFD3A8>\u0441\u043E\u0432\u0430</color>
+      \u043B\u0435\u0442\u0430\u0435\u0442 \u0447\u0430\u0449\u0435: \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442
+      \u043D\u0430 <color=#FFE08A>20%</color> \u043C\u0435\u043D\u044C\u0448\u0435
+      \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+    gridPosition: {x: -3, y: 2}
+    icon: {fileID: 21300000, guid: 98a7243ea80f4c745bcceeb2f3602a98, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_owl
+    maxLevel: 3
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 120
+      formula: 2
+    effects:
+    - id: fam_owl_rate
+      valueMode: 0
+      baseValue: 0.2
+      growthFormula: 1
+  - id: fam_raven_rate
+    title: "\u0411\u043B\u0435\u0441\u0442\u044F\u0449\u0438\u0435 \u0431\u0435\u0437\u0434\u0435\u043B\u0443\u0448\u043A\u0438"
+    description: "\u0417\u0430 \u0431\u043B\u0435\u0441\u0442\u044F\u0448\u043A\u0438
+      <color=#FFD3A8>\u0432\u043E\u0440\u043E\u043D</color> \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442
+      \u0443\u0441\u0435\u0440\u0434\u043D\u0435\u0435: \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442
+      \u043D\u0430 <color=#FFE08A>20%</color> \u043C\u0435\u043D\u044C\u0448\u0435
+      \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
+    gridPosition: {x: -3, y: 1}
+    icon: {fileID: 21300000, guid: a37feb07809ddcf4ebd6d49d0733668e, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_raven
+    maxLevel: 3
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 60
+      formula: 2
+    effects:
+    - id: fam_raven_rate
       valueMode: 0
       baseValue: 0.2
       growthFormula: 1
   - id: fam_raven
     title: "\u0412\u043E\u0440\u043E\u043D"
-    description: "\u0412\u043E\u0440\u043E\u043D \u0441\u043D\u0438\u043C\u0430\u0435\u0442
-      \u043F\u043E\u0441\u044B\u043B\u043A\u0438 \u0441 \u0447\u0443\u0436\u0438\u043C
-      \u0430\u0434\u0440\u0435\u0441\u043E\u043C."
+    description: "<color=#FFD3A8>\u0412\u043E\u0440\u043E\u043D</color> \u0441\u043D\u0438\u043C\u0430\u0435\u0442
+      \u043F\u043E\u0441\u044B\u043B\u043A\u0438 \u0441 <color=#FFE08A>\u0447\u0443\u0436\u043E\u0439
+      \u043C\u0430\u0440\u043A\u043E\u0439</color>."
     gridPosition: {x: -2, y: 1}
     icon: {fileID: 21300000, guid: e97e4c5384ce2ed44a30ddc602193d36, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -444,7 +668,7 @@ MonoBehaviour:
     maxLevel: 1
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 120
+      baseAmount: 150
       formula: 0
     effects:
     - id: fam_raven
@@ -453,8 +677,8 @@ MonoBehaviour:
       growthFormula: 0
   - id: fam_owl
     title: "\u0421\u043E\u0432\u0430"
-    description: "\u0421\u043E\u0432\u0430 \u0441\u043D\u0438\u043C\u0430\u0435\u0442
-      \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u044B\u0435 \u043F\u043E\u0441\u044B\u043B\u043A\u0438."
+    description: "<color=#FFD3A8>\u0421\u043E\u0432\u0430</color> \u0441\u043D\u0438\u043C\u0430\u0435\u0442
+      <color=#E6B3FF>\u043F\u0440\u043E\u043A\u043B\u044F\u0442\u044B\u0435 \u043F\u043E\u0441\u044B\u043B\u043A\u0438</color>."
     gridPosition: {x: -2, y: 2}
     icon: {fileID: 21300000, guid: 843c3191ef856834890697499cbcee5a, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
@@ -464,7 +688,7 @@ MonoBehaviour:
     maxLevel: 1
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 250
+      baseAmount: 350
       formula: 0
     effects:
     - id: fam_owl
@@ -473,21 +697,22 @@ MonoBehaviour:
       growthFormula: 0
   - id: fam_bat
     title: "\u041B\u0438\u0441\u0430"
-    description: "\u041B\u0438\u0441\u0430 \u043B\u043E\u0432\u0438\u0442 \u043C\u0438\u043C\u0438\u043A\u043E\u0432
-      \u0438 \u0432\u044B\u043F\u0443\u0441\u043A\u0430\u0435\u0442 \u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432."
+    description: "<color=#FFD3A8>\u041B\u0438\u0441\u0430</color> \u043B\u043E\u0432\u0438\u0442
+      <color=#FFC0B8>\u043C\u0438\u043C\u0438\u043A\u043E\u0432</color> \u0438 \u0432\u044B\u043F\u0443\u0441\u043A\u0430\u0435\u0442
+      <color=#ADFFEA>\u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432</color>."
     gridPosition: {x: -2, y: 3}
     icon: {fileID: 21300000, guid: 12a62c9c179049f4c8feefc89a5df0c4, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
     - fam_owl
-    - cam_candle
+    - cam_mimic
     maxLevel: 1
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 500
+      baseAmount: 700
       formula: 0
     - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
-      baseAmount: 8
+      baseAmount: 10
       formula: 0
     effects:
     - id: fam_bat
@@ -497,26 +722,310 @@ MonoBehaviour:
   - id: final_order
     title: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u0441\u043C\u0435\u043D\u0430"
     description: "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0441\u043C\u0435\u043D\u0430
-      \u0441\u0442\u0430\u043D\u0435\u0442 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439:
+      \u0441\u0442\u0430\u043D\u0435\u0442 <color=#FFE08A>\u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439</color>:
       \u043F\u043E\u043B\u043D\u043E\u0447\u044C \u0425\u0435\u043B\u043B\u043E\u0443\u0438\u043D\u0430,
       \u0432\u0441\u0435 \u043B\u0438\u043D\u0438\u0438, \u0434\u0432\u043E\u0439\u043D\u043E\u0439
       \u043F\u043E\u0442\u043E\u043A."
-    gridPosition: {x: 0, y: 4}
+    gridPosition: {x: 1, y: 4}
     icon: {fileID: 21300000, guid: 80e3e02795e8e5740a406965c0b11df1, type: 3}
     iconColor: {r: 1, g: 1, b: 1, a: 1}
     previousNodeIds:
-    - cam_candle
+    - open_ghost
     - line_4
     maxLevel: 1
     costs:
     - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
-      baseAmount: 1200
+      baseAmount: 1800
       formula: 0
     - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
-      baseAmount: 15
+      baseAmount: 30
       formula: 0
     effects:
     - id: final_order
       valueMode: 3
       baseValue: 1
       growthFormula: 0
+  - id: fam_cat_zone
+    title: "\u041A\u043E\u0448\u0430\u0447\u0438\u0439 \u043F\u0440\u044B\u0436\u043E\u043A"
+    description: "<color=#FFD3A8>\u041A\u043E\u0442</color> \u0437\u0430\u043C\u0435\u0447\u0430\u0435\u0442
+      \u043C\u0443\u0441\u043E\u0440 <color=#FFE08A>\u0440\u0430\u043D\u044C\u0448\u0435</color>
+      \u0438 \u043B\u043E\u0432\u0438\u0442 \u0435\u0433\u043E \u0431\u043B\u0438\u0436\u0435
+      \u043A \u043D\u0430\u0447\u0430\u043B\u0443 \u043B\u0435\u043D\u0442\u044B."
+    gridPosition: {x: -3, y: 0}
+    icon: {fileID: 21300000, guid: 72c485ece6629b646847c6f613a394bb, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_cat_fast
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 35
+      formula: 1
+    effects:
+    - id: fam_cat_zone
+      valueMode: 0
+      baseValue: 0.08
+      growthFormula: 1
+  - id: fam_cat_special
+    title: "\u041C\u044B\u0448\u0435\u043B\u043E\u0432"
+    description: "\u0418\u043D\u043E\u0433\u0434\u0430 <color=#FFD3A8>\u043A\u043E\u0442</color>
+      \u043F\u0440\u0438\u043D\u043E\u0441\u0438\u0442 \u0441 \u043E\u0445\u043E\u0442\u044B
+      \u043C\u043E\u043D\u0435\u0442\u043A\u0438: <color=#FFE08A>+2</color> \u0437\u0430
+      \u0441\u043D\u044F\u0442\u044B\u0439 \u043C\u0443\u0441\u043E\u0440."
+    gridPosition: {x: -4, y: 0}
+    icon: {fileID: 21300000, guid: cdca7612f4113574897c9738ea82d3dc, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_cat_zone
+    maxLevel: 1
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 80
+      formula: 0
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 3
+      formula: 0
+    effects:
+    - id: fam_cat_special
+      valueMode: 3
+      baseValue: 1
+      growthFormula: 0
+  - id: fam_cat_double
+    title: "\u041A\u043E\u0433\u0442\u0438 \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435"
+    description: "\u0428\u0430\u043D\u0441 <color=#FFE08A>15%</color> \u0437\u0430
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0441\u0440\u0430\u0437\u0443 \u043F\u0440\u044B\u0433\u043D\u0443\u0442\u044C
+      \u0435\u0449\u0451 \u0440\u0430\u0437, \u0431\u0435\u0437 \u043E\u0442\u0434\u044B\u0445\u0430."
+    gridPosition: {x: -5, y: 0}
+    icon: {fileID: 21300000, guid: 2c0181eb1dc76ee4ea1b9223b86c9733, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_cat_special
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 3
+      formula: 1
+    effects:
+    - id: fam_cat_double
+      valueMode: 0
+      baseValue: 0.15
+      growthFormula: 1
+  - id: fam_raven_zone
+    title: "\u041F\u043E\u0434\u0437\u043E\u0440\u043D\u0430\u044F \u0442\u0440\u0443\u0431\u0430"
+    description: "<color=#FFD3A8>\u0412\u043E\u0440\u043E\u043D</color> \u0437\u0430\u043C\u0435\u0447\u0430\u0435\u0442
+      \u0447\u0443\u0436\u0438\u0435 \u043C\u0430\u0440\u043A\u0438 <color=#FFE08A>\u0440\u0430\u043D\u044C\u0448\u0435</color>
+      \u0438 \u043B\u043E\u0432\u0438\u0442 \u0431\u043B\u0438\u0436\u0435 \u043A
+      \u043D\u0430\u0447\u0430\u043B\u0443 \u043B\u0435\u043D\u0442\u044B."
+    gridPosition: {x: -4, y: 1}
+    icon: {fileID: 21300000, guid: 2d2626643e1fb584ea5377fbfca80a48, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_raven_rate
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 70
+      formula: 1
+    effects:
+    - id: fam_raven_zone
+      valueMode: 0
+      baseValue: 0.08
+      growthFormula: 1
+  - id: fam_raven_special
+    title: "\u041F\u043E\u0447\u0442\u0430\u043B\u044C\u043E\u043D"
+    description: "<color=#FFD3A8>\u0412\u043E\u0440\u043E\u043D</color> \u0441\u0430\u043C
+      \u043F\u0435\u0440\u0435\u043E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u0442
+      \u043F\u043E\u0441\u044B\u043B\u043A\u0438: <color=#FFE08A>+3 \u043C\u043E\u043D\u0435\u0442\u044B</color>
+      \u0437\u0430 \u043A\u0430\u0436\u0434\u0443\u044E \u0441 \u0447\u0443\u0436\u0438\u043C
+      \u0430\u0434\u0440\u0435\u0441\u043E\u043C."
+    gridPosition: {x: -5, y: 1}
+    icon: {fileID: 21300000, guid: 1a0a33798e29ee142a6e8d2c89177c2b, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_raven_zone
+    maxLevel: 1
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 120
+      formula: 0
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 5
+      formula: 0
+    effects:
+    - id: fam_raven_special
+      valueMode: 3
+      baseValue: 1
+      growthFormula: 0
+  - id: fam_raven_double
+    title: "\u041D\u044B\u0440\u043E\u043A"
+    description: "\u0428\u0430\u043D\u0441 <color=#FFE08A>15%</color> \u0437\u0430
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0441\u0440\u0430\u0437\u0443 \u043D\u044B\u0440\u043D\u0443\u0442\u044C
+      \u0435\u0449\u0451 \u0440\u0430\u0437, \u0431\u0435\u0437 \u043E\u0442\u0434\u044B\u0445\u0430."
+    gridPosition: {x: -6, y: 1}
+    icon: {fileID: 21300000, guid: 11cb68f94e3e2164988fc6d9cfec11b3, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_raven_special
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 4
+      formula: 1
+    effects:
+    - id: fam_raven_double
+      valueMode: 0
+      baseValue: 0.15
+      growthFormula: 1
+  - id: fam_owl_zone
+    title: "\u041B\u0443\u043D\u043D\u044B\u0439 \u0434\u043E\u0437\u043E\u0440"
+    description: "<color=#FFD3A8>\u0421\u043E\u0432\u0430</color> \u0432\u0438\u0434\u0438\u0442
+      <color=#E6B3FF>\u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u044F</color>
+      <color=#FFE08A>\u0440\u0430\u043D\u044C\u0448\u0435</color> \u0438 \u043B\u043E\u0432\u0438\u0442
+      \u0431\u043B\u0438\u0436\u0435 \u043A \u043D\u0430\u0447\u0430\u043B\u0443
+      \u043B\u0435\u043D\u0442\u044B."
+    gridPosition: {x: -4, y: 2}
+    icon: {fileID: 21300000, guid: 507f3744771a0484d8de8d142b73d4d0, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_owl_rate
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 150
+      formula: 1
+    effects:
+    - id: fam_owl_zone
+      valueMode: 0
+      baseValue: 0.08
+      growthFormula: 1
+  - id: fam_owl_special
+    title: "\u041D\u043E\u0447\u043D\u043E\u0435 \u0437\u0440\u0435\u043D\u0438\u0435"
+    description: "\u041F\u043E\u043A\u0430 <color=#FFD3A8>\u0441\u043E\u0432\u0430</color>
+      \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442, <color=#E6B3FF>\u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u044F</color>
+      \u043D\u0430 \u043B\u0435\u043D\u0442\u0430\u0445 \u0441\u0432\u0435\u0442\u044F\u0442\u0441\u044F
+      <color=#FFE08A>\u044F\u0440\u0447\u0435</color>."
+    gridPosition: {x: -5, y: 2}
+    icon: {fileID: 21300000, guid: 5104cc4a70b2cf2479d96bcdec45a0ca, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_owl_zone
+    maxLevel: 1
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 250
+      formula: 0
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 7
+      formula: 0
+    effects:
+    - id: fam_owl_special
+      valueMode: 3
+      baseValue: 1
+      growthFormula: 0
+  - id: fam_owl_double
+    title: "\u0411\u0435\u0441\u0448\u0443\u043C\u043D\u044B\u0435 \u043F\u0435\u0440\u044C\u044F"
+    description: "\u0428\u0430\u043D\u0441 <color=#FFE08A>15%</color> \u0437\u0430
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0441\u0440\u0430\u0437\u0443 \u0432\u044B\u043B\u0435\u0442\u0435\u0442\u044C
+      \u0435\u0449\u0451 \u0440\u0430\u0437, \u0431\u0435\u0437 \u043E\u0442\u0434\u044B\u0445\u0430."
+    gridPosition: {x: -6, y: 2}
+    icon: {fileID: 21300000, guid: 94c0d4540d25da74eb2f96c23c100a08, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_owl_special
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 5
+      formula: 1
+    effects:
+    - id: fam_owl_double
+      valueMode: 0
+      baseValue: 0.15
+      growthFormula: 1
+  - id: fam_bat_zone
+    title: "\u041B\u0438\u0441\u0438\u0439 \u043D\u044E\u0445"
+    description: "<color=#FFD3A8>\u041B\u0438\u0441\u0430</color> \u0447\u0443\u0435\u0442
+      \u043D\u0435\u0447\u0438\u0441\u0442\u044C <color=#FFE08A>\u0440\u0430\u043D\u044C\u0448\u0435</color>
+      \u0438 \u043B\u043E\u0432\u0438\u0442 \u0431\u043B\u0438\u0436\u0435 \u043A
+      \u043D\u0430\u0447\u0430\u043B\u0443 \u043B\u0435\u043D\u0442\u044B."
+    gridPosition: {x: -4, y: 3}
+    icon: {fileID: 21300000, guid: 2d6f55ac8d6b48f47975a98780b93205, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_bat_rate
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 180
+      formula: 1
+    effects:
+    - id: fam_bat_zone
+      valueMode: 0
+      baseValue: 0.08
+      growthFormula: 1
+  - id: fam_bat_special
+    title: "\u0425\u0438\u0442\u0440\u043E\u0441\u0442\u044C"
+    description: "<color=#ADFFEA>\u041F\u0440\u0438\u0437\u0440\u0430\u043A</color>,
+      \u0432\u044B\u043F\u0443\u0449\u0435\u043D\u043D\u044B\u0439 \u043B\u0438\u0441\u043E\u0439,
+      \u0434\u0430\u0451\u0442 \u043D\u0430 <color=#FFE08A>1</color> <color=#ADFFEA>\u044D\u043A\u0442\u043E\u043F\u043B\u0430\u0437\u043C\u0443</color>
+      \u0431\u043E\u043B\u044C\u0448\u0435."
+    gridPosition: {x: -5, y: 3}
+    icon: {fileID: 21300000, guid: aea1acf51bc8baa4e9866b1c18a88423, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_bat_zone
+    maxLevel: 1
+    costs:
+    - currency: {fileID: 11400000, guid: c94768aad57f84a4ab4d4751b43a316c, type: 2}
+      baseAmount: 300
+      formula: 0
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 8
+      formula: 0
+    effects:
+    - id: fam_bat_special
+      valueMode: 3
+      baseValue: 1
+      growthFormula: 0
+  - id: fam_bat_double
+    title: "\u0420\u044B\u0436\u0430\u044F \u043C\u043E\u043B\u043D\u0438\u044F"
+    description: "\u0428\u0430\u043D\u0441 <color=#FFE08A>15%</color> \u0437\u0430
+      \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0441\u0440\u0430\u0437\u0443 \u0431\u0440\u043E\u0441\u0438\u0442\u044C\u0441\u044F
+      \u0435\u0449\u0451 \u0440\u0430\u0437, \u0431\u0435\u0437 \u043E\u0442\u0434\u044B\u0445\u0430."
+    gridPosition: {x: -6, y: 3}
+    icon: {fileID: 21300000, guid: abc95c686b6c37b40947977dbeae43c6, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - fam_bat_special
+    maxLevel: 2
+    costs:
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 6
+      formula: 1
+    effects:
+    - id: fam_bat_double
+      valueMode: 0
+      baseValue: 0.15
+      growthFormula: 1
+  - id: ghost_deal
+    title: "\u0421\u0434\u0435\u043B\u043A\u0430 \u0441 \u043F\u0440\u0438\u0437\u0440\u0430\u043A\u0430\u043C\u0438"
+    description: "<color=#ADFFEA>\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0438</color>
+      \u0437\u0430\u043C\u043E\u043B\u0432\u044F\u0442 \u0437\u0430 \u0442\u0435\u0431\u044F
+      \u0441\u043B\u043E\u0432\u0435\u0447\u043A\u043E: \u0432\u0441\u0435 \u0432\u044B\u043F\u043B\u0430\u0442\u044B
+      <color=#FFE08A>+10%</color> \u0437\u0430 \u0443\u0440\u043E\u0432\u0435\u043D\u044C.\n\u041F\u043B\u0430\u0442\u0438\u0442\u044C
+      \u0438\u043C \u043F\u0440\u0438\u0434\u0451\u0442\u0441\u044F <color=#ADFFEA>\u044D\u043A\u0442\u043E\u043F\u043B\u0430\u0437\u043C\u043E\u0439</color>."
+    gridPosition: {x: 0, y: -4}
+    icon: {fileID: 21300000, guid: 685f7cb79041437439084fe761732d7c, type: 3}
+    iconColor: {r: 1, g: 1, b: 1, a: 1}
+    previousNodeIds:
+    - ecto_luck
+    maxLevel: 5
+    costs:
+    - currency: {fileID: 11400000, guid: 8a401c1fda49c224cae57ab5e7eae142, type: 2}
+      baseAmount: 6
+      formula: 2
+    effects:
+    - id: parcel_value
+      valueMode: 0
+      baseValue: 0.1
+      growthFormula: 1

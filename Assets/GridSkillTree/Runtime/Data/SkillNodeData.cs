@@ -11,6 +11,7 @@ namespace GridSkillTree
         public string id;
         public string title;
 
+        [Tooltip("Разные описания для уровней разделяются ||: показывается описание следующего уровня (у купленного до конца — последнее)")]
         [TextArea(3, 8)]
         public string description;
 
@@ -32,5 +33,19 @@ namespace GridSkillTree
 
         [Header("Effects")]
         public List<SkillEffect> effects = new();
+
+        public const string LevelSeparator = "||";
+
+        // Описание для узла с текущим уровнем level: части через || идут по уровням,
+        // последняя часть повторяется для всех следующих уровней
+        public string GetDescription(int level)
+        {
+            if (string.IsNullOrEmpty(description) || !description.Contains(LevelSeparator))
+                return description;
+
+            string[] parts = description.Split(new[] { LevelSeparator }, StringSplitOptions.None);
+            int index = Mathf.Clamp(Mathf.Min(level, maxLevel - 1), 0, parts.Length - 1);
+            return parts[index].Trim();
+        }
     }
 }
