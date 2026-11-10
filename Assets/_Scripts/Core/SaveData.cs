@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // Наш собственный прогресс. Дерево и кошелёк сохраняет GridSkillTree сам.
@@ -10,6 +11,7 @@ public static class SaveData
     private const string CoinsKey = "PumpkinPost.TotalCoins";
     private const string IntroKey = "PumpkinPost.IntroSeen";
     private const string HintsKey = "PumpkinPost.HintsSeen";
+    private const string AnnouncedKey = "PumpkinPost.UnlocksAnnounced";
 
     // Меню попросило начать заново. Сбросить прогресс можно только в Game: там живут дерево и кошелёк
     public static bool NewGameRequested;
@@ -50,6 +52,20 @@ public static class SaveData
         PlayerPrefs.Save();
     }
 
+    // Покупки книги, о которых уже рассказали в записке начала ночи. Строка «|line_2|fam_cat|»
+    public static bool HasAnnouncedList => PlayerPrefs.HasKey(AnnouncedKey);
+    public static bool IsAnnounced(string id) => PlayerPrefs.GetString(AnnouncedKey, "|").Contains("|" + id + "|");
+
+    public static void MarkAnnounced(IEnumerable<string> ids)
+    {
+        string s = PlayerPrefs.GetString(AnnouncedKey, "|");
+        foreach (string id in ids)
+            if (!s.Contains("|" + id + "|"))
+                s += id + "|";
+        PlayerPrefs.SetString(AnnouncedKey, s);
+        PlayerPrefs.Save();
+    }
+
     // Итоги за всю игру, для титров
     public static int TotalParcels => PlayerPrefs.GetInt(ParcelsKey, 0);
     public static int TotalComplaints => PlayerPrefs.GetInt(ComplaintsKey, 0);
@@ -79,6 +95,7 @@ public static class SaveData
         PlayerPrefs.DeleteKey(CoinsKey);
         PlayerPrefs.DeleteKey(IntroKey);
         PlayerPrefs.DeleteKey(HintsKey);
+        PlayerPrefs.DeleteKey(AnnouncedKey);
 
         if (G.tree != null)
             G.tree.ResetProgress();
