@@ -25,6 +25,21 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
     [SerializeField] private float shakeStrength = 12f;
     [SerializeField] private float glitchDuration = 0.4f;
 
+    [Header("Поломка: монитор теряет сигнал, чинится ударами кулака")]
+    [Tooltip("Надпись «НЕТ СИГНАЛА» поверх экрана")]
+    [SerializeField] private GameObject brokenRoot;
+    [SerializeField] private TMP_Text brokenText;
+    [Tooltip("Кулак над монитором (не ловит клики)")]
+    [SerializeField] private RectTransform fist;
+    [Tooltip("Где висит кулак, пока ждёт удара (якорь вверху по центру монитора)")]
+    [SerializeField] private Vector2 fistRest = new(0f, 60f);
+    [Tooltip("Куда кулак опускается при ударе")]
+    [SerializeField] private Vector2 fistImpact = new(0f, 10f);
+    [SerializeField] private float fistPunchTime = 0.07f;
+    [Tooltip("Сколько снега на экране сразу после поломки; с каждым ударом меньше")]
+    [Range(0f, 1f)] [SerializeField] private float brokenStatic = 0.92f;
+    [SerializeField] private float hitShake = 9f;
+
     [Header("Таймкод: 23:00 → 00:00")]
     [SerializeField] private int startHour = 23;
     [SerializeField] private int clockMinutes = 60;
@@ -32,12 +47,17 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
     private static readonly int NoiseId = Shader.PropertyToID("_Noise");
     private static readonly int GlitchId = Shader.PropertyToID("_Glitch");
     private static readonly int DistortionId = Shader.PropertyToID("_Distortion");
+    private static readonly int StaticId = Shader.PropertyToID("_Static");
+    private static readonly int AberrationId = Shader.PropertyToID("_Aberration");
 
     private Belt belt;
     private int index;
     private Material material;
     private float baseNoise;
+    private float baseAberration;
     private float glitch;
+    private int faultHits;
+    private Tween fistIdle;
 
     public Belt Belt => belt;
 
@@ -47,17 +67,31 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
         material = new Material(screen.material);
         screen.material = material;
         baseNoise = material.GetFloat(NoiseId);
+        baseAberration = material.GetFloat(AberrationId);
     }
 
     private void Start()
     {
         G.shift.OnParcelResolved += HandleOutcome;
+        if (G.faults != null)
+        {
+            G.faults.OnBroken += HandleBroken;
+            G.faults.OnHit += HandleHit;
+            G.faults.OnRepaired += HandleRepaired;
+        }
+        HideFault();
     }
 
     private void OnDestroy()
     {
         if (G.shift != null)
             G.shift.OnParcelResolved -= HandleOutcome;
+        if (G.faults != null)
+        {
+            G.faults.OnBroken -= HandleBroken;
+            G.faults.OnHit -= HandleHit;
+            G.faults.OnRepaired -= HandleRepaired;
+        }
         if (belt != null)
             belt.Cam.OnOutputChanged -= HandleOutputChanged;
         Destroy(material);
@@ -83,7 +117,10 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
         ShowStamp(info);
 
         material.SetFloat(NoiseId, baseNoise * G.stats.camNoise);
+        // «Протереть глаза» убирает и цветную двоящуюся кайму: с ней картинка мыльная при любом разрешении
+        material.SetFloat(AberrationId, baseAberration * G.stats.camNoise);
         SetGlitch(0f);
+        HideFault();
     }
 
     // Чтобы игрок знал, какая марка «своя» для этой ленты
@@ -123,6 +160,7 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
 
         belt = null;
         index = slotIndex;
+        HideFault();
         gameObject.SetActive(true);
         liveRoot.SetActive(false);
         lockedRoot.SetActive(true);
@@ -136,9 +174,52 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
         gameObject.SetActive(false);
     }
 
+    // Где на экране монитора видна область мира (например, посылка): мировые углы UI-прямоугольника.
+    // Обратная к CctvMath.Distort считается итерациями: искажение небольшое, пары шагов хватает
+    public bool TryGetScreenCorners(Bounds world, out Vector3 min, out Vector3 max)
+    {
+        min = max = Vector3.zero;
+        if (belt == null || !liveRoot.activeInHierarchy)
+            return false;
+
+        Camera cam = belt.Cam.Camera;
+        float distortion = material.GetFloat(DistortionId);
+        Rect rect = screen.rectTransform.rect;
+        Vector2 lo = new(float.MaxValue, float.MaxValue);
+        Vector2 hi = new(float.MinValue, float.MinValue);
+
+        for (int i = 0; i < 8; i++)
+        {
+            Vector3 sign = new((i & 1) == 0 ? -1 : 1, (i & 2) == 0 ? -1 : 1, (i & 4) == 0 ? -1 : 1);
+            Vector3 vp = cam.WorldToViewportPoint(world.center + Vector3.Scale(world.extents, sign));
+            if (vp.z <= 0f)
+                continue;
+
+            Vector2 target = vp;
+            Vector2 uv = target;
+            for (int k = 0; k < 6; k++)
+                uv += target - CctvMath.Distort(uv, distortion);
+
+            Vector2 local = Rect.NormalizedToPoint(rect, new Vector2(Mathf.Clamp01(uv.x), Mathf.Clamp01(uv.y)));
+            lo = Vector2.Min(lo, local);
+            hi = Vector2.Max(hi, local);
+        }
+
+        if (lo.x > hi.x)
+            return false;
+
+        min = screen.rectTransform.TransformPoint(lo);
+        max = screen.rectTransform.TransformPoint(hi);
+        return true;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (belt == null || G.IsPaused || eventData.button != PointerEventData.InputButton.Left)
+        if (belt == null || G.IsFrozen || eventData.button != PointerEventData.InputButton.Left)
+            return;
+
+        // Сломанный монитор: клик = удар кулаком, посылки не выбираются
+        if (G.faults != null && G.faults.Hit(belt))
             return;
 
         RectTransform rt = screen.rectTransform;
@@ -173,14 +254,152 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
         if (belt == null || o.belt != belt || o.penalty <= 0)
             return;
 
-        if (shakeTarget != null)
+        Shake(shakeStrength);
+        Glitch(1f);
+    }
+
+    // ---------- Поломка ----------
+
+    private void HandleBroken(Belt b)
+    {
+        if (b != belt)
+            return;
+
+        faultHits = G.faults.HitsLeft(belt);
+        material.SetFloat(StaticId, brokenStatic);
+        if (brokenRoot != null)
+            brokenRoot.SetActive(true);
+        UpdateBrokenText(faultHits);
+        Glitch(1f);
+        Shake(shakeStrength);
+
+        if (fist == null)
+            return;
+
+        // Кулак спускается сверху и покачивается в ожидании
+        fistIdle?.Kill();
+        fist.DOKill();
+        fist.gameObject.SetActive(true);
+        fist.localScale = Vector3.one;
+        fist.anchoredPosition = fistRest + Vector2.up * 220f;
+        SetFistAlpha(1f);
+        fist.DOAnchorPos(fistRest, 0.35f).SetEase(Ease.OutBack).SetLink(gameObject)
+            .OnComplete(StartFistIdle);
+    }
+
+    private void HandleHit(Belt b, int hitsLeft)
+    {
+        if (b != belt)
+            return;
+
+        // С каждым ударом снег редеет
+        float left = faultHits > 0 ? hitsLeft / (float)faultHits : 0f;
+        material.SetFloat(StaticId, brokenStatic * Mathf.Lerp(0.45f, 1f, left));
+        UpdateBrokenText(hitsLeft);
+        Glitch(0.8f);
+
+        if (fist == null)
         {
-            shakeTarget.DOKill(true);
-            shakeTarget.DOShakeAnchorPos(0.3f, shakeStrength, 30).SetLink(gameObject);
+            Shake(hitShake);
+            return;
         }
 
+        fistIdle?.Kill();
+        fist.DOKill(true);
+        fist.localScale = Vector3.one;
+        // Замах вверх, удар вниз, встряска монитора, обратно
+        Sequence s = DOTween.Sequence().SetLink(gameObject).SetTarget(fist);
+        s.Append(fist.DOAnchorPos(fistRest + Vector2.up * 25f, fistPunchTime).SetEase(Ease.OutQuad));
+        s.Append(fist.DOAnchorPos(fistImpact, fistPunchTime).SetEase(Ease.InQuad));
+        s.AppendCallback(() => Shake(hitShake));
+        s.Append(fist.DOPunchScale(new Vector3(0.12f, -0.12f, 0f), 0.15f, 8));
+        if (hitsLeft > 0)
+        {
+            s.Append(fist.DOAnchorPos(fistRest, 0.18f).SetEase(Ease.OutQuad));
+            s.OnComplete(StartFistIdle);
+        }
+    }
+
+    private void HandleRepaired(Belt b)
+    {
+        if (b != belt)
+            return;
+
+        material.SetFloat(StaticId, 0f);
+        if (brokenRoot != null)
+            brokenRoot.SetActive(false);
+        Glitch(0.6f);
+
+        if (fist == null || !fist.gameObject.activeSelf)
+            return;
+
+        // Кулак уходит наверх, дав последнему удару доиграть
+        fistIdle?.Kill();
+        Sequence s = DOTween.Sequence().SetLink(gameObject);
+        s.AppendInterval(fistPunchTime * 2f + 0.2f);
+        s.Append(fist.DOAnchorPos(fistRest + Vector2.up * 200f, 0.35f).SetEase(Ease.InBack));
+        s.Join(DOTween.To(() => 1f, SetFistAlpha, 0f, 0.35f));
+        s.OnComplete(() => fist.gameObject.SetActive(false));
+    }
+
+    private void StartFistIdle()
+    {
+        if (fist == null)
+            return;
+
+        fistIdle?.Kill();
+        fist.anchoredPosition = fistRest;
+        fistIdle = fist.DOAnchorPosY(fistRest.y + 10f, 0.45f).SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo).SetLink(gameObject);
+    }
+
+    private void UpdateBrokenText(int hitsLeft)
+    {
+        if (brokenText != null)
+            brokenText.text = "НЕТ СИГНАЛА\n<size=70%>СТУКНИ!</size>";
+    }
+
+    private void HideFault()
+    {
+        if (material != null)
+            material.SetFloat(StaticId, 0f);
+        if (brokenRoot != null)
+            brokenRoot.SetActive(false);
+        if (fist != null)
+        {
+            fistIdle?.Kill();
+            fist.DOKill();
+            fist.gameObject.SetActive(false);
+        }
+
+        // Монитор могли привязать к ленте, которая уже сломана
+        if (belt != null && G.faults != null && G.faults.IsBroken(belt))
+            HandleBroken(belt);
+    }
+
+    private void SetFistAlpha(float a)
+    {
+        if (fist != null && fist.TryGetComponent(out Image img))
+        {
+            Color c = img.color;
+            c.a = a;
+            img.color = c;
+        }
+    }
+
+    private void Shake(float strength)
+    {
+        if (shakeTarget == null)
+            return;
+
+        shakeTarget.DOKill(true);
+        shakeTarget.DOShakeAnchorPos(0.25f, strength, 30).SetLink(gameObject);
+    }
+
+    private void Glitch(float from)
+    {
         DOTween.Kill(this);
-        DOTween.To(() => 1f, SetGlitch, 0f, glitchDuration).SetTarget(this).SetLink(gameObject);
+        DOTween.To(() => from, SetGlitch, 0f, glitchDuration).SetTarget(this).SetLink(gameObject);
     }
 
     private void SetGlitch(float value)
