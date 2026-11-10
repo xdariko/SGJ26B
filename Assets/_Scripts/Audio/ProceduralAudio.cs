@@ -39,6 +39,9 @@ public static class ProceduralAudio
             SfxId.PageTurn => (Whoosh(0.3f, 400f, 2200f, 0.5f), 5000f),
             SfxId.BookOpen => (Whoosh(0.45f, 250f, 1500f, 0.45f), 4500f),
             SfxId.Splash => (SplashSting(), 6000f),
+            SfxId.MonitorBreak => (StaticBurst(), 3000f),
+            SfxId.MonitorHit => (Thump(), 2400f),
+            SfxId.MonitorFix => (PowerOn(), 6000f),
             _ => (Click(), 4500f)
         };
         Warm(d, SfxRate, warmth);
@@ -138,6 +141,36 @@ public static class ProceduralAudio
         for (int tap = 0; tap < taps; tap++)
             for (int i = d.Length - 1; i >= ds; i--)
                 d[i] += d[i - ds] * feedback;
+    }
+
+    // Монитор потерял сигнал: шипение помех и проседающий гул кинескопа
+    private static float[] StaticBurst()
+    {
+        float[] d = Buf(0.6f);
+        AddNoise(d, SfxRate, 0, 0.55f, 3500f, 1200f, 0.5f, 0.005f, 4f, true);
+        AddNoise(d, SfxRate, 0, 0.5f, 900f, 400f, 0.35f, 0.005f, 5f);
+        AddTone(d, SfxRate, 0, 0.4f, 160f, 70f, 0.35f, 1, 0.005f, 6f);
+        return d;
+    }
+
+    // Кулак по корпусу: глухой удар + дребезг пластика
+    private static float[] Thump()
+    {
+        float[] d = Buf(0.3f);
+        AddTone(d, SfxRate, 0, 0.2f, 140f, 60f, 0.8f, 0, 0.001f, 18f);
+        AddNoise(d, SfxRate, 0, 0.05f, 1800f, 400f, 0.5f, 0.0005f, 60f);
+        AddTone(d, SfxRate, 0.01f, 0.12f, 420f, 380f, 0.15f, 1, 0.001f, 35f);
+        return d;
+    }
+
+    // Картинка вернулась: короткий писк кинескопа и два щипка вверх
+    private static float[] PowerOn()
+    {
+        float[] d = Buf(0.6f);
+        AddTone(d, SfxRate, 0, 0.12f, 200f, 1600f, 0.2f, 1, 0.002f, 12f);
+        Pluck(d, 0.08f, E5, 0.45f, 10f);
+        Pluck(d, 0.16f, A5, 0.45f, 9f);
+        return d;
     }
 
     // Деревянный «ток» — как кнопка старого радиоприёмника

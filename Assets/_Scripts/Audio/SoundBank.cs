@@ -94,6 +94,9 @@ public class SoundBank : ScriptableObject
         { SfxId.Splash, (0.7f, 0f, 1f) },
         { SfxId.BookOpen, (0.6f, 0.05f, 0.2f) },
         { SfxId.UiHover, (0.3f, 0.06f, 0.06f) },
+        { SfxId.MonitorBreak, (0.6f, 0.05f, 0.2f) },
+        { SfxId.MonitorHit, (0.8f, 0.08f, 0.04f) },
+        { SfxId.MonitorFix, (0.6f, 0.02f, 0.1f) },
     };
 
     private Dictionary<SfxId, SfxEntry> sfxMap;

@@ -18,7 +18,10 @@ public enum SfxId
     PageTurn,        // книга, комикс
     Splash,          // логотип на старте
     BookOpen,
-    UiHover          // курсор навели на кнопку
+    UiHover,         // курсор навели на кнопку
+    MonitorBreak,    // монитор потерял сигнал
+    MonitorHit,      // удар кулаком по монитору
+    MonitorFix       // монитор снова показывает
 }
 
 public enum MusicId

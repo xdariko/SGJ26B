@@ -26,6 +26,12 @@ public class GameAudio : MonoBehaviour
             G.familiars.OnPounce += HandlePounce;
         if (G.tree != null)
             G.tree.OnNodePurchased += HandlePurchased;
+        if (G.faults != null)
+        {
+            G.faults.OnBroken += HandleMonitorBroken;
+            G.faults.OnHit += HandleMonitorHit;
+            G.faults.OnRepaired += HandleMonitorRepaired;
+        }
         subscribed = true;
 
         // Смена могла начаться раньше нашего Start (Main.Start идёт первым)
@@ -50,6 +56,12 @@ public class GameAudio : MonoBehaviour
             G.familiars.OnPounce -= HandlePounce;
         if (G.tree != null)
             G.tree.OnNodePurchased -= HandlePurchased;
+        if (G.faults != null)
+        {
+            G.faults.OnBroken -= HandleMonitorBroken;
+            G.faults.OnHit -= HandleMonitorHit;
+            G.faults.OnRepaired -= HandleMonitorRepaired;
+        }
     }
 
     private void HandleShiftStarted()
@@ -112,6 +124,23 @@ public class GameAudio : MonoBehaviour
                 AudioHub.Play(o.correct ? SfxId.Deliver : SfxId.Complaint);
                 break;
         }
+    }
+
+    private void HandleMonitorBroken(Belt belt)
+    {
+        AudioHub.Play(SfxId.MonitorBreak);
+    }
+
+    private void HandleMonitorHit(Belt belt, int hitsLeft)
+    {
+        AudioHub.Play(SfxId.MonitorHit);
+    }
+
+    private void HandleMonitorRepaired(Belt belt)
+    {
+        // Конец смены чинит всё молча
+        if (G.shift.Current == ShiftController.State.Running)
+            AudioHub.Play(SfxId.MonitorFix);
     }
 
     private void HandlePounce(Familiar f, Parcel target)
