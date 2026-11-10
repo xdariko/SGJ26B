@@ -36,6 +36,11 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
     [Tooltip("Куда кулак опускается при ударе")]
     [SerializeField] private Vector2 fistImpact = new(0f, 10f);
     [SerializeField] private float fistPunchTime = 0.07f;
+    [Tooltip("Общий размер кулака")]
+    [SerializeField] private float fistSize = 0.85f;
+    [Tooltip("При такой ширине монитора кулак в полном размере; мониторы меньше — кулак меньше")]
+    [SerializeField] private float fistReferenceWidth = 1000f;
+    [SerializeField] private float fistMinScale = 0.5f;
     [Tooltip("Сколько снега на экране сразу после поломки; с каждым ударом меньше")]
     [Range(0f, 1f)] [SerializeField] private float brokenStatic = 0.92f;
     [SerializeField] private float hitShake = 9f;
@@ -58,6 +63,8 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
     private float glitch;
     private int faultHits;
     private Tween fistIdle;
+    // Масштаб кулака под текущий размер монитора: все сдвиги кулака умножаются на него
+    private float fistK = 1f;
 
     public Belt Belt => belt;
 
@@ -280,10 +287,11 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
         fistIdle?.Kill();
         fist.DOKill();
         fist.gameObject.SetActive(true);
-        fist.localScale = Vector3.one;
-        fist.anchoredPosition = fistRest + Vector2.up * 220f;
+        fistK = FistScale();
+        fist.localScale = Vector3.one * fistK;
+        fist.anchoredPosition = (fistRest + Vector2.up * 220f) * fistK;
         SetFistAlpha(1f);
-        fist.DOAnchorPos(fistRest, 0.35f).SetEase(Ease.OutBack).SetLink(gameObject)
+        fist.DOAnchorPos(fistRest * fistK, 0.35f).SetEase(Ease.OutBack).SetLink(gameObject)
             .OnComplete(StartFistIdle);
     }
 
@@ -306,16 +314,16 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
 
         fistIdle?.Kill();
         fist.DOKill(true);
-        fist.localScale = Vector3.one;
+        fist.localScale = Vector3.one * fistK;
         // Замах вверх, удар вниз, встряска монитора, обратно
         Sequence s = DOTween.Sequence().SetLink(gameObject).SetTarget(fist);
-        s.Append(fist.DOAnchorPos(fistRest + Vector2.up * 25f, fistPunchTime).SetEase(Ease.OutQuad));
-        s.Append(fist.DOAnchorPos(fistImpact, fistPunchTime).SetEase(Ease.InQuad));
+        s.Append(fist.DOAnchorPos((fistRest + Vector2.up * 25f) * fistK, fistPunchTime).SetEase(Ease.OutQuad));
+        s.Append(fist.DOAnchorPos(fistImpact * fistK, fistPunchTime).SetEase(Ease.InQuad));
         s.AppendCallback(() => Shake(hitShake));
-        s.Append(fist.DOPunchScale(new Vector3(0.12f, -0.12f, 0f), 0.15f, 8));
+        s.Append(fist.DOPunchScale(new Vector3(0.12f, -0.12f, 0f) * fistK, 0.15f, 8));
         if (hitsLeft > 0)
         {
-            s.Append(fist.DOAnchorPos(fistRest, 0.18f).SetEase(Ease.OutQuad));
+            s.Append(fist.DOAnchorPos(fistRest * fistK, 0.18f).SetEase(Ease.OutQuad));
             s.OnComplete(StartFistIdle);
         }
     }
@@ -337,7 +345,7 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
         fistIdle?.Kill();
         Sequence s = DOTween.Sequence().SetLink(gameObject);
         s.AppendInterval(fistPunchTime * 2f + 0.2f);
-        s.Append(fist.DOAnchorPos(fistRest + Vector2.up * 200f, 0.35f).SetEase(Ease.InBack));
+        s.Append(fist.DOAnchorPos((fistRest + Vector2.up * 200f) * fistK, 0.35f).SetEase(Ease.InBack));
         s.Join(DOTween.To(() => 1f, SetFistAlpha, 0f, 0.35f));
         s.OnComplete(() => fist.gameObject.SetActive(false));
     }
@@ -348,9 +356,16 @@ public class MonitorView : MonoBehaviour, IPointerDownHandler
             return;
 
         fistIdle?.Kill();
-        fist.anchoredPosition = fistRest;
-        fistIdle = fist.DOAnchorPosY(fistRest.y + 10f, 0.45f).SetEase(Ease.InOutSine)
+        fist.anchoredPosition = fistRest * fistK;
+        fistIdle = fist.DOAnchorPosY((fistRest.y + 10f) * fistK, 0.45f).SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo).SetLink(gameObject);
+    }
+
+    private float FistScale()
+    {
+        float width = ((RectTransform)transform).rect.width;
+        float k = fistReferenceWidth > 0f ? Mathf.Clamp(width / fistReferenceWidth, fistMinScale, 1f) : 1f;
+        return fistSize * k;
     }
 
     private void UpdateBrokenText(int hitsLeft)
