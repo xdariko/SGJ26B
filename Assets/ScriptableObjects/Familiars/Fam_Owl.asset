@@ -15,11 +15,31 @@ MonoBehaviour:
   displayName: "\u0421\u043E\u0432\u0430"
   feminine: 1
   sprite: {fileID: 21300000, guid: 0b7e27ad7538c434b8dd4485d365118a, type: 3}
+  pounceClips: []
   unlockEffect: fam_owl
-  rateEffect: 
+  rateEffect: fam_owl_rate
   cooldown: 6
   pounceTime: 0.35
   targets: 03000000
   releasesGhosts: 0
   zoneStart: 0.3
   zoneEnd: 0.92
+  zoneEffect: fam_owl_zone
+  minZoneStart: 0.08
+  doubleEffect: fam_owl_double
+  special: 3
+  specialEffect: fam_owl_special
+  specialChance: 1
+  specialAmount: 0
+  reportColor: {r: 0.54, g: 0.4, b: 0.15, a: 1}
+  reportNoun: "\u043F\u043E\u0441\u044B\u043B\u043A\u0443|\u043F\u043E\u0441\u044B\u043B\u043A\u0438|\u043F\u043E\u0441\u044B\u043B\u043E\u043A"
+  reportLines:
+  - text: "\u0421\u043E\u0432\u0430 \u0441\u043D\u044F\u043B\u0430 {0} {1} \u0441
+      \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u0435\u043C"
+    minCount: 1
+  - text: "\u0421\u043E\u0432\u0430 \u043D\u0435 \u0441\u043E\u043C\u043A\u043D\u0443\u043B\u0430
+      \u0433\u043B\u0430\u0437: {0} {1} \u0441 \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u0435\u043C"
+    minCount: 1
+  - text: "\u0421\u043E\u0432\u0430 \u0443\u043D\u0435\u0441\u043B\u0430 {0} {1}
+      \u0441 \u043F\u0440\u043E\u043A\u043B\u044F\u0442\u0438\u0435\u043C. \u0423\u0445!"
+    minCount: 1

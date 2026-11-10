@@ -13,12 +13,30 @@ MonoBehaviour:
   m_Name: Fam_Raven
   m_EditorClassIdentifier: Assembly-CSharp::FamiliarDefinition
   displayName: "\u0412\u043E\u0440\u043E\u043D"
+  feminine: 0
   sprite: {fileID: 21300000, guid: 9a9191b6f24316b4ebb8c89e68bf633b, type: 3}
+  pounceClips: []
   unlockEffect: fam_raven
-  rateEffect: 
+  rateEffect: fam_raven_rate
   cooldown: 5
   pounceTime: 0.35
   targets: 02000000
   releasesGhosts: 0
   zoneStart: 0.3
   zoneEnd: 0.92
+  zoneEffect: fam_raven_zone
+  minZoneStart: 0.08
+  doubleEffect: fam_raven_double
+  special: 2
+  specialEffect: fam_raven_special
+  specialChance: 1
+  specialAmount: 3
+  reportColor: {r: 0.24, g: 0.36, b: 0.55, a: 1}
+  reportNoun: "\u043F\u043E\u0441\u044B\u043B\u043A\u0443|\u043F\u043E\u0441\u044B\u043B\u043A\u0438|\u043F\u043E\u0441\u044B\u043B\u043E\u043A"
+  reportLines:
+  - text: "\u0412\u043E\u0440\u043E\u043D \u0432\u0435\u0440\u043D\u0443\u043B \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u0435\u043B\u044F\u043C
+      {0} {1}"
+    minCount: 1
+  - text: "\u0412\u043E\u0440\u043E\u043D \u043F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u0438\u043B
+      {0} {1} \u0438 \u043E\u0434\u043D\u0443 \u043F\u0443\u0433\u043E\u0432\u0438\u0446\u0443"
+    minCount: 2

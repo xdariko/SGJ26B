@@ -15,6 +15,20 @@ public class FamiliarManager : ManagedBehaviour
     public event Action OnRosterChanged;
     // Фамильяр выбрал цель и прыгнул (посылка снимется через pounceTime)
     public event Action<Familiar, Parcel> OnPounce;
+    // Сработал двойной прыжок: фамильяр не отдыхает
+    public event Action<Familiar> OnDoubleJump;
+
+    // Умение совы: пока она отдыхает (или летит), проклятия светятся ярче
+    public bool CurseSight
+    {
+        get
+        {
+            foreach (Familiar f in active)
+                if (f.hasSpecial && f.def.special == FamiliarSpecial.CurseSight && !f.IsReady)
+                    return true;
+            return false;
+        }
+    }
 
     private void Awake()
     {
@@ -44,11 +58,19 @@ public class FamiliarManager : ManagedBehaviour
             if (def == null || !G.stats.HasUnlock(def.unlockEffect))
                 continue;
 
-            float own = string.IsNullOrEmpty(def.rateEffect) ? 0f : G.tree.GetEffectValue(def.rateEffect);
-            active.Add(new Familiar(def, (1f + own) * G.stats.famRateMult));
+            active.Add(new Familiar(def,
+                1f + Value(def.rateEffect),
+                Value(def.zoneEffect),
+                Value(def.doubleEffect),
+                def.special != FamiliarSpecial.None && G.stats.HasUnlock(def.specialEffect)));
         }
 
         OnRosterChanged?.Invoke();
+    }
+
+    private static float Value(string effectId)
+    {
+        return string.IsNullOrEmpty(effectId) || G.tree == null ? 0f : G.tree.GetEffectValue(effectId);
     }
 
     protected override void PausableUpdate()
@@ -70,12 +92,13 @@ public class FamiliarManager : ManagedBehaviour
                 Parcel target = f.Target;
                 claimed.Remove(target);
                 if (target != null && !target.IsResolved)
-                    G.shift.HandleFamiliar(target, f.def);
-                f.Finish();
+                    G.shift.HandleFamiliar(target, f);
+                if (f.Finish())
+                    OnDoubleJump?.Invoke(f);
             }
             else if (f.IsReady)
             {
-                Parcel target = FindTarget(f.def);
+                Parcel target = FindTarget(f);
                 if (target == null)
                     continue;
 
@@ -87,8 +110,9 @@ public class FamiliarManager : ManagedBehaviour
     }
 
     // Самая срочная видимая цель: та, что ближе всех к концу ленты
-    private Parcel FindTarget(FamiliarDefinition def)
+    private Parcel FindTarget(Familiar f)
     {
+        FamiliarDefinition def = f.def;
         Parcel best = null;
         float bestProgress = -1f;
 
@@ -104,7 +128,7 @@ public class FamiliarManager : ManagedBehaviour
                     continue;
 
                 float progress = p.Distance / length;
-                if (progress < def.zoneStart || progress > def.zoneEnd || progress <= bestProgress)
+                if (progress < f.zoneStart || progress > def.zoneEnd || progress <= bestProgress)
                     continue;
 
                 best = p;
@@ -120,7 +144,7 @@ public class FamiliarManager : ManagedBehaviour
     {
         int camLevel = G.stats.camLevel;
 
-        if (def.releasesGhosts && p.HasGhost && camLevel >= 3)
+        if (def.releasesGhosts && p.HasGhost)
             return true;
 
         return def.targets.Contains(p.Kind) && G.config.GetRule(p.Kind).requiredCamLevel <= camLevel;
