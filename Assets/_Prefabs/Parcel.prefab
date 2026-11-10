@@ -239,10 +239,11 @@ MonoBehaviour:
   aura: {fileID: 1226621370508792669}
   ghostAura: {fileID: 7564751796496353794}
   mimicAura: {fileID: 8673994398157167551}
-  mimicColor: {r: 0.86, g: 0.18, b: 0.16, a: 0.9}
-  mimicSize: 1.7
+  mimicColor: {r: 0.95, g: 0.2, b: 0.17, a: 1}
+  mimicSize: 2.4
   mimicBeatScale: 1.15
   mimicBeatPause: 0.55
+  mimicDimAlpha: 0.6
   ghostColor: {r: 0.62, g: 0.95, b: 0.9, a: 0.75}
   ghostSize: 1.9
   ghostBreathTime: 1.4
@@ -254,6 +255,7 @@ MonoBehaviour:
   deliverDuration: 0.2
   ghostFlyHeight: 2
   ghostFlyDuration: 0.6
+  tutorialGlow: 0.9
 --- !u!210 &7590371289689085118
 SortingGroup:
   m_ObjectHideFlags: 0

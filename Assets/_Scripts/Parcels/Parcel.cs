@@ -15,6 +15,8 @@ public class Parcel : MonoBehaviour
 
     // Пройденный путь по ленте, в мировых единицах
     public float Distance { get; set; }
+    // Сдвиг поперёк ленты, чтобы посылка ехала по середине полотна (ставит Belt)
+    public Vector3 LaneOffset { get; set; }
 
     // facing: поворот камеры ленты, чтобы спрайты стояли лицом к ней
     public void Setup(ParcelSpec spec, Belt belt, Quaternion facing)
@@ -24,6 +26,7 @@ public class Parcel : MonoBehaviour
         HasGhost = spec.hasGhost;
         IsResolved = false;
         Distance = 0f;
+        LaneOffset = Vector3.zero;
 
         visual.Show(spec, G.config, facing);
     }

@@ -16,8 +16,10 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 0452d5e9ae176524cb2ca0c290a3eee0, type: 3}
   isTrash: 0
   value: 3
+  addressee: 0
   minNight: 4
   requiredUnlock: 
   weight: 0.5
   scale: 1
+  beltAnchor: 0
   stampOffset: {x: 0.15, y: -0.05}

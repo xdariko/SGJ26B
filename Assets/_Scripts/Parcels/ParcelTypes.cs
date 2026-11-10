@@ -39,6 +39,8 @@ public class KindRule
     public bool mustRemove;
     [Tooltip("Монеты за верное снятие. За доставку платит сам предмет (ParcelDefinition.value)")]
     public int reward;
+    [Tooltip("Эктоплазма за верное снятие (мимик роняет каплю)")]
+    public int ectoReward;
     [Tooltip("Штраф за доставку того, что надо было снять")]
     public int penalty;
     [Tooltip("С какого уровня камеры игрок видит этот тип")]
@@ -55,6 +57,17 @@ public class NightNote
 {
     [Min(1)] public int night = 1;
     [TextArea] public string text;
+    [Tooltip("Не показывать, если этот Unlock-эффект уже куплен (записка-намёк на то, что уже открыто)")]
+    public string hideIfUnlocked;
+}
+
+// Записка в начале ночи после покупки в книге: «открылась лента», «пришёл кот»...
+[Serializable]
+public class UnlockNote
+{
+    [Tooltip("id Unlock-эффекта из книги")]
+    public string effectId;
+    [TextArea] public string text;
 }
 
 [Serializable]
@@ -65,6 +78,8 @@ public class TraitChance
     [Range(0f, 1f)] public float chance = 0.1f;
     [Tooltip("Минимальный уровень камеры, чтобы признак начал выпадать. -1 = выпадает даже невидимым")]
     public int minCamLevel = -1;
+    [Tooltip("id Unlock-эффекта из книги, без которого признак не выпадает. Пусто = открыт сразу")]
+    public string requiredUnlock;
 }
 
 [Serializable]

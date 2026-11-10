@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-// Камера-тыква над лентой. Рендерит в свою RenderTexture, разрешение и видимые слои = уровень камеры.
+// Камера над лентой. Рендерит в свою RenderTexture: разрешение = чёткость, видимые слои = уровень камеры.
 [RequireComponent(typeof(Camera))]
 public class BeltCamera : MonoBehaviour
 {
@@ -19,13 +19,13 @@ public class BeltCamera : MonoBehaviour
         cam = GetComponent<Camera>();
     }
 
-    public void Setup(int camLevel)
+    public void Setup(int camLevel, int sharpness)
     {
         if (cam == null)
             cam = GetComponent<Camera>();
 
         Vector2Int[] resolutions = G.config.cameraResolutions;
-        Vector2Int res = resolutions[Mathf.Clamp(camLevel, 0, resolutions.Length - 1)];
+        Vector2Int res = resolutions[Mathf.Clamp(sharpness, 0, resolutions.Length - 1)];
 
         if (rt == null || rt.width != res.x || rt.height != res.y)
         {
@@ -34,6 +34,8 @@ public class BeltCamera : MonoBehaviour
             {
                 name = $"{name}_RT",
                 filterMode = FilterMode.Bilinear,
+                // Сглаживание краёв: без него на высоких уровнях «Протереть глаза» видны лесенки
+                antiAliasing = 2,
                 wrapMode = TextureWrapMode.Clamp
             };
             rt.Create();

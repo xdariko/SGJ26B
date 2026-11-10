@@ -6,6 +6,8 @@ using UnityEngine.Serialization;
 
 // Внешний вид посылки. Слои-дети лежат на разных Layer, их показывает или прячет камера (CamVision).
 // Спрайты стоят лицом к камере ленты (billboard), пивот у спрайтов посылок — снизу по центру.
+// Ауры проклятия, мимика и призрака мигают: вспыхивают на onTime, гаснут на offTime, яркость на пике = strength
+// (у проклятия, мимика и призрака свои настройки в GameStats, качаются в книге). Твины аур крутят только «свой» цвет, итог считается в LateUpdate.
 // Чтобы поменять арт: подменить спрайты в ParcelDefinition / GameConfig или прямо PNG-файлы.
 public class ParcelVisual : MonoBehaviour
 {
@@ -25,6 +27,8 @@ public class ParcelVisual : MonoBehaviour
     [SerializeField] private float mimicBeatScale = 1.15f;
     [Tooltip("Пауза между двойными ударами")]
     [SerializeField] private float mimicBeatPause = 0.55f;
+    [Tooltip("Яркость ауры между ударами (доля от пика)")]
+    [Range(0f, 1f)] [SerializeField] private float mimicDimAlpha = 0.6f;
 
     [Header("Аура призрака: бледная, дышит и дрожит")]
     [SerializeField] private Color ghostColor = new(0.62f, 0.95f, 0.9f, 0.75f);
@@ -45,6 +49,18 @@ public class ParcelVisual : MonoBehaviour
     [SerializeField] private float ghostFlyHeight = 2f;
     [SerializeField] private float ghostFlyDuration = 0.6f;
 
+    [Header("Мигание аур")]
+    [Tooltip("Яркость свечения, пока идёт обучение: посылку должно быть хорошо видно")]
+    [Range(0f, 1f)] [SerializeField] private float tutorialGlow = 0.9f;
+
+    private Color curseColor;
+    private Color mimicTint;
+    private Color ghostTint;
+    // false после снятия/доставки: дальше альфой управляют анимации исчезновения
+    private bool glowLive;
+    private bool ghostFlying;
+    private float glowPhase;
+
     private Vector3 auraCenter;
     private Vector3 mimicBaseScale;
     private Vector3 ghostBaseScale;
@@ -53,14 +69,32 @@ public class ParcelVisual : MonoBehaviour
 
     public Bounds ClickBounds => body.bounds;
 
+    // Посылка вместе с включёнными аурами (для подсветки в обучении)
+    public Bounds GlowBounds
+    {
+        get
+        {
+            Bounds b = body.bounds;
+            if (aura.enabled) b.Encapsulate(aura.bounds);
+            if (mimicAura.enabled) b.Encapsulate(mimicAura.bounds);
+            if (ghostAura.enabled) b.Encapsulate(ghostAura.bounds);
+            return b;
+        }
+    }
+
     private void Awake()
     {
         renderers = GetComponentsInChildren<SpriteRenderer>(true);
+        curseColor = aura.color;
     }
 
     public void Show(ParcelSpec spec, GameConfig cfg, Quaternion facing)
     {
         KillLoops();
+        glowLive = true;
+        ghostFlying = false;
+        // Разные посылки мигают вразнобой
+        glowPhase = UnityEngine.Random.value * 10f;
         transform.rotation = facing;
         transform.localScale = Vector3.one * (spec.shape != null ? spec.shape.scale : 1f) * cfg.parcelScale;
         body.sprite = spec.shape != null ? spec.shape.sprite : null;
@@ -108,21 +142,21 @@ public class ParcelVisual : MonoBehaviour
     {
         Transform t = mimicAura.transform;
         Color dim = mimicColor;
-        dim.a *= 0.45f;
-        mimicAura.color = dim;
+        dim.a *= mimicDimAlpha;
+        mimicTint = dim;
 
         Vector3 big = mimicBaseScale * mimicBeatScale;
         Vector3 mid = mimicBaseScale * Mathf.Lerp(1f, mimicBeatScale, 0.6f);
 
         Sequence s = DOTween.Sequence()
             .Append(t.DOScale(big, 0.09f).SetEase(Ease.OutQuad))
-            .Join(mimicAura.DOColor(mimicColor, 0.09f))
+            .Join(MimicTo(mimicColor, 0.09f))
             .Append(t.DOScale(mimicBaseScale, 0.12f).SetEase(Ease.InQuad))
-            .Join(mimicAura.DOColor(dim, 0.12f))
+            .Join(MimicTo(dim, 0.12f))
             .Append(t.DOScale(mid, 0.08f).SetEase(Ease.OutQuad))
-            .Join(mimicAura.DOColor(mimicColor, 0.08f))
+            .Join(MimicTo(mimicColor, 0.08f))
             .Append(t.DOScale(mimicBaseScale, 0.25f).SetEase(Ease.InOutSine))
-            .Join(mimicAura.DOColor(dim, 0.25f))
+            .Join(MimicTo(dim, 0.25f))
             .AppendInterval(mimicBeatPause)
             .SetLoops(-1)
             .SetLink(gameObject);
@@ -131,19 +165,22 @@ public class ParcelVisual : MonoBehaviour
         loops.Add(s);
     }
 
-    // Медленное дыхание + мелкая беспокойная дрожь ауры (сама посылка не дрожит,
-    // иначе призрака было бы видно и без камеры 3-го уровня)
+    private Tween MimicTo(Color c, float d) => DOTween.To(() => mimicTint, v => mimicTint = v, c, d);
+    private Tween GhostTo(Color c, float d) => DOTween.To(() => ghostTint, v => ghostTint = v, c, d);
+
+    // Медленное дыхание + мелкая беспокойная дрожь ауры (сама посылка не дрожит:
+    // призрака выдаёт только мигающая аура)
     private void StartGhostShiver()
     {
         Transform t = ghostAura.transform;
         Color dim = ghostColor;
         dim.a *= 0.4f;
-        ghostAura.color = dim;
+        ghostTint = dim;
 
         Tween breath = DOTween.Sequence()
-            .Append(ghostAura.DOColor(ghostColor, ghostBreathTime * 0.5f).SetEase(Ease.InOutSine))
+            .Append(GhostTo(ghostColor, ghostBreathTime * 0.5f).SetEase(Ease.InOutSine))
             .Join(t.DOScale(ghostBaseScale * 1.06f, ghostBreathTime * 0.5f).SetEase(Ease.InOutSine))
-            .Append(ghostAura.DOColor(dim, ghostBreathTime * 0.5f).SetEase(Ease.InOutSine))
+            .Append(GhostTo(dim, ghostBreathTime * 0.5f).SetEase(Ease.InOutSine))
             .Join(t.DOScale(ghostBaseScale, ghostBreathTime * 0.5f).SetEase(Ease.InOutSine))
             .SetLoops(-1)
             .SetLink(gameObject);
@@ -165,6 +202,44 @@ public class ParcelVisual : MonoBehaviour
         loops.Add(shiver);
     }
 
+    private void LateUpdate()
+    {
+        if (!glowLive)
+            return;
+
+        GameStats s = G.stats;
+        if (aura.enabled)
+            aura.color = Fade(curseColor, GlowFactor(G.familiars != null && G.familiars.CurseSight ? s?.curseGlowSight : s?.curseGlow));
+        if (mimicAura.enabled)
+            mimicAura.color = Fade(mimicTint, GlowFactor(s?.mimicGlow));
+        if (ghostAura.enabled && !ghostFlying)
+            ghostAura.color = Fade(ghostTint, GlowFactor(s?.ghostGlow));
+    }
+
+    private static Color Fade(Color c, float k)
+    {
+        c.a *= k;
+        return c;
+    }
+
+    // 0..strength: плавная вспышка на onTime, потом темнота на offTime
+    private float GlowFactor(GlowStats s)
+    {
+        if (s == null)
+            return 1f;
+
+        if (G.IsTutorial)
+            return Mathf.Max(s.strength, tutorialGlow);
+
+        float on = Mathf.Max(0.05f, s.onTime);
+        float t = Mathf.Repeat(Time.time + glowPhase, on + s.offTime);
+        if (t >= on)
+            return 0f;
+
+        float fade = Mathf.Clamp(G.config.glowFade, 0.01f, on * 0.5f);
+        return Mathf.Min(1f, t / fade, (on - t) / fade) * s.strength;
+    }
+
     private void KillLoops()
     {
         foreach (Tween tw in loops)
@@ -180,6 +255,7 @@ public class ParcelVisual : MonoBehaviour
     public void PlayRemove(Action onComplete)
     {
         KillLoops();
+        glowLive = false;
         Transform root = transform.parent;
         Vector3 floorTarget = transform.localPosition + (Vector3)removeOffset;
         // «Вверх» над полом = -Z в пространстве ленты
@@ -201,6 +277,7 @@ public class ParcelVisual : MonoBehaviour
     public void PlayDeliver(Action onComplete)
     {
         KillLoops();
+        glowLive = false;
         transform.DOScale(0f, deliverDuration)
             .SetEase(Ease.InBack)
             .SetLink(gameObject)
@@ -218,6 +295,9 @@ public class ParcelVisual : MonoBehaviour
             StartMimicPulse();
         }
 
+        ghostFlying = true;
+        // Вылет видно всегда, даже если клик пришёлся на погасшую фазу мигания
+        ghostAura.color = ghostColor;
         Transform g = ghostAura.transform;
         g.localPosition = auraCenter;
         g.DOLocalMoveY(auraCenter.y + ghostFlyHeight, ghostFlyDuration).SetEase(Ease.OutQuad).SetLink(gameObject);

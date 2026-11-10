@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b49be5be89220e45bd78e4b4e79958f, type: 3}
   m_Name: Shape_BottleGreen
   m_EditorClassIdentifier: Assembly-CSharp::ParcelDefinition
-  displayName: "Бутыль"
+  displayName: "\u0411\u0443\u0442\u044B\u043B\u044C"
   sprite: {fileID: 21300000, guid: 0375e85555b44045af812d1c7186e607, type: 3}
   isTrash: 0
   value: 3
@@ -21,4 +21,5 @@ MonoBehaviour:
   requiredUnlock: 
   weight: 0.5
   scale: 1
+  beltAnchor: 0
   stampOffset: {x: 0.15, y: -0.05}

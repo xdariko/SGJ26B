@@ -29,6 +29,10 @@ public static class ParcelFactory
             if (night < tc.minNight || stats.camLevel < tc.minCamLevel)
                 continue;
 
+            // Проклятия, мимиков и призраков игрок открывает сам в книге
+            if (!string.IsNullOrEmpty(tc.requiredUnlock) && !stats.HasUnlock(tc.requiredUnlock))
+                continue;
+
             if (tc.trait == ParcelTrait.WrongAddress && beltAddress == Addressee.Any)
                 continue;
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 
-// Скрытые признаки посылок лежат на отдельных слоях. Уровень камеры = какие слои она рендерит.
+// Признаки посылок лежат на отдельных слоях. Марки видны только с «Ровной резьбой» (уровень 1),
+// свечение проклятий, мимиков и призраков камера видит всегда (насколько ярко — решает ParcelVisual).
 public static class CamVision
 {
     public const string ParcelsLayer = "Parcels";
@@ -12,11 +13,9 @@ public static class CamVision
 
     public static int GetCullingMask(int camLevel, int baseMask)
     {
-        int mask = baseMask | LayerMask.GetMask(ParcelsLayer);
+        int mask = baseMask | LayerMask.GetMask(ParcelsLayer, CurseLayer, GhostLayer);
 
         if (camLevel >= 1) mask |= LayerMask.GetMask(StampLayer);
-        if (camLevel >= 2) mask |= LayerMask.GetMask(CurseLayer);
-        if (camLevel >= 3) mask |= LayerMask.GetMask(GhostLayer);
 
         return mask;
     }

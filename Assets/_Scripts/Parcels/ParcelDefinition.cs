@@ -22,6 +22,8 @@ public class ParcelDefinition : ScriptableObject
     [Min(0f)] public float weight = 1f;
     [Tooltip("Множитель размера на ленте")]
     public float scale = 1f;
+    [Tooltip("Какая точка спрайта по высоте едет по середине ленты: 0 = нижний край, 0.5 = центр")]
+    [Range(0f, 1f)] public float beltAnchor = 0.5f;
     [Tooltip("Сдвиг печати от центра спрайта, в юнитах")]
     public Vector2 stampOffset = new(0.15f, -0.05f);
 
