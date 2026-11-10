@@ -24,6 +24,8 @@ public struct ParcelOutcome
     public Belt belt;
     // Кто сделал: null = игрок или лента, иначе фамильяр
     public FamiliarDefinition familiar;
+    // Сработало особое умение фамильяра (монеты/эктоплазма в coins/ecto уже с бонусом)
+    public bool familiarBonus;
 }
 
 public static class ParcelJudge
@@ -55,6 +57,8 @@ public static class ParcelJudge
                 ? parcel.Spec.shape.value
                 : rule.reward;
             o.coins = Mathf.RoundToInt(reward * stats.parcelValueMult);
+            if (action == ParcelAction.Removed)
+                o.ecto = rule.ectoReward;
         }
         else if (action == ParcelAction.Delivered)
         {

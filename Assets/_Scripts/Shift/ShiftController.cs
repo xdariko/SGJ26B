@@ -62,7 +62,7 @@ public class ShiftController : ManagedBehaviour
             if (!active)
                 continue;
 
-            belt.Cam.Setup(G.stats.camLevel);
+            belt.Cam.Setup(G.stats.camLevel, G.stats.camSharpness);
             belt.Begin(GetLineAddressee(i), Night);
         }
 
@@ -90,7 +90,7 @@ public class ShiftController : ManagedBehaviour
         if (Current != State.Running || parcel == null || parcel.IsResolved)
             return;
 
-        if (parcel.HasGhost && G.stats.camLevel >= 3)
+        if (parcel.HasGhost)
         {
             Resolve(parcel, ParcelAction.GhostReleased);
             parcel.ReleaseGhost();
@@ -102,12 +102,12 @@ public class ShiftController : ManagedBehaviour
     }
 
     // Фамильяр снимает посылку (или выпускает призрака). Комбо игрока не трогает.
-    public void HandleFamiliar(Parcel parcel, FamiliarDefinition familiar)
+    public void HandleFamiliar(Parcel parcel, Familiar familiar)
     {
         if (Current != State.Running || parcel == null || parcel.IsResolved)
             return;
 
-        if (familiar.releasesGhosts && parcel.HasGhost && G.stats.camLevel >= 3)
+        if (familiar.def.releasesGhosts && parcel.HasGhost)
         {
             Resolve(parcel, ParcelAction.GhostReleased, familiar);
             parcel.ReleaseGhost();
@@ -123,7 +123,7 @@ public class ShiftController : ManagedBehaviour
     {
         foreach (Belt belt in belts)
             if (belt.gameObject.activeInHierarchy)
-                belt.Cam.Setup(G.stats.camLevel);
+                belt.Cam.Setup(G.stats.camLevel, G.stats.camSharpness);
     }
 
     private void HandleReachedEnd(Parcel parcel)
@@ -132,10 +132,12 @@ public class ShiftController : ManagedBehaviour
         parcel.Deliver();
     }
 
-    private void Resolve(Parcel parcel, ParcelAction action, FamiliarDefinition familiar = null)
+    private void Resolve(Parcel parcel, ParcelAction action, Familiar familiar = null)
     {
         ParcelOutcome outcome = ParcelJudge.Evaluate(parcel, action, G.config, G.stats);
-        outcome.familiar = familiar;
+        outcome.familiar = familiar?.def;
+        if (familiar != null && familiar.hasSpecial)
+            FamiliarSpecials.Apply(ref outcome, familiar.def);
         Score.Register(ref outcome);
 
         if (G.wallet != null)

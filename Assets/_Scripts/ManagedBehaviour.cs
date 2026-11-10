@@ -14,9 +14,14 @@ public static class G
     public static CurrencyWallet wallet;
     public static ShiftController shift;
     public static FamiliarManager familiars;
+    public static CameraFaults faults;
 
     public static bool IsPaused;
     public static bool IsMenuOpen;
+    // Идёт пошаговое обучение: ленты, таймер и фамильяры стоят, но Time.timeScale не трогаем
+    public static bool IsTutorial;
+
+    public static bool IsFrozen => IsPaused || IsTutorial;
 }
 
 
@@ -24,13 +29,13 @@ public class ManagedBehaviour : MonoBehaviour
 {
     void Update()
     {
-        if (!G.IsPaused)
+        if (!G.IsFrozen)
             PausableUpdate();
     }
 
     void FixedUpdate()
     {
-        if (!G.IsPaused)
+        if (!G.IsFrozen)
             PausableFixedUpdate();
     }
 

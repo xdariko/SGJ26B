@@ -15,6 +15,8 @@ public class FloatingTextView : MonoBehaviour
     [SerializeField] private Color ectoColor = new(0.6f, 1f, 0.9f);
     [SerializeField] private Color complaintColor = new(1f, 0.3f, 0.3f);
     [SerializeField] private Color lostColor = new(0.7f, 0.7f, 0.7f);
+    [Tooltip("Монеты/эктоплазма с бонусом от умения фамильяра")]
+    [SerializeField] private Color familiarBonusColor = new(1f, 0.85f, 0.45f);
 
     private void Start()
     {
@@ -31,12 +33,15 @@ public class FloatingTextView : MonoBehaviour
     {
         Quaternion facing = o.belt != null ? o.belt.Cam.transform.rotation : Quaternion.identity;
 
+        string mark = o.familiarBonus ? "!" : "";
+        // Мимик платит и монетами, и каплей эктоплазмы: показываем оба
+        string coinsPart = o.coins > 0 ? $"+{o.coins} " : "";
         if (o.ecto > 0)
-            Spawn(o.position, facing, $"+{o.ecto} экто", ectoColor);
+            Spawn(o.position, facing, $"{coinsPart}+{o.ecto} экто{mark}", o.familiarBonus ? familiarBonusColor : ectoColor);
         else if (o.penalty > 0)
             Spawn(o.position, facing, $"жалоба -{o.penalty}", complaintColor);
         else if (o.coins > 0)
-            Spawn(o.position, facing, $"+{o.coins}", coinColor);
+            Spawn(o.position, facing, $"+{o.coins}{mark}", o.familiarBonus ? familiarBonusColor : coinColor);
         else if (!o.correct)
             Spawn(o.position, facing, "зря", lostColor);
     }

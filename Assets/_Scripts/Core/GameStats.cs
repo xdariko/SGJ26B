@@ -6,9 +6,18 @@ using UnityEngine;
 public static class Effects
 {
     public const string CamColor = "cam_color";
-    public const string CamCurse = "cam_curse";
-    public const string CamGhost = "cam_ghost";
     public const string CamNoise = "cam_noise";
+    // Чёткость картинки: +1 ступень разрешения за уровень
+    public const string CamSharp = "cam_sharp";
+    // Открыть особые посылки (Unlock): без узла такие посылки не приходят вовсе.
+    // Сразу после открытия аура слабая, ярче её делают узлы glow_*
+    public const string OpenCurse = "open_curse";
+    public const string OpenMimic = "open_mimic";
+    public const string OpenGhost = "open_ghost";
+    // Свечение особых посылок, у каждого типа свой узел: уровень = ярче и чаще
+    public const string GlowCurse = "glow_curse";
+    public const string GlowMimic = "glow_mimic";
+    public const string GlowGhost = "glow_ghost";
     public const string CamZoom = "cam_zoom";
 
     public const string BeltSpeed = "belt_speed";
@@ -25,14 +34,40 @@ public static class Effects
     public const string GoldenChance = "golden_chance";
     public const string TrashCut = "trash_cut";
 
+    // Фамильяры и скорость каждого по отдельности (FamiliarDefinition.rateEffect)
     public const string FamCat = "fam_cat";
     public const string FamCatRate = "fam_cat_rate";
     public const string FamRaven = "fam_raven";
+    public const string FamRavenRate = "fam_raven_rate";
     public const string FamOwl = "fam_owl";
+    public const string FamOwlRate = "fam_owl_rate";
     public const string FamBat = "fam_bat";
-    public const string FamRate = "fam_rate";
+    public const string FamBatRate = "fam_bat_rate";
 
     public const string FinalOrder = "final_order";
+
+    // Поломки мониторов: реже (доля за уровень), меньше ударов (штук за уровень), лента ждёт починки
+    public const string FaultRate = "fault_rate";
+    public const string FaultHits = "fault_hits";
+    public const string FaultStop = "fault_stop";
+}
+
+// Как мигает аура одного типа: прозрачность на пике и сколько секунд горит / погашена
+public class GlowStats
+{
+    public float strength = 1f;
+    public float onTime = 1f;
+    public float offTime;
+
+    public static GlowStats Build(GameConfig cfg, float level)
+    {
+        return new GlowStats
+        {
+            strength = Mathf.Clamp01(cfg.glowBaseStrength + cfg.glowStrengthPerLevel * level),
+            onTime = cfg.glowOnTime + cfg.glowOnPerLevel * level,
+            offTime = Mathf.Max(cfg.glowMinOffTime, cfg.glowOffTime - cfg.glowOffPerLevel * level)
+        };
+    }
 }
 
 // Снимок статов на смену. Пересобирается перед каждой сменой из дерева.
@@ -41,8 +76,18 @@ public static class Effects
 // baseValue пишем долей (0.15 = +15% за уровень). Режим Percent в тулзе умножает на 100, его не используем.
 public class GameStats
 {
+    // 0 = марок не видно, 1 = видно (узел «Ровная резьба»)
     public int camLevel;
+    // Ступень разрешения камеры (индекс в GameConfig.cameraResolutions) = уровень «Протереть глаза»
+    public int camSharpness;
     public float camNoise = 1f;
+
+    // Свечение проклятий, мимиков и призраков
+    public GlowStats curseGlow = new();
+    // Проклятия при ночном зрении совы
+    public GlowStats curseGlowSight = new();
+    public GlowStats mimicGlow = new();
+    public GlowStats ghostGlow = new();
     public float camZoom;
 
     public float beltSpeed;
@@ -58,15 +103,19 @@ public class GameStats
     public float goldenChanceMult = 1f;
 
     public bool famCat, famRaven, famOwl, famBat;
-    public float famCatRateMult = 1f;
-    public float famRateMult = 1f;
 
     public bool finalShift;
+
+    // Поломки мониторов
+    public float faultInterval;
+    public int faultHits = 3;
+    public float faultBeltSpeed = 0.5f;
 
     // Все купленные Unlock-эффекты (новые предметы и прочее)
     private readonly HashSet<string> unlocks = new();
 
     public bool HasUnlock(string effectId) => unlocks.Contains(effectId);
+    public IReadOnlyCollection<string> Unlocks => unlocks;
 
     // forceFinal: финальная смена без покупки final_order (чит F6)
     public static GameStats Build(SkillTreeRuntime tree, GameConfig cfg, bool forceFinal = false)
@@ -76,12 +125,19 @@ public class GameStats
         float Value(string id) => tree != null ? tree.GetEffectValue(id) : 0f;
         bool Has(string id) => tree != null && tree.HasUnlock(id);
 
-        s.camLevel = (Has(Effects.CamColor) ? 1 : 0) + (Has(Effects.CamCurse) ? 1 : 0) + (Has(Effects.CamGhost) ? 1 : 0);
+        s.camLevel = Has(Effects.CamColor) ? 1 : 0;
+        s.camSharpness = Mathf.RoundToInt(Value(Effects.CamSharp));
         s.camNoise = Mathf.Max(0f, 1f - Value(Effects.CamNoise));
+
+        s.curseGlow = GlowStats.Build(cfg, Value(Effects.GlowCurse));
+        s.curseGlowSight = GlowStats.Build(cfg, Value(Effects.GlowCurse) + cfg.curseSightLevels);
+        s.mimicGlow = GlowStats.Build(cfg, Value(Effects.GlowMimic));
+        s.ghostGlow = GlowStats.Build(cfg, Value(Effects.GlowGhost));
         s.camZoom = Value(Effects.CamZoom);
 
         s.beltSpeed = cfg.beltSpeed * (1f + Value(Effects.BeltSpeed));
-        s.spawnInterval = cfg.spawnInterval / (1f + Value(Effects.SpawnRate));
+        // Быстрая лента и подаёт чаще: расстояние между посылками то же, а посылок за смену больше
+        s.spawnInterval = cfg.spawnInterval / ((1f + Value(Effects.SpawnRate)) * (1f + Value(Effects.BeltSpeed)));
         // Мусора меньше от ночи к ночи: на ленте появляются другие посылки, которые надо снимать
         float nightTrash = Mathf.Max(Mathf.Min(cfg.trashNightFloor, cfg.trashChance),
             cfg.trashChance - cfg.trashDropPerNight * (SaveData.Night - 1));
@@ -108,8 +164,11 @@ public class GameStats
         s.famRaven = Has(Effects.FamRaven);
         s.famOwl = Has(Effects.FamOwl);
         s.famBat = Has(Effects.FamBat);
-        s.famCatRateMult = 1f + Value(Effects.FamCatRate);
-        s.famRateMult = 1f + Value(Effects.FamRate);
+
+        s.faultInterval = cfg.faultInterval * (1f + Value(Effects.FaultRate));
+        s.faultHits = Mathf.Max(1, cfg.faultHits - Mathf.RoundToInt(Value(Effects.FaultHits)));
+        // «Песочные часы»: каждый уровень снимает долю скорости сломанной ленты, на последнем она стоит
+        s.faultBeltSpeed = Mathf.Clamp01(cfg.faultBeltSpeed - Value(Effects.FaultStop));
 
         if (tree != null && tree.TreeData != null)
             foreach (SkillNodeData node in tree.TreeData.nodes)
